@@ -19,14 +19,14 @@ class ConectarPostgre extends Postgres {
 
     
   //metodo verificador de la consulta realizada retorna true y false
-  public function verificador($consulta){
+  protected function verificador($consulta){
 
       if ($consulta > 0) {return true; }
       else{ return false; }
   }
 
 
-  
+//************************** INSERT SQL *********************************  
 // metodo para insertar registros de la base de datos
 	public  function InsertRegistro($sql)
 	{
@@ -38,15 +38,16 @@ class ConectarPostgre extends Postgres {
 
   // contador de los resultados de la consulta 
 
-  public function contador($consulta){
+  protected function contador($consulta){
     
      $contador = pg_num_rows($consulta); 
      return $contador;
   }
-    
+   
+//************************** SELECT SQL *********************************  
 // metodo para seleccionar registros de la base de datos
 
-    public function selectRegistro($sql)
+    public function SelectRegistro($sql)
     {  
        $this->consulta = pg_query($sql)
        or die('Fatal Error: ' . pg_last_error());
@@ -56,7 +57,7 @@ class ConectarPostgre extends Postgres {
 
 // metodo para listar los  registros de la base de datos en un array asociativo
 
-    public function listRegistro()
+    public function ListRegistro()
     {  
         
           while ($res=pg_fetch_assoc($this->consulta))
@@ -68,10 +69,11 @@ class ConectarPostgre extends Postgres {
     }
 
 
+//************************** UPDATE SQL *********************************
 // metodo para actulizar registros de la base de datos
 
 
-	public  function updateRegistro($sql)
+	public  function UpdateRegistro($sql)
 	{
 		$this->consulta = pg_query($sql)
 		or die('Fatal Error: ' . pg_last_error());
@@ -79,10 +81,12 @@ class ConectarPostgre extends Postgres {
       return self::verificador($this->consulta);
 	}
 
+
+//************************** DELETE SQL *********************************
 //metodo para borrar registros de la base de datos
 
 
-	public  function deleteRegistro($sql)
+	public  function DeleteRegistro($sql)
 	{
 		$this->consulta = pg_query($sql)
 		or die('Fatal Error: ' . pg_last_error());
@@ -92,7 +96,7 @@ class ConectarPostgre extends Postgres {
 
 
 
-}
+}//final de clase postgres
 
 
 

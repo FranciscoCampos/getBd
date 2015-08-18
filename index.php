@@ -1,6 +1,6 @@
 <?php 
 
-require_once 'class/class_mysql.php';
+/*require_once 'class/class_mysql.php';
 
 
 $sql = "INSERT INTO otra (apellido) values ('otro')";
@@ -23,11 +23,38 @@ if($con->selectRegistro($sql)){
 
 	echo "no hay resultado";
 }
- 
-if ($con->updateRegistro("UPDATE  otra set apellido = 'camarada' where id = 5")) {
- 	echo "actualizado";
- } 
 
+multiple="multiple"
+multiple="multiple"
+multiple="multiple"
+multiple="multiple"
+multiple="multiple"
+multiple="multiple"
+multiple="multiple"
 
+*/
 
  ?>
+
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+    </head>
+
+    <body>
+
+        <form action="file.php" method="post" enctype="multipart/form-data">
+       
+         <input type="file" name="archivo" multiple="multiple"></input><br>
+        
+
+            <input type="submit" value="Subir archivo"></input>
+
+        </form>
+
+    </body>
+
+</html>

@@ -1,29 +1,31 @@
 
 <?php 
-
-
 // Copyright by Francisco Campos 
 // **********Año 2015***********
 // ==================================
 
 
 
- class Mysql{
+//===============================configuracion de Mysql ===============================
 
-    private $usuario = 'root';
-    private $localhost = 'localhost';
-    private $password = '123456';
-    private $bd = 'PRUEBA';
+ class Mysql
+ {
 
-    public function __construct(){
+    private $usuario; //usuario de la base de datos
+    private $localhost;//ruta local
+    private $password ;//clave del host
+    private $bd;  //nombre de la base de datos
+
+    public function __construct()
+    {  //inicializacion de los parametros de la conexion a la base datos mysql
 
         $this->localhost = 'localhost';
         $this->usuario = 'root';
         $this->password = '123456';
-        $this->bd = 'prueba';
+        $this->bd = 'PRUEBA';
     }
 
-    protected  function conectar(){
+    protected  function conectar(){ //funcion conectar que retorna la conexion 
        
         $con = mysql_connect($this->localhost,$this->usuario,$this->password)
         or die(mysql_error());
@@ -38,9 +40,10 @@
  }
 
 
-//========================================================================
+//===============================configuracion de Postgres ===============================
 
-class Postgres{
+class Postgres
+{
 
    private $host;
    private $user;
@@ -60,7 +63,4 @@ class Postgres{
 
 
  }
-
-
-
 
