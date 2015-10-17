@@ -51,7 +51,7 @@ class Postgres
    private $db;
 
     public function __construct()
-    {
+    { //inicializacion de los parametros de la conexion a la base datos postgres
         $this->host = 'localhost';
         $this->user = 'postgres';
         $this->pass = '123456';

@@ -5,18 +5,17 @@ require_once 'class/class_mysql.php';
 
 
 
-$file = $_FILES['archivo'];
-	
+$file = $_FILES['archivo'];	
 
 $archivo = new FileUp();
 
  	
 
-$var = $archivo->uploadFile( $file , "prueba" );
+//$var = $archivo->uploadFile( $file , "prueba2" );
 
 
 
-//$var = $archivo->uploadFileMult($file , "prueba" );
+$var = $archivo->uploadFileMult($file , "prueba2" );
 
 
 echo "<pre>";

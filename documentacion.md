@@ -3,7 +3,7 @@
 
 ------------------------------------------------------
  + Copyright by **FRANCISCO CAMPOS** 
- + Vercion: 0.1
+ + Vercion: BETA
  + Licencia: OpenSource 
  + Contactar: <camqui2011@gmail.com>
 
@@ -301,7 +301,121 @@ $con = new ConectarPostgre();
 **Nota:** 
  >puede ver los ejemplos de los metodos arriba.
 
+##getBd subir archivos al servidor
 
+Para ello tenemos la clase ` FileUp()` que contiene los metodos:
+    
+`uploadFile()` 
+
+* Recibe un primer parametro. file a subir.
+* Recibe un segundo parametro el nombre de la carpeta donde se guarda el archivo.
+* Retorna **Array:** con 2 valores el primero true , el sugundo la ruta final del archivo guardado.
+* Retorna **False:** Si no se guardo el archivo.
+
+Ejemplo de uso:
+
+*index.html*
+
+```
+<!DOCTYPE html>
+
+<html>
+    <head>
+    </head>
+    <body>
+
+        <form action="file.php" method="post" enctype="multipart/form-data">
+         <input type="file" name="archivo" ></input><br>
+         <input type="submit" value="Subir archivo"></input>
+        </form>
+
+    </body>
+
+</html>
+```
+
+*file.php*
+
+```
+ <?php 
+
+require_once 'class/class_mysql.php'; //se puede usar con postgres
+
+
+$file = $_FILES['archivo'];//reciben el archivo
+
+$archivo = new FileUp(); //instancia de la clase
+
+//usamos el metodo uploadFile(nombre del archivo , nombre de la carpeta)
+$var = $archivo->uploadFile( $file , "prueba" );
+
+if($var[0] == true){
+    echo "Archivo subido";
+}else{
+    echo "Error al subir archivo";
+}
+
+?>
+```
+
+##getBd con multiples archivos:
+
+Para ello tenemos la clase ` FileUp()` que contiene los metodos:
+    
+`uploadFileMult()` 
+
+* Recibe un primer parametro. file a subir.
+* Recibe un segundo parametro el nombre de la carpeta donde se guarda el archivo.
+* Retorna **Array:** con 2 valores el primero true , el sugundo la ruta final del archivo guardado.
+* Retorna **Array:** con error  Si no se guardo el archivo.
+
+Ejemplo de uso:
+
+*index.html*
+
+```
+<!DOCTYPE html>
+
+<html>
+    <head>
+    </head>
+    <body>
+
+        <form action="file.php" method="post" enctype="multipart/form-data">
+         <input type="file" name="archivo[]" multiple="multiple" ></input><br>
+         <input type="submit" value="Subir archivo"></input>
+        </form>
+
+    </body>
+
+</html>
+```
+
+
+*file.php*
+```
+ <?php 
+
+require_once 'class/class_mysql.php'; //se puede usar con postgres
+
+
+$file = $_FILES['archivo'];//reciben el archivo
+
+$archivo = new FileUp(); //instancia de la clase
+
+//usamos el metodo uploadFileMult(nombre del archivo , nombre de la carpeta)
+//para la subida de varios archivos al servidor.
+
+$var = $archivo->uploadFileMult($file , "prueba" );
+
+echo "<pre>";
+
+ print_r($var);//mostrando el resultado de la subida.
+
+echo "</pre>";
+
+?>
+```
 
 
 ------------------------------------------------------

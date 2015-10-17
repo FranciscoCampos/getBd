@@ -1019,7 +1019,7 @@ body .markdown-body
 <hr />
 <ul>
 <li>Copyright by <strong>FRANCISCO CAMPOS</strong> </li>
-<li>Vercion: 0.1</li>
+<li>Vercion: BETA</li>
 <li>Licencia: OpenSource </li>
 <li>Contactar: <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#109;&#113;&#117;&#105;&#50;&#48;&#49;&#49;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#99;&#97;&#109;&#113;&#117;&#105;&#50;&#48;&#49;&#49;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a></li>
 </ul>
@@ -1118,7 +1118,7 @@ $con = new ConectarPostgre();
 <p><strong>Insertar registros en la base de datos:</strong></p>
 <p><code>InsertRegistro( parametro )</code></p>
 <p>Este metodo recibe un parametro que es la consulta SQL<br />
-Retorna.</p>
+Retorna:</p>
 <ul>
 <li><strong>true:</strong>  si la consulta se realizo correctamente</li>
 <li><strong>false:</strong> si la consulta no se realizo correctamente</li>
@@ -1265,6 +1265,107 @@ $con = new ConectarPostgre();
 <blockquote>
 <p>puede ver los ejemplos de los metodos arriba.</p>
 </blockquote>
+<h2 id="getbd-subir-archivos-al-servidor"><a name="user-content-getbd-subir-archivos-al-servidor" href="#getbd-subir-archivos-al-servidor" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>getBd subir archivos al servidor</h2>
+<p>Para ello tenemos la clase <code>FileUp()</code> que contiene los metodos:</p>
+<p><code>uploadFile()</code> </p>
+<ul>
+<li>Recibe un primer parametro. file a subir.</li>
+<li>Recibe un segundo parametro el nombre de la carpeta donde se guarda el archivo.</li>
+<li>Retorna <strong>Array:</strong> con 2 valores el primero true , el sugundo la ruta final del archivo guardado.</li>
+<li>Retorna <strong>False:</strong> Si no se guardo el archivo.</li>
+</ul>
+<p>Ejemplo de uso:</p>
+<p><em>index.html</em></p>
+<pre><code>&lt;!DOCTYPE html&gt;
+
+&lt;html&gt;
+    &lt;head&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+
+        &lt;form action=&quot;file.php&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;
+         &lt;input type=&quot;file&quot; name=&quot;archivo&quot; &gt;&lt;/input&gt;&lt;br&gt;
+         &lt;input type=&quot;submit&quot; value=&quot;Subir archivo&quot;&gt;&lt;/input&gt;
+        &lt;/form&gt;
+
+    &lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre>
+
+<p><em>file.php</em></p>
+<pre><code> &lt;?php 
+
+require_once 'class/class_mysql.php'; //se puede usar con postgres
+
+
+$file = $_FILES['archivo'];//reciben el archivo
+
+$archivo = new FileUp(); //instancia de la clase
+
+//usamos el metodo uploadFile(nombre del archivo , nombre de la carpeta)
+$var = $archivo-&gt;uploadFile( $file , &quot;prueba&quot; );
+
+if($var[0] == true){
+    echo &quot;Archivo subido&quot;;
+}else{
+    echo &quot;Error al subir archivo&quot;;
+}
+
+?&gt;
+</code></pre>
+
+<h2 id="getbd-con-multiples-archivos"><a name="user-content-getbd-con-multiples-archivos" href="#getbd-con-multiples-archivos" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>getBd con multiples archivos:</h2>
+<p>Para ello tenemos la clase <code>FileUp()</code> que contiene los metodos:</p>
+<p><code>uploadFileMult()</code> </p>
+<ul>
+<li>Recibe un primer parametro. file a subir.</li>
+<li>Recibe un segundo parametro el nombre de la carpeta donde se guarda el archivo.</li>
+<li>Retorna <strong>Array:</strong> con 2 valores el primero true , el sugundo la ruta final del archivo guardado.</li>
+<li>Retorna <strong>Array:</strong> con error  Si no se guardo el archivo.</li>
+</ul>
+<p>Ejemplo de uso:</p>
+<p><em>index.html</em></p>
+<pre><code>&lt;!DOCTYPE html&gt;
+
+&lt;html&gt;
+    &lt;head&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+
+        &lt;form action=&quot;file.php&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;
+         &lt;input type=&quot;file&quot; name=&quot;archivo[]&quot; multiple=&quot;multiple&quot; &gt;&lt;/input&gt;&lt;br&gt;
+         &lt;input type=&quot;submit&quot; value=&quot;Subir archivo&quot;&gt;&lt;/input&gt;
+        &lt;/form&gt;
+
+    &lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre>
+
+<p><em>file.php</em><br />
+<pre><code> &lt;?php 
+
+require_once 'class/class_mysql.php'; //se puede usar con postgres
+
+
+$file = $_FILES['archivo'];//reciben el archivo
+
+$archivo = new FileUp(); //instancia de la clase
+
+//usamos el metodo uploadFileMult(nombre del archivo , nombre de la carpeta)
+//para la subida de varios archivos al servidor.
+
+$var = $archivo-&gt;uploadFileMult($file , &quot;prueba&quot; );
+
+echo &quot;&lt;pre&gt;&quot;;
+
+ print_r($var);//mostrando el resultado de la subida.
+
+echo &quot;&lt;/pre&gt;&quot;;
+
+?&gt;
+</code></pre></p>
 <hr />
 <h2 id="creditos"><a name="user-content-creditos" href="#creditos" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Creditos:</h2>
 <ul>

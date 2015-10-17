@@ -3,7 +3,7 @@
 // Copyright by Francisco Campos 
 // **********Año 2015***********
 // ==================================
-
+// version BETA
 
 // class para subir archivos al servidor de manera facil
 
@@ -17,19 +17,19 @@ class FileUp{
    
 //metodo para subir el archivo al servidor
 
-   public function uploadFile($file , $dire , $opc=array())
+   public function uploadFile($file , $dire)
    {
 
 	   	 $this->file = $file;
+
 	     if ($this->file["error"] > 0)
 		  {
-		     echo "Error Fatal: " . $this->file["error"]['error'];
-		  }
+		     echo "Error Fatal: ";
 
-		 else{
+		  }else{
 			  
 			  //verificando los vlores permitido 
-		 	   if (self::permitido($this->file) != false && self::taPermitido($this->file) != false) {
+		 	   if ( self::permitido($this->file) != false ) {
 		 	   	
 				         $this->dire = $dire;
 				         
@@ -62,9 +62,13 @@ class FileUp{
 
 
 //metodo para la validaciones permitidas para subir archivos al servidor.
-  protected function permitido($file){
+  
+  public function permitido($file){
+  
       $res = false;
+  
      //validando solo formato img
+  
       if ($file['type'] == 'image/jpeg') {
       	 $res = true;
 
@@ -82,11 +86,14 @@ class FileUp{
   }  
   
   //metodo para la validaciones permitidas para subir archivos al servidor.
+  
   protected function taPermitido($file){
       
       $res = false;
+     
      //validando solo tamaño
-      if (($file['size'] / 1024) <= 2048) {
+     
+      if ($file['size'] <= 2048) {
       	 $res = true;
 
       }
@@ -94,68 +101,80 @@ class FileUp{
       return $res; //retornado el valor true si pasa
   }
 
+//metodo para subir el archivo al servidor
+
 protected function subido(){
+
+	// se mueve el archivo a la ruta creada
+
 	if(move_uploaded_file($this->file['tmp_name'], "".$this->dire."/" . $this->file['name']."")){
-					             		
+
+		//se retorna un array con el primer volor true , mas la ruta donde se guardo el archivo
+
 		return $this->repuesta = array(true , $this->dire."/" . $this->file['name']);
 					             	
 	}else{
 
-		return false;
+		return false;//si hay error retorna false
 	}
 }
 
-//metodo para multiples ficheros
 
+
+//****************************** ARCHIVOS MULTIPLES ****************************************************
+//metodo para multiples ficheros
 
 public function uploadFileMult($file , $dire ){
 
         
-	    $this->file = $file;
-	    $this->dire = $dire;
-	    $statusFile = array();
+	    $this->file = $file;//variable que armacena el archivo
+	    $this->dire = $dire;//variable de la ruta donde se guarda el archivo
+	    $statusFile = array();//almacena los status y los errores de los archivos subidos
 
+        // se comprueba si el directorio existe
         if(!file_exists($this->dire))
         {
-
+        	//se crea el directorio con los permiso totales
 			if(!mkdir($this->dire, 0777, true))//creando el directorio
 			 {
 				die('Fallo al crear las carpetas...');
 
 			 }else{
 
-			 	return self::subiendoMultiple();
+			 	return self::subiendoMultiple();//donde se subi el archivo
 			 }
 			 
         }else{
-
-        	return self::subiendoMultiple();
+            //si ya existe el directorio solo se guarda el archivo
+        	return self::subiendoMultiple();//donde se subi el archivo
         }
 
 
-   }
+   }//final del metodo uploadFileMult
 
- 
+ //metodo que subir los multiples archivos al servidor
   protected function subiendoMultiple(){
 
-	  	for ($i= 0; $i < sizeof($this->file)  ; $i++) { 
+	  	for ($i= 0; $i < count($this->file['name'])  ; $i++) { 
+	  		//recore el arreglo de archios
+	        //if ($this->file["error"][$i] > 0)//verifica los errores de subida
+			//{
+				//$statusFile[] = "error"; //se almacena en el arreglo los errores
 
-	        if ($this->file["error"][$i] > 0)
-			{
-				//echo "Error Fatal:";
-				$statusFile[] = "error";
-			}else{
-
+			//}else{
+				//movemos ya los archivos al servidor
 				if(move_uploaded_file($this->file['tmp_name'][$i], "".$this->dire."/" . $this->file['name'][$i]."")){
-						             		
-					$statusFile[] =  $this->dire."/" . $this->file['name'][$i];
+					//agregando la ruta al arreglo sel archivo movido correctamente	             		
+					$this->statusFile[] =  $this->dire."/" . $this->file['name'][$i];
 						             	
+				}else{
+
+					$this->statusFile[] = "error";
 				}
-			}
+			//}
 	    }//llave de for o cliclo
 
-	  return $statusFile;
+	  return $this->statusFile;//retornamos el arreglo con la informacion de subida
   }
 
 }//final de clase file
-
