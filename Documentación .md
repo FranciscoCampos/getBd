@@ -1,4 +1,4 @@
-##Libreria getBd 
+## Libreria getBd 
 #### libreria basica para gestionar consultas a la base de dato.
 
 ------------------------------------------------------
@@ -17,9 +17,9 @@ Tiene soporte para:
 
 ******************************************************
 
-###Extructura de la Libreria:
+### Extructura de la Libreria:
 
-####getBd:
+#### getBd:
 
     -class
         class_help.php
