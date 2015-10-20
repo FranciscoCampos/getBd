@@ -32,7 +32,7 @@ Tiene soporte para:
 
 
 
-###Descripcion de la Libreria:
+### Descripcion de la Libreria:
 
 ------------------------------------------------------
 
@@ -61,7 +61,7 @@ contiene las clases y metodos requerido para el  uso de Mysql y Postgres.
 archivo para ver el facil funcionamiento de la libreria.
 
 
-##Funcionamiento:
+## Funcionamiento:
 
 Configuracion de las variables de conexion.
 
@@ -125,7 +125,7 @@ $con = new ConectarPostgre();
 ?>
 ```
 
-##getBd con Mysql
+## getBd con Mysql
 
 **Insertar registros en la base de datos:**
 
@@ -165,7 +165,7 @@ $con->InsertRegistro($sql);
 ```
 
 
-##Consultar registro de la base de datos
+## Consultar registro de la base de datos
 
 Para ello tenemos 2 metodos:
 
@@ -179,7 +179,7 @@ Para ello tenemos 2 metodos:
 
 + Retorna un Array Asociativo con los datos
 
-##Consulta a la base de datos
+## Consulta a la base de datos
 
 ```
  <?php
@@ -207,7 +207,7 @@ Para ello tenemos 2 metodos:
  ?>
 ```
 
-##Actualizar registro de la base de datos
+## Actualizar registro de la base de datos
 
 Para ello tenemos el metodos:
 
@@ -240,7 +240,7 @@ Para ello tenemos el metodos:
 ```
 
 
-##Eliminar registro de la base de datos
+## Eliminar registro de la base de datos
 
 Para ello tenemos el metodos:
 
@@ -272,7 +272,7 @@ Para ello tenemos el metodos:
  ?>
 ```
 
-##getBd  con  Postgres
+## getBd  con  Postgres
 
 El uso de getBd con Postgres es igual al funcionamiento con Mysql tenemos los mismo metodos. Solo cambia es el **include de la class**
 
@@ -301,7 +301,7 @@ $con = new ConectarPostgre();
 **Nota:** 
  >puede ver los ejemplos de los metodos arriba.
 
-##getBd subir archivos al servidor
+## getBd subir archivos al servidor
 
 Para ello tenemos la clase ` FileUp()` que contiene los metodos:
     
@@ -358,7 +358,7 @@ if($var[0] == true){
 ?>
 ```
 
-##getBd con multiples archivos:
+## getBd con multiples archivos:
 
 Para ello tenemos la clase ` FileUp()` que contiene los metodos:
     
