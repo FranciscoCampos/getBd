@@ -13,11 +13,12 @@ class FileUp{
    private $file;
    private $dire;
    private $repuesta = array();
+   private $confi;
    
    
 //metodo para subir el archivo al servidor
 
-   public function uploadFile($file , $dire)
+   public function uploadFile($file , $dire , $conf = array())
    {
 
 	   	 $this->file = $file;
@@ -124,7 +125,7 @@ protected function subido(){
 //****************************** ARCHIVOS MULTIPLES ****************************************************
 //metodo para multiples ficheros
 
-public function uploadFileMult($file , $dire ){
+public function uploadFileMult($file , $dire , $conf = array()){
 
         
 	    $this->file = $file;//variable que armacena el archivo
@@ -166,10 +167,11 @@ public function uploadFileMult($file , $dire ){
 				if(move_uploaded_file($this->file['tmp_name'][$i], "".$this->dire."/" . $this->file['name'][$i]."")){
 					//agregando la ruta al arreglo sel archivo movido correctamente	             		
 					$this->statusFile[] =  $this->dire."/" . $this->file['name'][$i];
-						             	
+					//array_push(	$this->statusFile[] ,   $this->dire."/" . $this->file['name'][$i]);          	
 				}else{
 
-					$this->statusFile[] = "error";
+					$this->statusFile[] = $this->file['error'][$i];
+					//array_push(	$this->statusFile[] , $this->file['error'][$i]);
 				}
 			//}
 	    }//llave de for o cliclo

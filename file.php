@@ -9,9 +9,10 @@ $file = $_FILES['archivo'];
 
 $archivo = new FileUp();
 
+
  	
 
-$var = $archivo->uploadFile( $file , "prueba2" );
+//$var = $archivo->uploadFile( $file , "prueba2" );
 
 
 
