@@ -131,7 +131,8 @@ $con = new ConectarPostgre();
 
 `InsertRegistro( parametro )`
 
-Este metodo recibe un parametro que es la consulta SQL
+Este metodo recibe tres parametro el primero que es la consulta SQL.
+Los dos metodos restantes son opcionales , 
 Retorna:
 
 - **true:**  si la consulta se realizo correctamente
@@ -211,9 +212,9 @@ Para ello tenemos 2 metodos:
 
 Para ello tenemos el metodos:
 
-`UpdateRegistro( parametro )`
+`UpdateRegistro( parametro , seguro )`
 
-+ Recibe un parametro que es la consulta SQL
++ Recibe dos parametro que son: la consulta SQL , y la cadena 'update', para evitar error en la consulta. 
 + Retorna **True:** Si se actualizo el registro
 + Retorna **False:** Si no se actualizo el registro
 
@@ -221,13 +222,11 @@ Para ello tenemos el metodos:
  <?php
   require_once 'class/class_mysql.php';
 
-  $con = new ConectarMysql();
-  
-  $sql = "UPDATE  tabla SET campo = 'valor' where condicion";
+     $con = new ConectarMysql();
+      
+     $sql = "UPDATE  tabla SET campo = 'valor' where condicion";
 
-  $con->UpdateRegistro($sql);
-
-     if ( $con > 0 ) 
+     if ( $con->UpdateRegistro($sql , 'update') != false  ) 
      {
         echo "Registro actualizado";
      }
@@ -244,9 +243,9 @@ Para ello tenemos el metodos:
 
 Para ello tenemos el metodos:
 
-`DeleteRegistro( parametro )`
+`DeleteRegistro( parametro , seguro )`
 
-+ Recibe un parametro que es la consulta SQL
++ Recibe dos parametro que son : la consulta SQL , y la cadena 'delete', para evitar error en la consulta. 
 + Retorna **True:** Si se elimino el registro
 + Retorna **False:** Si no se elimino el registro
 
@@ -258,7 +257,7 @@ Para ello tenemos el metodos:
   
   $sql = "DELETE FROM tabla WHERE condición";
 
-  $con->DeleteRegistro($sql);
+  $con->DeleteRegistro($sql , 'delete');
 
      if ( $con > 0 ) 
      {

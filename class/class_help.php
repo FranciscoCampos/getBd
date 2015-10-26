@@ -7,53 +7,53 @@
 
 // class para subir archivos al servidor de manera facil
 
+class FileUp {
 
-class FileUp{
-
-   private $file;
-   private $dire;
-   private $repuesta = array();
-   private $confi;
+   private $file;//archivo a subir
+   private $dire;//directorio
+   private $repuesta = array();//repuesta sobre la subida
+   private $opc;//parametros opcionales en beta
    
    
 //metodo para subir el archivo al servidor
 
-   public function uploadFile($file , $dire , $conf = array())
+   public function uploadFile($file , $dire , $opc = array())
    {
 
-	   	 $this->file = $file;
+	   	 $this->file = $file;//recibe el archivo
 
-	     if ($this->file["error"] > 0)
+	     if ($this->file["error"] > 0)//si no hay error
 		  {
 		     echo "Error Fatal: ";
 
-		  }else{
+		  }else{//continua el proceso
 			  
-			  //verificando los vlores permitido 
+			  //verificando los valores permitido "jpg , png , git etc" 
 		 	   if ( self::permitido($this->file) != false ) {
 		 	   	
-				         $this->dire = $dire;
+				         $this->dire = $dire;//recibimos el directorio donde sera guardado
 				         
-					         if(!file_exists($this->dire))
+					         if(!file_exists($this->dire))//comprobando el directorio
 							  {
 								if(!mkdir($this->dire, 0777, true))//creando el directorio
 								{
 								    die('Fallo al crear las carpetas...');
 								}else {
 					         
-					             	return self::subido();
+					             	return self::subido();//se realiza la subidadel archivo
 					          
 					             }
 								
 							  }else { 
 				
-								return self::subido();
+								return self::subido();//se realiza la subidadel archivo
 
 							  }
 
 			 	   }else{
 
-			 	   	return "error no cumple los requicito";
+			 	   	return "error no cumple los requicito";//error sino cumple con 
+			 	   	                                       //los valores permitdos
 
 			 	   }//final de else de comprobacion de tamaño y peso
 
@@ -66,7 +66,7 @@ class FileUp{
   
   public function permitido($file){
   
-      $res = false;
+      $res = false;//repuesta del metodo por defecto esta en false
   
      //validando solo formato img
   
@@ -85,7 +85,9 @@ class FileUp{
 
       return $res; //retornado el valor true si pasa
   }  
-  
+ 
+
+ //*************************BETA****************************************
   //metodo para la validaciones permitidas para subir archivos al servidor.
   
   protected function taPermitido($file){
@@ -102,7 +104,7 @@ class FileUp{
       return $res; //retornado el valor true si pasa
   }
 
-//metodo para subir el archivo al servidor
+//metodo para subir un solo archivo al servidor
 
 protected function subido(){
 
@@ -110,7 +112,8 @@ protected function subido(){
 
 	if(move_uploaded_file($this->file['tmp_name'], "".$this->dire."/" . $this->file['name']."")){
 
-		//se retorna un array con el primer volor true , mas la ruta donde se guardo el archivo
+//se retorna un array con el primer valor true
+//si se gurdo correctamente , mas la ruta donde se guardo el archivo para ser ingresado a la bd
 
 		return $this->repuesta = array(true , $this->dire."/" . $this->file['name']);
 					             	
@@ -119,6 +122,13 @@ protected function subido(){
 		return false;//si hay error retorna false
 	}
 }
+
+
+
+// Copyright by Francisco Campos 
+// **********Año 2015***********
+// ==================================
+// version BETA
 
 
 
@@ -153,27 +163,24 @@ public function uploadFileMult($file , $dire , $conf = array()){
 
    }//final del metodo uploadFileMult
 
- //metodo que subir los multiples archivos al servidor
+
+//metodo que subir los multiples archivos al servidor
   protected function subiendoMultiple(){
 
 	  	for ($i= 0; $i < count($this->file['name'])  ; $i++) { 
-	  		//recore el arreglo de archios
-	        //if ($this->file["error"][$i] > 0)//verifica los errores de subida
-			//{
-				//$statusFile[] = "error"; //se almacena en el arreglo los errores
+	  		
+			if(move_uploaded_file($this->file['tmp_name'][$i], "".$this->dire."/" . $this->file['name'][$i]."")){
+				
+				//agregando la ruta al arreglo sel archivo movido correctamente	             		
+				$this->statusFile[] =  $this->dire."/" . $this->file['name'][$i];
+				
+        	
+			}else{
 
-			//}else{
-				//movemos ya los archivos al servidor
-				if(move_uploaded_file($this->file['tmp_name'][$i], "".$this->dire."/" . $this->file['name'][$i]."")){
-					//agregando la ruta al arreglo sel archivo movido correctamente	             		
-					$this->statusFile[] =  $this->dire."/" . $this->file['name'][$i];
-					//array_push(	$this->statusFile[] ,   $this->dire."/" . $this->file['name'][$i]);          	
-				}else{
+				$this->statusFile[] = $this->file['error'][$i];
 
-					$this->statusFile[] = $this->file['error'][$i];
-					//array_push(	$this->statusFile[] , $this->file['error'][$i]);
-				}
-			//}
+			}
+			
 	    }//llave de for o cliclo
 
 	  return $this->statusFile;//retornamos el arreglo con la informacion de subida

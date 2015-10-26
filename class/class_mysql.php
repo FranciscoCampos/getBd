@@ -23,29 +23,57 @@ class ConectarMysql extends Mysql
 
 
 
+
 //metodo verificador de la consulta realizada retorna true de ser positivo y false negativo
  
-  protected function verificador($consulta){
+  protected function verificador($var){
 
-      if ($consulta > 0) {return true; }
-      else{ return false; }
+      if ($var > 0)
+       {
+        return true; 
+       }
+      else{ 
+        return false; 
+      }
   }
 
 
 
  //************************** INSERT SQL ********************************* 
 // metodo para insertar registros de la base de datos
-	
-  public  function InsertRegistro($sql)
+//con comprobacion del registro si  ya existe o no
+
+  public  function InsertRegistro($sql , $sql2 = '', $valid = false )
 	{
-		$this->consulta = mysql_query($sql, self::conectar())
-    or die(mysql_error()); 
-        
-        return self::verificador($this->consulta);
-	}
+    //si es true verificamos si ya existe el registro
+    if($valid == true ){
+      //buscamos en la bd si el registro existe
+        if(self::SelectRegistro($sql2) != true){
+
+            $this->consulta = mysql_query($sql, self::conectar())
+            or die(mysql_error());//errores de sintaxis
+
+            return true;//si se registro corectamente
+
+        }else{
+
+          return false;//si ya existe el registro retordamos false para error
+        }
+
+// esto se ejecuta si no se envia la validacion del registro
+// la insercion del registro normal
+     }else{
+      //creando el registro normal en la bd
+          if($this->consulta = mysql_query($sql, self::conectar())
+          or die(mysql_error()) > 0){
+            return true;
+          }     
+          
+        }
+	}//final del metodo insert
 
 
-  // motodo contador de los resultados de la consulta cuando se requiere los registros
+  // metodo contador de los resultados de la consulta cuando se requiere los registros
 
   protected function contador($consulta){
     
@@ -83,26 +111,49 @@ class ConectarMysql extends Mysql
 //************************** UPDATE SQL *********************************
 // metodo para actulizar registros de la base de datos
 
-	public  function UpdateRegistro($sql)
-	{
-		$this->consulta = mysql_query($sql,self::conectar())
-    or die(mysql_error());
-       
-      return self::verificador($this->consulta);
+	public  function UpdateRegistro($sql, $conf)
+	{ 
+      if( $conf == 'update' ){ //seguro para evitar error en los metodos
+
+      		$this->consulta = mysql_query($sql,self::conectar());
+
+          return $this->consulta;
+
+      }else{
+
+          return false ;
+      }
+    
 	}
 
 
 //************************** DELETE SQL *********************************
 //metodo para borrar registros de la base de datos
 
-	public  function DeleteRegistro($sql)
+	public  function DeleteRegistro($sql , $conf)
 	{
-		$this->consulta = mysql_query($sql,self::conectar())
-    or die(mysql_error());
-      return self::verificador($this->consulta);
+		if( $conf == 'delete' ){ //seguro para evitar error en los metodos
+
+          $this->consulta = mysql_query($sql,self::conectar());
+
+          return $this->consulta;
+
+      }else{
+
+          return false ;
+      }
 	}
     
+//************************** PROTEC SQL *********************************
+//metodo para EVITAR  la inyec de sql registros de la base de datos
 
+  public  function sqlValid( $var )
+  {
+    //seguro para evitar error en los metodos 
+    //y la inyeccion de sql malo
+      return mysql_real_escape_string($var);
+
+  }
 
 }//final de la clase conectar
 
