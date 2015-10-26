@@ -129,10 +129,16 @@ $con = new ConectarPostgre();
 
 **Insertar registros en la base de datos:**
 
-`InsertRegistro( parametro )`
+`InsertRegistro( parametro , parametro2 , opcion)`
 
 Este metodo recibe tres parametro el primero que es la consulta SQL.
-Los dos metodos restantes son opcionales , 
+Los dos metodos restantes son opcionales , con el se puede verificar el registro antes de ser insertado todo en una sola linea de codigo.
+
+- **sql:**  consulta sql a insertar
+- **sql2:** consulta sql de verificacion opcional
+- **opc:**  se envia de forma TRUE para activar la verificacion opcional.
+
+
 Retorna:
 
 - **true:**  si la consulta se realizo correctamente
@@ -150,8 +156,10 @@ require_once 'class/class_mysql.php';
 $con = new ConectarMysql();
 
 $sql = "INSERT INTO tabla (campos) Values (valores)";
+//verificador del registro
+$sql2 = " SELECT * FROM tabla WHERE campo = campos";
 
-$con->InsertRegistro($sql);
+$con->InsertRegistro($sql , $sql2 , true);
 
     if($con > 0)
     {
