@@ -202,10 +202,11 @@ Para ello tenemos 2 metodos:
 
      if ( $con > 0 ) 
      {
-        $dato = ListRegistro();
-
-        for ($i=0; $i < sizeof($dato); $i++) { 
-            echo $dato[$i]['campo'] . "<br>";
+        $datos = ListRegistro();
+        
+        //mostrando los registros
+        foreach ($datos as $dato) {
+            echo $dato['campo'] . "<br>";
         }
      }
      else
@@ -295,7 +296,7 @@ $con = new ConectarPostgre();
 ?>
 ```
 
-`InsertRegistro( parametro )` 
+`InsertRegistro( parametro , parametro , true )` 
 
 `SelectRegistro( parametro )`
 
@@ -426,7 +427,7 @@ echo "</pre>";
 
 
 ------------------------------------------------------
-##Creditos:
+## Creditos:
  + Copyright by **FRANCISCO CAMPOS** 
  + Vercion: 0.1
  + Licencia: OpenSource 
