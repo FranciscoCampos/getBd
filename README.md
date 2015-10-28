@@ -1,4 +1,6 @@
-## Libreria getBd 
+# Libreria getBd 
+![](http://i.imgur.com/q2CBZ1t.png?1)
+
 #### libreria basica para gestionar consultas a la base de dato.
 
 ------------------------------------------------------
@@ -6,6 +8,7 @@
  + Vercion: BETA
  + Licencia: OpenSource 
  + Contactar: <camqui2011@gmail.com>
+ + [https://gitlab.com/franpc/getBd.git](http://)
 
 ------------------------------------------------------ 
 
@@ -27,8 +30,8 @@ Tiene soporte para:
         class_postgre.php  
     -config
         config.php
-    - documentacion.md
-    - index.php
+    - README.md
+    
 
 
 
@@ -39,31 +42,26 @@ Tiene soporte para:
 **Class:** contiene las class necesaria para el manejo rapido de las consultas a la base de datos.
 
     - class_mysql.php:
-contiene las clases y metodos requerido el uso de Mysql.
+Contiene las clases y metodos requerido el uso de Mysql.
 
     - class_postgre.php:
-contiene las clases y metodos requerido el uso de Postgres.
+Contiene las clases y metodos requerido el uso de Postgres.
 
     - class_help.php:
-contiene las clases nesesarias para trabajos.  
+Contiene las clases nesesarias para trabajos.  
 
 + Sessiones.
 + Subida de Archivos al servidor.
-+ Manejos de Errores.
 
 
-**Config:** contiene las class dode se crea la conexion a la base de datos, aqui configuraremos las variables de la conexion: root , localhost , password.
+
+**Config:** Contiene las class dode se crea la conexion a la base de datos, aqui configuraremos las variables de la conexion: root , localhost , password.
 
     - config.php:
-contiene las clases y metodos requerido para el  uso de Mysql y Postgres.
-
-    - index.php: 
-archivo para ver el facil funcionamiento de la libreria.
-
 
 ## Funcionamiento:
 
-Configuracion de las variables de conexion.
+Configuracion de las variables de conexión.
 
 *config/config.php*
  
@@ -79,7 +77,7 @@ Configuracion de las variables de conexion.
         $this->bd = 'nombre de base de datos';
     }
 
-Class Postgres:
+**Class Postgres:**
 
  Inicializamos los valores en el  constructor de la clase.
 
@@ -94,7 +92,7 @@ Class Postgres:
 Ejemplo de uso en Mysql:
 
 
-**Archivo index.php**
+**Archivo demo.php**
 ```
 <?php
 
@@ -102,7 +100,7 @@ Ejemplo de uso en Mysql:
 require_once 'class/class_mysql.php';
 
 //Instancisa del objeto para Mysql
-$con = new ConectarMysql();
+ $con = new ConectarMysql();
 
 ?>
 
@@ -112,7 +110,7 @@ $con = new ConectarMysql();
 Ejemplo de uso en Postgres:
 
 
-**Archivo index.php**
+**Archivo demo.php**
 ```
 <?php
 
@@ -129,14 +127,14 @@ $con = new ConectarPostgre();
 
 **Insertar registros en la base de datos:**
 
-`InsertRegistro( parametro , parametro2 , opcion)`
+`InsertRegistro( sql , opcional , opcional )`
 
 Este metodo recibe tres parametro el primero que es la consulta SQL.
-Los dos metodos restantes son opcionales , con el se puede verificar el registro antes de ser insertado todo en una sola linea de codigo.
+Los dos metodos restantes son opcionales. Si los enviamos podemos verificar si el  registro existe! antes de ser insertado todo en una sola linea de codigo.
 
 - **sql:**  consulta sql a insertar
-- **sql2:** consulta sql de verificacion opcional
-- **opc:**  se envia de forma TRUE para activar la verificacion opcional.
+- **sql2 opcional:** consulta sql de verificacion opcional
+- **opcional:**  se envia de forma TRUE para activar la verificacion del registro opcional.
 
 
 Retorna:
@@ -145,7 +143,7 @@ Retorna:
 - **false:** si la consulta no se realizo correctamente
 
 
-Archivo index.php
+Archivo demo.php
 
 ```
 <?php 
@@ -161,7 +159,7 @@ $sql2 = " SELECT * FROM tabla WHERE campo = campos";
 
 $con->InsertRegistro($sql , $sql2 , true);
 
-    if($con > 0)
+    if($con != false)
     {
         echo "Registro Insertado";
     }
@@ -202,10 +200,11 @@ Para ello tenemos 2 metodos:
 
      if ( $con > 0 ) 
      {
-        $dato = ListRegistro();
-
-        for ($i=0; $i < sizeof($dato); $i++) { 
-            echo $dato[$i]['campo'] . "<br>";
+        $datos = ListRegistro();
+        
+        //mostrando los registros
+        foreach ($datos as $dato) {
+            echo $dato['campo'] . "<br>";
         }
      }
      else
@@ -220,7 +219,7 @@ Para ello tenemos 2 metodos:
 
 Para ello tenemos el metodos:
 
-`UpdateRegistro( parametro , seguro )`
+`UpdateRegistro( sql , 'string' )`
 
 + Recibe dos parametro que son: la consulta SQL , y la cadena 'update', para evitar error en la consulta. 
 + Retorna **True:** Si se actualizo el registro
@@ -251,7 +250,7 @@ Para ello tenemos el metodos:
 
 Para ello tenemos el metodos:
 
-`DeleteRegistro( parametro , seguro )`
+`DeleteRegistro(sql , string' )`
 
 + Recibe dos parametro que son : la consulta SQL , y la cadena 'delete', para evitar error en la consulta. 
 + Retorna **True:** Si se elimino el registro
@@ -295,15 +294,15 @@ $con = new ConectarPostgre();
 ?>
 ```
 
-`InsertRegistro( parametro )` 
+`InsertRegistro( parametro , parametro , true )` 
 
 `SelectRegistro( parametro )`
 
 `ListRegistro()`
 
-`UpdateRegistro( parametro )`
+`UpdateRegistro( parametro , 'string' )`
 
-`DeleteRegistro( parametro )` 
+`DeleteRegistro( parametro , 'string' )` 
 
 **Nota:** 
  >puede ver los ejemplos de los metodos arriba.
@@ -318,6 +317,12 @@ Para ello tenemos la clase ` FileUp()` que contiene los metodos:
 * Recibe un segundo parametro el nombre de la carpeta donde se guarda el archivo.
 * Retorna **Array:** con 2 valores el primero true , el sugundo la ruta final del archivo guardado.
 * Retorna **False:** Si no se guardo el archivo.
+
+>Array retornado:
+
+```
+ array respuesta = [ 'valid' => true , 'ruta'=> 'ruta del archivo' ];
+```
 
 Ejemplo de uso:
 
@@ -341,12 +346,12 @@ Ejemplo de uso:
 </html>
 ```
 
-*file.php*
+*demo.php*
 
 ```
  <?php 
 
-require_once 'class/class_mysql.php'; //se puede usar con postgres
+require_once 'class/class_help.php';
 
 
 $file = $_FILES['archivo'];//reciben el archivo
@@ -354,10 +359,15 @@ $file = $_FILES['archivo'];//reciben el archivo
 $archivo = new FileUp(); //instancia de la clase
 
 //usamos el metodo uploadFile(nombre del archivo , nombre de la carpeta)
-$var = $archivo->uploadFile( $file , "prueba" );
+
+$var = $archivo->uploadFile( $file , "nombre de la carpeta" );
 
 if($var[0] == true){
     echo "Archivo subido";
+    
+    //ejemplo mostrando el archivo subido
+    echo" <img src='$var[1]' /> ";
+    
 }else{
     echo "Error al subir archivo";
 }
@@ -375,6 +385,14 @@ Para ello tenemos la clase ` FileUp()` que contiene los metodos:
 * Recibe un segundo parametro el nombre de la carpeta donde se guarda el archivo.
 * Retorna **Array:** con 2 valores el primero true , el sugundo la ruta final del archivo guardado.
 * Retorna **Array:** con error  Si no se guardo el archivo.
+
+```
+array respuesta = {
+  [0] => 'true',
+  [1] => 'ruta del archivo guardado'
+}
+
+```
 
 Ejemplo de uso:
 
@@ -413,7 +431,7 @@ $archivo = new FileUp(); //instancia de la clase
 //usamos el metodo uploadFileMult(nombre del archivo , nombre de la carpeta)
 //para la subida de varios archivos al servidor.
 
-$var = $archivo->uploadFileMult($file , "prueba" );
+$var = $archivo->uploadFileMult($file , "carpeta a guardar" );
 
 echo "<pre>";
 
@@ -426,7 +444,7 @@ echo "</pre>";
 
 
 ------------------------------------------------------
-##Creditos:
+## Creditos:
  + Copyright by **FRANCISCO CAMPOS** 
  + Vercion: 0.1
  + Licencia: OpenSource 

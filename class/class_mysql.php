@@ -9,7 +9,7 @@
 // archivos requeridos para el funcionamiento
 
 require_once 'config/config.php';
-require_once 'class_help.php';
+
 
 
 //======= clase Conectar la clase  extiende de Mysql ==========

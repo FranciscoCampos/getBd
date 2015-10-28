@@ -7,7 +7,7 @@
 // a la base de datos de postgres
 
 require_once 'config/config.php';
-require_once 'class_help.php';
+
 
 
 class ConectarPostgre extends Postgres {
@@ -28,12 +28,37 @@ class ConectarPostgre extends Postgres {
 
 //************************** INSERT SQL *********************************  
 // metodo para insertar registros de la base de datos
-	public  function InsertRegistro($sql)
+	public  function InsertRegistro($sql , $sql2 = '', $valid = false )
 	{
-		$this->consulta = pg_query($sql) 
-        or die('Fatal Error: ' . pg_last_error());
-        return self::verificador($this->consulta);
-	}
+	
+    //si es true verificamos si ya existe el registro
+    if($valid == true ){
+      //buscamos en la bd si el registro existe
+        if(self::SelectRegistro($sql2) != true){
+
+            $this->consulta = $this->consulta = pg_query($sql) 
+        or die('Fatal Error: ' . pg_last_error());//errores de sintaxis
+
+            return true;//si se registro corectamente
+
+        }else{
+
+          return false;//si ya existe el registro retordamos false para error
+        }
+
+// esto se ejecuta si no se envia la validacion del registro
+// la insercion del registro normal
+     }else{
+      //creando el registro normal en la bd
+          if($this->consulta = $this->consulta = pg_query($sql)) 
+        or die('Fatal Error: ' . pg_last_error());//errores de sintaxis
+
+            return true;//si se registro corectamente
+
+          }     
+          
+        }
+	}//final de metodo insert
 
 
   // contador de los resultados de la consulta 
@@ -73,12 +98,20 @@ class ConectarPostgre extends Postgres {
 // metodo para actulizar registros de la base de datos
 
 
-	public  function UpdateRegistro($sql)
+	public  function UpdateRegistro($sql, $conf)
 	{
-		$this->consulta = pg_query($sql)
-		or die('Fatal Error: ' . pg_last_error());
-       
-      return self::verificador($this->consulta);
+		 
+    if( $conf == 'update' ){ //seguro para evitar error en los metodos
+
+          $this->consulta = pg_query($sql)
+    or die('Fatal Error: ' . pg_last_error());
+
+          return $this->consulta;
+
+      }else{
+
+          return false ;
+      }
 	}
 
 
@@ -86,11 +119,19 @@ class ConectarPostgre extends Postgres {
 //metodo para borrar registros de la base de datos
 
 
-	public  function DeleteRegistro($sql)
+	public  function DeleteRegistro($sql, $conf)
 	{
-		$this->consulta = pg_query($sql)
-		or die('Fatal Error: ' . pg_last_error());
-      return self::verificador($this->consulta);
+      if( $conf == 'delete' ){ //seguro para evitar error en los metodos
+
+         $this->consulta = pg_query($sql)
+              or die('Fatal Error: ' . pg_last_error());
+
+          return $this->consulta;
+
+      }else{
+
+          return false ;
+      }
 	}
     
 
