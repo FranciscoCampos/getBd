@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Libreria getBd 
 ![](http://i.imgur.com/q2CBZ1t.png?1)
 
