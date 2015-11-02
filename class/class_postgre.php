@@ -6,17 +6,19 @@
 // clase  para gestionar las consultas 
 // a la base de datos de postgres
 
-require_once 'config/config.php';
+require_once '../config/config.php';
+
+error_reporting(-1);
+      ini_set('display_errors', '1');
 
 
-
-class ConectarPostgre extends Postgres {
+class GetbdP extends Postgres {
 
  //atributos de la clase
 
     public $result = array();
     public $consulta;
-
+    public $status = NULL;
     
   //metodo verificador de la consulta realizada retorna true y false
   protected function verificador($consulta){
@@ -25,44 +27,63 @@ class ConectarPostgre extends Postgres {
       else{ return false; }
   }
 
+  static public function Debug(){
+      error_reporting(-1);
+      ini_set('display_errors', '1');
+  }
 
 //************************** INSERT SQL *********************************  
-// metodo para insertar registros de la base de datos
-	public  function InsertRegistro($sql , $sql2 = '', $valid = false )
-	{
-	
-    //si es true verificamos si ya existe el registro
-    if($valid == true ){
-      //buscamos en la bd si el registro existe
-        if(self::SelectRegistro($sql2) != true){
 
-            $this->consulta = $this->consulta = pg_query($sql) 
-        or die('Fatal Error: ' . pg_last_error());//errores de sintaxis
+//validor de registro repetido
 
-            return true;//si se registro corectamente
+
+  public function check($var = []){
+
+       $this->consulta = pg_query("SELECT * FROM $var[0] WHERE $var[1] = '$var[2]'")
+       or die('Fatal Error: ' . pg_last_error());
+       
+        if(self::contador($this->consulta) == true){
+            $this->status = true;
+            return $this;//si se registro corectamente
 
         }else{
 
-          return false;//si ya existe el registro retordamos false para error
+           $this->status = false;
+            return $this;//si se registro corectamente
         }
 
-// esto se ejecuta si no se envia la validacion del registro
-// la insercion del registro normal
-     }else{
+  }
+
+
+
+// metodo para insertar registros de la base de datos
+	public  function save($sql )
+	{
+	    // verificamos si status no esta vacia
+    if(is_null($this->status)){
       //creando el registro normal en la bd
-          if($this->consulta = $this->consulta = pg_query($sql)) 
-        or die('Fatal Error: ' . pg_last_error());//errores de sintaxis
+          $this->consulta = $this->consulta = pg_query($sql)
+                    or die('Fatal Error: ' . pg_last_error());//errores de sintaxis
+         return true;//si se registro corectamente        
+     }
+    else{
+        if($this->status ==  true){
+          return false;
 
-            return true;//si se registro corectamente
-
-          }     
-          
+        }else{
+           //var_dump($this->status);
+           //creando el registro normal en la bd
+           $this->consulta = $this->consulta = pg_query($sql)
+                    or die('Fatal Error: ' . pg_last_error());//errores de sintaxis
+           return true;//si se registro corectamente   
         }
-	}//final de metodo insert
+    }//llave de else
+	}//final de metodo save()
 
 
-  // contador de los resultados de la consulta 
 
+
+// contador de los resultados de la consulta 
   protected function contador($consulta){
     
      $contador = pg_num_rows($consulta); 
@@ -72,17 +93,22 @@ class ConectarPostgre extends Postgres {
 //************************** SELECT SQL *********************************  
 // metodo para seleccionar registros de la base de datos
 
-    public function SelectRegistro($sql)
+    public function find($sql)
     {  
        $this->consulta = pg_query($sql)
        or die('Fatal Error: ' . pg_last_error());
-       if(self::contador($this->consulta)){return true;}   
-       else{return false; } 
+
+       if(self::contador($this->consulta)){
+        return $this;
+      }   
+       else{
+        return $this; 
+      } 
     }
 
 // metodo para listar los  registros de la base de datos en un array asociativo
 
-    public function ListRegistro()
+    public function show()
     {  
         
           while ($res=pg_fetch_assoc($this->consulta))
@@ -94,11 +120,15 @@ class ConectarPostgre extends Postgres {
     }
 
 
+
+
+
+
 //************************** UPDATE SQL *********************************
 // metodo para actulizar registros de la base de datos
 
 
-	public  function UpdateRegistro($sql, $conf)
+	public  function update($sql, $conf)
 	{
 		 
     if( $conf == 'update' ){ //seguro para evitar error en los metodos
@@ -115,11 +145,15 @@ class ConectarPostgre extends Postgres {
 	}
 
 
+
+
+
+
 //************************** DELETE SQL *********************************
 //metodo para borrar registros de la base de datos
 
 
-	public  function DeleteRegistro($sql, $conf)
+	public  function remove($sql, $conf)
 	{
       if( $conf == 'delete' ){ //seguro para evitar error en los metodos
 

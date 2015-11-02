@@ -7,7 +7,7 @@
 
 // class para subir archivos al servidor de manera facil
 
-class FileUp {
+class File {
 
    private $file;//archivo a subir
    private $dire;//directorio
@@ -17,7 +17,7 @@ class FileUp {
    
 //metodo para subir el archivo al servidor
 
-   public function uploadFile($file , $dire , $opc = array())
+   public function upFile($file , $dire , $opc = array())
    {
 
 	   	 $this->file = $file;//recibe el archivo
@@ -135,7 +135,7 @@ protected function subido(){
 //****************************** ARCHIVOS MULTIPLES ****************************************************
 //metodo para multiples ficheros
 
-public function uploadFileMult($file , $dire , $conf = array()){
+public function upFiles($file , $dire , $conf = array()){
 
         
 	    $this->file = $file;//variable que armacena el archivo

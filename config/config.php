@@ -22,7 +22,7 @@
         $this->localhost = 'localhost';
         $this->usuario = 'root';
         $this->password = '123456';
-        $this->bd = 'PRUEBA';
+        $this->bd = 'prueba';
     }
 
     protected  function conectar(){ //funcion conectar que retorna la conexion 
@@ -53,11 +53,11 @@ class Postgres
     public function __construct()
     { //inicializacion de los parametros de la conexion a la base datos postgres
         $this->host = 'localhost';
-        $this->user = 'postgres';
+        $this->user = 'fran';
         $this->pass = '123456';
-        $this->bd = 'prueba';
+        $this->bd = 'beta';
 
-    $conectar = pg_connect("host=$this->host dbname=$this->bd user=$this->user password=$this->pass");
+     $conectar = pg_connect("host=$this->host dbname=$this->bd user=$this->user password=$this->pass");
 
     }
 

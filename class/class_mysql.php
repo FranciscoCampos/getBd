@@ -14,7 +14,7 @@ require_once 'config/config.php';
 
 //======= clase Conectar la clase  extiende de Mysql ==========
 
-class ConectarMysql extends Mysql
+class GetbdM extends Mysql
 { 
    
    //atributos de la clase 
@@ -39,16 +39,18 @@ class ConectarMysql extends Mysql
 
 
 
- //************************** INSERT SQL ********************************* 
+ //************************** INSERT SQL save() ********************************* 
 // metodo para insertar registros de la base de datos
 //con comprobacion del registro si  ya existe o no
 
-  public  function InsertRegistro($sql , $sql2 = '', $valid = false )
+  public  function save($sql , $sql2 = '', $valid = false )
 	{
     //si es true verificamos si ya existe el registro
     if($valid == true ){
       //buscamos en la bd si el registro existe
-        if(self::SelectRegistro($sql2) != true){
+        $this->consulta = mysql_query($sql2,self::conectar())
+                                       or die(mysql_error());
+        if(self::contador($this->consulta) != true){
 
             $this->consulta = mysql_query($sql, self::conectar())
             or die(mysql_error());//errores de sintaxis
@@ -60,16 +62,16 @@ class ConectarMysql extends Mysql
           return false;//si ya existe el registro retordamos false para error
         }
 
-// esto se ejecuta si no se envia la validacion del registro
-// la insercion del registro normal
-     }else{
-      //creando el registro normal en la bd
-          if($this->consulta = mysql_query($sql, self::conectar())
-          or die(mysql_error()) > 0){
-            return true;
-          }     
-          
-        }
+    // esto se ejecuta si no se envia la validacion del registro
+    // la insercion del registro normal
+       }else{
+        //creando el registro normal en la bd
+            if($this->consulta = mysql_query($sql, self::conectar())
+            or die(mysql_error()) > 0){
+              return true;
+            }     
+            
+          }
 	}//final del metodo insert
 
 
@@ -82,21 +84,22 @@ class ConectarMysql extends Mysql
   }
 
 
-//************************** SELECT SQL *********************************  
+//************************** SELECT SQL  find(sql)->show()*********************************  
 // metodo para seleccionar registros de la base de datos
 
-    public function SelectRegistro($sql)
+    public function find($sql)
     {  
        $this->consulta = mysql_query($sql,self::conectar())
        or die(mysql_error());
        
-       if(self::contador($this->consulta)){return true;}   
-       else{return false; } 
+       if(self::contador($this->consulta)){return $this;}   
+       else{return $this; } 
     }
+
 
 // metodo para listar los  registros de la base de datos en un array asociativo
 
-    public function ListRegistro()
+    public function show()
     {  
         
           while ($res=mysql_fetch_assoc($this->consulta))
@@ -108,10 +111,10 @@ class ConectarMysql extends Mysql
     }
 
 
-//************************** UPDATE SQL *********************************
+//************************** UPDATE SQL update(sql , 'update')*********************************
 // metodo para actulizar registros de la base de datos
 
-	public  function UpdateRegistro($sql, $conf)
+	public  function update($sql, $conf)
 	{ 
       if( $conf == 'update' ){ //seguro para evitar error en los metodos
 
@@ -127,10 +130,10 @@ class ConectarMysql extends Mysql
 	}
 
 
-//************************** DELETE SQL *********************************
+//************************** DELETE SQL remove(sql , 'delete')*********************************
 //metodo para borrar registros de la base de datos
 
-	public  function DeleteRegistro($sql , $conf)
+	public  function remove($sql , $conf)
 	{
 		if( $conf == 'delete' ){ //seguro para evitar error en los metodos
 
