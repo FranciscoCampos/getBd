@@ -20,7 +20,7 @@ class GetbdM extends Mysql
    //atributos de la clase 
     public $result = array(); //almasena el resultado de la consulta
     public $consulta; //almacena el query a ejecutar
-
+    private $status = NULL;
 
 
 
@@ -37,41 +37,58 @@ class GetbdM extends Mysql
       }
   }
 
+static public function Debug(){
+      error_reporting(-1);
+      ini_set('display_errors', '1');
+  }
 
 
  //************************** INSERT SQL save() ********************************* 
 // metodo para insertar registros de la base de datos
 //con comprobacion del registro si  ya existe o no
 
-  public  function save($sql , $sql2 = '', $valid = false )
-	{
-    //si es true verificamos si ya existe el registro
-    if($valid == true ){
-      //buscamos en la bd si el registro existe
-        $this->consulta = mysql_query($sql2,self::conectar())
-                                       or die(mysql_error());
-        if(self::contador($this->consulta) != true){
+  //validor de registro repetido
 
-            $this->consulta = mysql_query($sql, self::conectar())
-            or die(mysql_error());//errores de sintaxis
 
-            return true;//si se registro corectamente
+  public function check($var = []){
+
+       $this->consulta = mysql_query("SELECT * FROM $var[0] WHERE $var[1] = '$var[2]'")
+       or die(mysql_error());
+       
+        if(self::contador($this->consulta) == true){
+            $this->status = true;
+            return $this;//si se registro corectamente
 
         }else{
 
-          return false;//si ya existe el registro retordamos false para error
+           $this->status = false;
+            return $this;//si se registro corectamente
         }
 
-    // esto se ejecuta si no se envia la validacion del registro
-    // la insercion del registro normal
-       }else{
-        //creando el registro normal en la bd
-            if($this->consulta = mysql_query($sql, self::conectar())
-            or die(mysql_error()) > 0){
-              return true;
-            }     
-            
-          }
+  }
+
+//guarda el registro
+  public  function save( $sql )
+	{
+    // verificamos si status no esta vacia
+    if(is_null($this->status)){
+      //creando el registro normal en la bd
+        $this->consulta = mysql_query($sql)
+                    or die(mysql_error());//errores de sintaxis
+         return true;//si se registro corectamente        
+     }
+    else{
+        if($this->status ==  true){
+          return false;
+
+        }else{
+           //var_dump($this->status);
+           //creando el registro normal en la bd
+           $this->consulta = mysql_query($sql)
+                                          or die(mysql_error());//errores de sintaxis
+           return true;//si se registro corectamente   
+        }
+     }//llave de else
 	}//final del metodo insert
 
 
@@ -109,6 +126,18 @@ class GetbdM extends Mysql
 
         return $this->result;
     }
+
+//selecionar un registro unico de la base de datos
+
+   public function findOne($var = []){
+
+     $this->consulta = mysql_query("SELECT * FROM $var[0] WHERE $var[1] = $var[2]")
+                                                             or die(mysql_error());
+
+        return $fila = mysql_fetch_array($this->consulta);
+          //var_dump($fila);
+   }
+
 
 
 //************************** UPDATE SQL update(sql , 'update')*********************************
@@ -150,7 +179,7 @@ class GetbdM extends Mysql
 //************************** PROTEC SQL *********************************
 //metodo para EVITAR  la inyec de sql registros de la base de datos
 
-  public  function sqlValid( $var )
+  static public  function Valid( $var )
   {
     //seguro para evitar error en los metodos 
     //y la inyeccion de sql malo

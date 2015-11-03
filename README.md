@@ -5,13 +5,14 @@
 
 ------------------------------------------------------
  + Copyright by **FRANCISCO CAMPOS** 
- + Vercion: 1
+ + Vercion: BETA
  + Licencia: OpenSource 
  + Contactar: <camqui2011@gmail.com>
  + [https://gitlab.com/franpc/getBd.git](http://)
+ + Requicito: [Apache2 ,  php5 ]
 
 ------------------------------------------------------ 
-
+[TOC]
 Tiene soporte para: 
 
 + Mysql
@@ -25,7 +26,7 @@ Tiene soporte para:
 #### getBd:
 
     -class
-        class_help.php
+        class_file.php
         class_mysql.php 
         class_postgre.php  
     -config
@@ -47,10 +48,10 @@ Contiene las clases y metodos requerido el uso de Mysql.
     - class_postgre.php:
 Contiene las clases y metodos requerido el uso de Postgres.
 
-    - class_help.php:
+    - class_file.php:
 Contiene las clases nesesarias para trabajos.  
 
-+ Sessiones.
+
 + Subida de Archivos al servidor.
 
 
@@ -100,7 +101,7 @@ Ejemplo de uso en Mysql:
 require_once 'class/class_mysql.php';
 
 //Instancisa del objeto para Mysql
- $con = new ConectarMysql();
+ $con = new GetbdM();
 
 ?>
 
@@ -118,7 +119,7 @@ Ejemplo de uso en Postgres:
 require_once 'class/class_postgre.php';
 
 //Instancisa del objeto para Postgres
-$con = new ConectarPostgre();
+$con = new GetbdP();
 
 ?>
 ```
@@ -127,21 +128,35 @@ $con = new ConectarPostgre();
 
 **Insertar registros en la base de datos:**
 
-`InsertRegistro( sql , opcional , opcional )`
+`save( sql )`
 
-Este metodo recibe tres parametro el primero que es la consulta SQL.
-Los dos metodos restantes son opcionales. Si los enviamos podemos verificar si el  registro existe! antes de ser insertado todo en una sola linea de codigo.
+Este metodo recibe un parametro, la consulta SQL.
 
-- **sql:**  consulta sql a insertar
-- **sql2 opcional:** consulta sql de verificacion opcional
-- **opcional:**  se envia de forma TRUE para activar la verificacion del registro opcional.
-
+- **sql:**  consulta sql a insertar, Nota: la variable puede ser llamada de otra forma!
 
 Retorna:
 
-- **true:**  si la consulta se realizo correctamente
-- **false:** si la consulta no se realizo correctamente
+- **true:**  Si la consulta se realizo correctamente.
+- **false:** Si la consulta no se realizo correctamente.
+Con getBd es posible verificar el registro antes de ser insertado, todo en una sola linea de codigo.
 
+Usamos el método: 
+
+`check( [ 'tabla' , 'campos' , 'valor'] )`
+
+- **tabla** : Nombre de la tabla donde sera verificado el registro.
+- **campo**: Campos referencia para la condicion a cumplir.
+- **valor**: Valor de verificacion de la condicion.
+
+Retorna:
+
+- **true**: Si existe el registro.
+- **false**: No se encotro registro.
+
+**Nota:** Uselo antes del metodo save()
+Ejemplo:
+
+    `obj->check( [ 'tabla' , 'campos' , 'valor'] )->save(sql)`
 
 Archivo demo.php
 
@@ -151,23 +166,36 @@ Archivo demo.php
 require_once 'class/class_mysql.php';
 
 
-$con = new ConectarMysql();
+$con = new GetbdM();
 
 $sql = "INSERT INTO tabla (campos) Values (valores)";
+
 //verificador del registro
-$sql2 = " SELECT * FROM tabla WHERE campo = campos";
 
-$con->InsertRegistro($sql , $sql2 , true);
+$con->check(['tabla' , 'campo' , 'valor'])->save($sql);
 
-    if($con != false)
-    {
-        echo "Registro Insertado";
-    }
-    else
-    {
-        echo "Registro No Insertado";
-    }
+ if(!$con)
+ {
+   echo "Registro Insertado";
+ }
+ else
+ {
+   echo "Registro No Insertado";
+ }
+ 
+ 
+//Sin verificar registro
 
+$con->save($sql);
+
+ if(!$con)
+ {
+   echo "Registro Insertado";
+ }
+ else
+ {
+   echo "Registro No Insertado";
+ }
 ?>
 ```
 
@@ -176,13 +204,13 @@ $con->InsertRegistro($sql , $sql2 , true);
 
 Para ello tenemos 2 metodos:
 
-`SelectRegistro( parametro )`
+`find( parametro )`
 
 + Recibe un parametro que es la consulta SQL
 + Retorna **True:** Si hay registro
 + Retorna **False:**  Si no hay registro
 
-`ListRegistro()`
+`show()`
 
 + Retorna un Array Asociativo con los datos
 
@@ -192,26 +220,52 @@ Para ello tenemos 2 metodos:
  <?php
   require_once 'class/class_mysql.php';
 
-  $con = new ConectarMysql();
+  $obj = new GetbdM();
   
   $sql = "SELECT * FROM tabla ";
 
-  $con->SelectRegistro($sql);
+  $datos = $obj->find($sql)->show();
 
-     if ( $con > 0 ) 
-     {
-        $datos = ListRegistro();
-        
-        //mostrando los registros
-        foreach ($datos as $dato) {
-            echo $dato['campo'] . "<br>";
-        }
-     }
-     else
-     {
-        echo "No! hay registros";
-     }
+ //mostrando los registros
+ 
+ foreach ($datos as $dato) {
+    echo $dato['campo'] . "<br>";
+ }
+    
+ ?>
+```
 
+## Consultar un registro unico en la  base de datos
+
+Para ello tenemos el metodos:
+
+`findOne( ['tabla' , 'campos', 'valor'] )`
+
++ Recibe un arreglo con 3 parametros 
++ Retorna **True:** Si hay registro
++ Retorna **False:**  Si no hay registro
+
+
+
++ Retorna un registro encontrado
+
+## Consulta a la base de datos
+
+```
+ <?php
+  require_once 'class/class_mysql.php';
+
+  $obj = new GetbdM();
+  
+  $sql = "SELECT * FROM tabla ";
+
+  $datos = $obj->findOne(['table' , 'id', 'valor']);
+
+ //mostrando el registro
+
+    print_r($dato );
+ 
+    
  ?>
 ```
 
@@ -219,7 +273,7 @@ Para ello tenemos 2 metodos:
 
 Para ello tenemos el metodos:
 
-`UpdateRegistro( sql , 'string' )`
+`update( sql , 'string' )`
 
 + Recibe dos parametro que son: la consulta SQL , y la cadena 'update', para evitar error en la consulta. 
 + Retorna **True:** Si se actualizo el registro
@@ -229,18 +283,18 @@ Para ello tenemos el metodos:
  <?php
   require_once 'class/class_mysql.php';
 
-     $con = new ConectarMysql();
+ $obj = new GetbdM();
       
-     $sql = "UPDATE  tabla SET campo = 'valor' where condicion";
+ $sql = "UPDATE  tabla SET campo = 'valor' where condicion";
 
-     if ( $con->UpdateRegistro($sql , 'update') != false  ) 
-     {
-        echo "Registro actualizado";
-     }
-     else
-     {
-        echo "No! se actualizo el registro";
-     }
+  if ( !$con->update($sql , 'update')) 
+  {
+     echo "No! se actualizo el registro";
+  }
+  else
+  {   
+     echo "Registro actualizado";
+  }
 
  ?>
 ```
@@ -250,7 +304,7 @@ Para ello tenemos el metodos:
 
 Para ello tenemos el metodos:
 
-`DeleteRegistro(sql , string' )`
+`remove(sql , string' )`
 
 + Recibe dos parametro que son : la consulta SQL , y la cadena 'delete', para evitar error en la consulta. 
 + Retorna **True:** Si se elimino el registro
@@ -260,20 +314,18 @@ Para ello tenemos el metodos:
  <?php
   require_once 'class/class_mysql.php';
 
-  $con = new ConectarMysql();
+  $obj = new GetbdM();
   
   $sql = "DELETE FROM tabla WHERE condición";
 
-  $con->DeleteRegistro($sql , 'delete');
-
-     if ( $con > 0 ) 
-     {
-        echo "Registro eliminado";
-     }
-     else
-     {
-        echo "No! se elimino el registros";
-     }
+  if($obj->remove($sql , 'delete'))
+  {
+  	echo "Registro eliminado";
+  }
+  else
+  {
+    echo "No! se elimino el registros";
+  }
 
  ?>
 ```
@@ -289,29 +341,31 @@ El uso de getBd con Postgres es igual al funcionamiento con Mysql tenemos los mi
 require_once 'class/class_postgre.php';
 
 //Instancisa del objeto para Postgres
-$con = new ConectarPostgre();
+$con = new GetbdP();
 
 ?>
 ```
 
-`InsertRegistro( parametro , parametro , true )` 
+`save( parametro )` 
 
-`SelectRegistro( parametro )`
+`find( parametro )`
 
-`ListRegistro()`
+`findOne( parametro )`
 
-`UpdateRegistro( parametro , 'string' )`
+`show()`
 
-`DeleteRegistro( parametro , 'string' )` 
+`upadate( parametro , 'string' )`
+
+`remove( parametro , 'string' )` 
 
 **Nota:** 
  >puede ver los ejemplos de los metodos arriba.
 
 ## getBd subir archivos al servidor
 
-Para ello tenemos la clase ` FileUp()` que contiene los metodos:
+Para ello tenemos la clase ` File()` que contiene los metodos:
     
-`uploadFile()` 
+`upFile()` 
 
 * Recibe un primer parametro. file a subir.
 * Recibe un segundo parametro el nombre de la carpeta donde se guarda el archivo.
@@ -351,16 +405,16 @@ Ejemplo de uso:
 ```
  <?php 
 
-require_once 'class/class_help.php';
+require_once 'class/file.php';
 
 
 $file = $_FILES['archivo'];//reciben el archivo
 
-$archivo = new FileUp(); //instancia de la clase
+$archivo = new File(); //instancia de la clase
 
-//usamos el metodo uploadFile(nombre del archivo , nombre de la carpeta)
+//usamos el metodo upFile(nombre del archivo , nombre de la carpeta)
 
-$var = $archivo->uploadFile( $file , "nombre de la carpeta" );
+$var = $archivo->upFile( $file , "nombre de la carpeta" );
 
 if($var[0] == true){
     echo "Archivo subido";
@@ -377,9 +431,9 @@ if($var[0] == true){
 
 ## getBd con multiples archivos:
 
-Para ello tenemos la clase ` FileUp()` que contiene los metodos:
+Para ello tenemos la clase ` File()` que contiene los metodos:
     
-`uploadFileMult()` 
+`upFiles()` 
 
 * Recibe un primer parametro. file a subir.
 * Recibe un segundo parametro el nombre de la carpeta donde se guarda el archivo.
@@ -421,17 +475,17 @@ Ejemplo de uso:
 ```
  <?php 
 
-require_once 'class/class_mysql.php'; //se puede usar con postgres
+require_once 'class/file.php'; //se puede usar con postgres
 
 
 $file = $_FILES['archivo'];//reciben el archivo
 
-$archivo = new FileUp(); //instancia de la clase
+$archivo = new File(); //instancia de la clase
 
-//usamos el metodo uploadFileMult(nombre del archivo , nombre de la carpeta)
+//usamos el metodo upFiles(nombre del archivo , nombre de la carpeta)
 //para la subida de varios archivos al servidor.
 
-$var = $archivo->uploadFileMult($file , "carpeta a guardar" );
+$var = $archivo->upFiles($file , "carpeta a guardar" );
 
 echo "<pre>";
 
@@ -446,6 +500,9 @@ echo "</pre>";
 ------------------------------------------------------
 ## Creditos:
  + Copyright by **FRANCISCO CAMPOS** 
- + Vercion: 0.1
+ + Vercion: BETA
  + Licencia: OpenSource 
  + Contactar: <camqui2011@gmail.com>
+
+
+[TOC]

@@ -8,8 +8,7 @@
 
 require_once '../config/config.php';
 
-error_reporting(-1);
-      ini_set('display_errors', '1');
+
 
 
 class GetbdP extends Postgres {
@@ -18,7 +17,7 @@ class GetbdP extends Postgres {
 
     public $result = array();
     public $consulta;
-    public $status = NULL;
+    private $status = NULL;
     
   //metodo verificador de la consulta realizada retorna true y false
   protected function verificador($consulta){
@@ -62,7 +61,7 @@ class GetbdP extends Postgres {
 	    // verificamos si status no esta vacia
     if(is_null($this->status)){
       //creando el registro normal en la bd
-          $this->consulta = $this->consulta = pg_query($sql)
+          $this->consulta = pg_query($sql)
                     or die('Fatal Error: ' . pg_last_error());//errores de sintaxis
          return true;//si se registro corectamente        
      }
@@ -73,7 +72,7 @@ class GetbdP extends Postgres {
         }else{
            //var_dump($this->status);
            //creando el registro normal en la bd
-           $this->consulta = $this->consulta = pg_query($sql)
+           $this->consulta = pg_query($sql)
                     or die('Fatal Error: ' . pg_last_error());//errores de sintaxis
            return true;//si se registro corectamente   
         }
@@ -120,8 +119,16 @@ class GetbdP extends Postgres {
     }
 
 
+//selecionar un registro unico de la base de datos
 
+ public function findOne($var = []){
 
+   $this->consulta = pg_query("SELECT * FROM $var[0] WHERE $var[1] = $var[2]")
+                                    or die('Fatal Error: ' . pg_last_error());
+
+      return $fila = pg_fetch_array($this->consulta);
+        //var_dump($fila);
+ }
 
 
 //************************** UPDATE SQL *********************************
@@ -167,6 +174,15 @@ class GetbdP extends Postgres {
           return false ;
       }
 	}
+
+//seguro en el query
+  static public  function Valid( $var )
+  {
+    //seguro para evitar error en los metodos 
+    //y la inyeccion de sql malo
+      return pg_escape_string($var);
+
+  }
     
 
 
