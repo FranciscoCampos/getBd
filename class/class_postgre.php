@@ -84,7 +84,6 @@ class GetbdP extends Postgres {
 
 // contador de los resultados de la consulta 
   protected function contador($consulta){
-    
      $contador = pg_num_rows($consulta); 
      return $contador;
   }
@@ -124,7 +123,7 @@ class GetbdP extends Postgres {
  public function findOne($var = []){
 
    $this->consulta = pg_query("SELECT * FROM $var[0] WHERE $var[1] = $var[2]")
-                                    or die('Fatal Error: ' . pg_last_error());
+         or die('Fatal Error: ' . pg_last_error());
 
       return $fila = pg_fetch_array($this->consulta);
         //var_dump($fila);
@@ -150,9 +149,6 @@ class GetbdP extends Postgres {
           return false ;
       }
 	}
-
-
-
 
 
 

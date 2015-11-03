@@ -45,7 +45,7 @@ static public function Debug(){
 
  //************************** INSERT SQL save() ********************************* 
 // metodo para insertar registros de la base de datos
-//con comprobacion del registro si  ya existe o no
+
 
   //validor de registro repetido
 

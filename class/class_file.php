@@ -4,15 +4,16 @@
 // **********Año 2015***********
 // ==================================
 // version BETA
-
+require_once '../config/config.php';
 // class para subir archivos al servidor de manera facil
 
-class File {
+class File extends ConfigFile {
 
    private $file;//archivo a subir
    private $dire;//directorio
    private $repuesta = array();//repuesta sobre la subida
    private $opc;//parametros opcionales en beta
+   
    
    
 //metodo para subir el archivo al servidor
@@ -29,7 +30,7 @@ class File {
 		  }else{//continua el proceso
 			  
 			  //verificando los valores permitido "jpg , png , git etc" 
-		 	   if ( self::permitido($this->file) != false ) {
+		 	   if ( self::permitido($this->file) && self::sizes($this->file)) {
 		 	   	
 				         $this->dire = $dire;//recibimos el directorio donde sera guardado
 				         
@@ -52,7 +53,7 @@ class File {
 
 			 	   }else{
 
-			 	   	return "error no cumple los requicito";//error sino cumple con 
+			 	   	return $err = NULL;//error sino cumple con 
 			 	   	                                       //los valores permitdos
 
 			 	   }//final de else de comprobacion de tamaño y peso
@@ -66,42 +67,32 @@ class File {
   
   public function permitido($file){
   
-      $res = false;//repuesta del metodo por defecto esta en false
-  
-     //validando solo formato img
-  
-      if ($file['type'] == 'image/jpeg') {
-      	 $res = true;
+     $res = false;//repuesta del metodo por defecto esta en false
+     foreach ( self::setFormato() as $key => $value ) {
+     	//validando solo formato del archivo
+		 	if ($file['type'] == $value ) {
+		 		$res = true;
+		 	}
+	  }
+		return $res; //var_dump($res);
 
-      }else if($file['type'] == 'image/png'){//png
-      	 $res = true;
-
-      }else if($file['type'] == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'){ //word
-      	 $res = true;
-
-      }else if($file['type'] == 'application/pdf'){ //pdf
-      	 $res = true;
-      }
-
-      return $res; //retornado el valor true si pasa
   }  
  
 
  //*************************BETA****************************************
   //metodo para la validaciones permitidas para subir archivos al servidor.
   
-  protected function taPermitido($file){
+  protected function sizes($file){
       
-      $res = false;
-     
-     //validando solo tamaño
-     
-      if ($file['size'] <= 2048) {
-      	 $res = true;
-
-      }
-
-      return $res; //retornado el valor true si pasa
+     $res = false;//repuesta del metodo por defecto esta en false
+     foreach ( self::setSize() as $key => $value ) {
+     	//validando solo tamano  del archivo
+		 	if ($file['size'] <= $value ) {
+		 		$res = true;
+		 		//size maximo 6mgb;
+		 	}
+	  }
+		return $res; //var_dump($res);
   }
 
 //metodo para subir un solo archivo al servidor
@@ -109,7 +100,7 @@ class File {
 protected function subido(){
 
 	// se mueve el archivo a la ruta creada
-
+   
 	if(move_uploaded_file($this->file['tmp_name'], "".$this->dire."/" . $this->file['name']."")){
 
 //se retorna un array con el primer valor true

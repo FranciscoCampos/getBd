@@ -20,6 +20,15 @@ include '../class/class_postgre.php';
 $postgre = new GetbdP();
 
 
+
+
+
+
+
+
+
+
+//var_dump(unlink('../prueba2/grunt-logo.png'));
 echo "<h1> CRUD de Usuarios con getBd</h1>";
 
 echo "
@@ -49,6 +58,7 @@ if(count($datos) > 0){
 	         <a href='editar.php?var=editar&id=$dato[id]'>Editar<a/>
 	         <a href='eliminar.php?var=eliminar&id=$dato[id]'>Eliminar<a/>
 		</div>";
+		echo $dato['avatar'];
 	}
 }else{
 
@@ -56,6 +66,6 @@ if(count($datos) > 0){
 }
 
 
-
+//rename("/tmp/archivo_tmp.txt", "/home/user/login/docs/mi_archivo.txt");
 
 ?>

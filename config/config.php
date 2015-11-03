@@ -52,16 +52,50 @@ class Postgres
 
     public function __construct()
     { //inicializacion de los parametros de la conexion a la base datos postgres
-        $this->host = '';
-        $this->user = '';
-        $this->pass = '';
-        $this->bd = '';
+        $this->host = 'localhost';
+        $this->user = 'fran';
+        $this->pass = '123456';
+        $this->bd = 'beta';
 
      $conectar = pg_connect("host=$this->host dbname=$this->bd user=$this->user password=$this->pass");
 
     }
 
 
+ }
+
+
+//===============================configuracion de File ===============================
+class ConfigFile
+ {
+    public $datos = array();
+    public $sizes = array();
+
+//formatos permitidos
+     public function setFormato(){
+        $this->datos = array(
+
+            'jpg' => 'image/jpeg',
+            'png' => 'image/png',
+            'word' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'pdf'  => 'application/pdf'
+
+        );
+        return $this->datos;
+    }
+
+//configuracion de los tamanos permitidos
+
+    public function setSize(){
+        $this->sizes = array( 
+            //nombre / byts / kbs
+            's' => 4096000 , //500kb
+            'm' =>  819200 , //800 Kb
+            'l' => 1048576 , //1024 Kb
+            'xl' => 6291456, //6144 Kb
+        );
+        return $this->sizes;
+    }
  }
 
 

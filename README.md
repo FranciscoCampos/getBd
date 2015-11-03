@@ -9,7 +9,7 @@
  + Licencia: OpenSource 
  + Contactar: <camqui2011@gmail.com>
  + [https://gitlab.com/franpc/getBd.git](http://)
- + Requicito: [ php5 +]
+ + Requicito: ( php5 +)
 
 ------------------------------------------------------ 
 
@@ -158,7 +158,7 @@ Ejemplo:
 
     `obj->check( [ 'tabla' , 'campos' , 'valor'] )->save(sql)`
 
-Archivo demo.php
+
 
 ```
 <?php 
@@ -330,6 +330,27 @@ Para ello tenemos el metodos:
  ?>
 ```
 
+## Evitar  sql injection en los query necesarios...
+
+Usamos el método `Valid()` recibe la variable a verificar
+
+**Retorna la consulta segura**
+
+```
+ <?php
+  require_once 'class/class_mysql.php';
+
+  $var = GetbdM::Valid( $_POST['campos']);
+  
+  $sql = "SELECT * FROM  tabla WHERE campo = ( $var )";
+
+  $con->find($sql);
+
+// todas las demas opciones 
+
+ ?>
+```
+
 ## getBd  con  Postgres
 
 El uso de getBd con Postgres es igual al funcionamiento con Mysql tenemos los mismo metodos. Solo cambia es el **include de la class**
@@ -348,15 +369,19 @@ $con = new GetbdP();
 
 `save( parametro )` 
 
+`check( array )`
+
 `find( parametro )`
 
-`findOne( parametro )`
+`findOne( array )`
 
 `show()`
 
 `upadate( parametro , 'string' )`
 
 `remove( parametro , 'string' )` 
+
+`Valid( parametro )`
 
 **Nota:** 
  >puede ver los ejemplos de los metodos arriba.
