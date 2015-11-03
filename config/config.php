@@ -1,4 +1,3 @@
-
 <?php 
 // Copyright by Francisco Campos 
 // **********Año 2015***********
@@ -52,10 +51,10 @@ class Postgres
 
     public function __construct()
     { //inicializacion de los parametros de la conexion a la base datos postgres
-        $this->host = 'localhost';
-        $this->user = 'fran';
-        $this->pass = '123456';
-        $this->bd = 'beta';
+        $this->host = '';
+        $this->user = '';
+        $this->pass = '';
+        $this->bd = '';
 
      $conectar = pg_connect("host=$this->host dbname=$this->bd user=$this->user password=$this->pass");
 
@@ -97,6 +96,3 @@ class ConfigFile
         return $this->sizes;
     }
  }
-
-
-
