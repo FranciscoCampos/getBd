@@ -1,20 +1,21 @@
 <?php 
 
+error_reporting(-1);
+      ini_set('display_errors', '1');
 
 include '../class/class_postgre.php';
 include '../class/class_help.php';
+$postgre = new GetbdP(); 
+$file = new File();
 
 
-error_reporting(-1);
-      ini_set('display_errors', '1');
-	
+
+
 	$nombre = $_POST['nombre'];
 	$apellido = $_POST['apellido'];
 	$avatar = $_FILES['avatar'];
 
-//var_dump($_POST);
-	$postgre = new GetbdP(); 
-    $file = new File();
+
 
     //prosesando el archivo
 
@@ -24,9 +25,8 @@ error_reporting(-1);
 	//sql
 	$sql = "INSERT INTO beta (nombre , apellido , avatar) VALUES('$nombre' , '$apellido','$avataruta')";
 
-	//var_dump($postgre->save($sql));
-	if ($postgre->check(['beta','nombre',$nombre])->save($sql) > 0) {
-	//if ($postgre->save($sql) > 0) {
+	
+	if ($postgre->save($sql) > 0) {
 
 		echo "Listo";
 		echo "<a href='index.php'>Inicio </a>";
@@ -35,6 +35,8 @@ error_reporting(-1);
 
 		echo "Error: ya Existe!!!";
 	}
+}
+	
 
 
 

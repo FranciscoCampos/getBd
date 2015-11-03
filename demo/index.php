@@ -11,17 +11,15 @@
 
 <?php 
 
+error_reporting(-1);
+      ini_set('display_errors', '1');
 
 include '../class/class_postgre.php';
 
 //GetbdP::Debug();
 $postgre = new GetbdP();
 
-$a  =  array('tabla' => 'beta', 'nombre'=>'nico' );
-$b = ['tabla'=>'beta','nombre'=>'nico'];
 
-//echo $a['tabla']  .  $a['nombre'];
-echo $b['tabla']  .  $b['nombre'];
 echo "<h1> CRUD de Usuarios con getBd</h1>";
 
 echo "
@@ -40,27 +38,24 @@ echo "
 ";
 
 $sql =" SELECT * FROM beta";
-
-//$postgre->SelectRegistro($sql);
-
-//$datos = $postgre->ListRegistro();
 $datos = $postgre->find($sql)->show();
+//$datos = $postgre->find($sql)
+if(count($datos) > 0){
+	foreach ($datos as $dato) {
+		
+	  echo "<div class='bock'>
+	         <h5>$dato[nombre] | |  $dato[apellido] </h4>
+	         <img src='$dato[avatar]'/>
+	         <a href='editar.php?var=editar&id=$dato[id]'>Editar<a/>
+	         <a href='eliminar.php?var=eliminar&id=$dato[id]'>Eliminar<a/>
+		</div>";
+	}
+}else{
 
-
-//if(count($datos) > 0){
-foreach ($datos as $dato) {
-	
-  echo "<div class='bock'>
-         <h5>$dato[nombre] | |  $dato[apellido] </h4>
-         <img src='$dato[avatar]'/>
-         <a href='$dato[id]'>Editar<a/>
-         <a href='$dato[id]'>Eliminar<a/>
-	</div>";
+	echo "No hay Datos";
 }
-//}else{
-
-	//echo "No hay Datos";
-//}
 
 
- ?>
+
+
+?>

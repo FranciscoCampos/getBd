@@ -9,10 +9,10 @@
  + Licencia: OpenSource 
  + Contactar: <camqui2011@gmail.com>
  + [https://gitlab.com/franpc/getBd.git](http://)
- + Requicito: [Apache2 ,  php5 ]
+ + Requicito: [ php5 +]
 
 ------------------------------------------------------ 
-[TOC]
+
 Tiene soporte para: 
 
 + Mysql
@@ -505,4 +505,3 @@ echo "</pre>";
  + Contactar: <camqui2011@gmail.com>
 
 
-[TOC]
