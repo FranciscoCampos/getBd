@@ -19,10 +19,10 @@
     public function __construct()
     {  //inicializacion de los parametros de la conexion a la base datos mysql
 
-        $this->localhost = 'localhost';
-        $this->usuario = 'root';
-        $this->password = '123456';
-        $this->bd = 'prueba';
+        $this->localhost = '';
+        $this->usuario = '';
+        $this->password = '';
+        $this->bd = '';
     }
 
     protected  function conectar(){ //funcion conectar que retorna la conexion 
@@ -52,10 +52,10 @@ class Postgres
 
     public function __construct()
     { //inicializacion de los parametros de la conexion a la base datos postgres
-        $this->host = 'localhost';
-        $this->user = 'fran';
-        $this->pass = '123456';
-        $this->bd = 'beta';
+        $this->host = '';
+        $this->user = '';
+        $this->pass = '';
+        $this->bd = '';
 
      $conectar = pg_connect("host=$this->host dbname=$this->bd user=$this->user password=$this->pass");
 
