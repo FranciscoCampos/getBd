@@ -403,6 +403,40 @@ Para ello tenemos la clase ` File()` que contiene los metodos:
  array respuesta = [ 'valid' => true , 'ruta'=> 'ruta del archivo' ];
 ```
 
+** Nota: ** Se puede configurar el tipo archivo y el tamano antes de ser enviado al servidor.
+
+Configuracion  de ` File()`
+
+ruta: config/config.php
+
+```
+//formatos permitidos
+     public function setFormato(){
+        $this->datos = array(
+
+            'jpg' => 'image/jpeg',
+            'png' => 'image/png',
+            'word' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'pdf'  => 'application/pdf'
+
+        );
+        return $this->datos;
+    }
+
+//Agregar  o eliminar variable de configuracion
+//tamano permitido
+   public function setSize(){
+        $this->sizes = array( 
+            //nombre / byts / kbs
+            's' => 4096000 , //500kb
+            'm' =>  819200 , //800 Kb
+            'l' => 1048576 , //1024 Kb
+            'xl' => 6291456, //6144 Kb
+        );
+        return $this->sizes;
+    }
+```
+
 Ejemplo de uso:
 
 *index.html*
@@ -528,5 +562,3 @@ echo "</pre>";
  + Vercion: BETA
  + Licencia: OpenSource 
  + Contactar: <camqui2011@gmail.com>
-
-
