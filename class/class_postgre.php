@@ -6,7 +6,7 @@
 // clase  para gestionar las consultas 
 // a la base de datos de postgres
 
-require_once '../config/config.php';
+require'config/con.php';
 
 
 
@@ -37,19 +37,35 @@ class GetbdP extends Postgres {
 
 
   public function check($var = []){
-
-       $this->consulta = pg_query("SELECT * FROM $var[0] WHERE $var[1] = '$var[2]'")
-       or die('Fatal Error: ' . pg_last_error());
        
-        if(self::contador($this->consulta) == true){
-            $this->status = true;
-            return $this;//si se registro corectamente
+       if (is_array($var)) {
+       	
+	       $this->consulta = pg_query("SELECT * FROM $var[0] WHERE $var[1] = '$var[2]'")
+	       or die('Fatal Error: ' . pg_last_error());
+	       
+	        if(self::contador($this->consulta)){
+	            $this->status = true;
+	            return $this;//si se registro corectamente
 
-        }else{
+	        }else{
 
-           $this->status = false;
-            return $this;//si se registro corectamente
-        }
+	           $this->status = false;
+	            return $this;//si se registro corectamente
+	        }
+       }else{
+
+       	     $this->consulta = pg_query($var)
+		       or die('Fatal Error: ' . pg_last_error());
+
+		       if(self::contador($this->consulta)){
+			        $this->status = false;
+		            return $this;//si se registro corectamente
+		      }   
+		       else{
+		         $this->status = false;
+	             return $this;//si se registro corectamente
+		      } 
+       }
 
   }
 
@@ -89,7 +105,7 @@ class GetbdP extends Postgres {
   }
    
 //************************** SELECT SQL *********************************  
-// metodo para seleccionar registros de la base de datos
+// metodo para seleccionar registros de la base de datos COMPLEJAS
 
     public function find($sql)
     {  
@@ -103,6 +119,21 @@ class GetbdP extends Postgres {
         return $this; 
       } 
     }
+
+//consultas simples  de datos
+    public function findAll($tabla)
+    {  
+       $this->consulta = pg_query("SELECT * FROM $tabla")
+       or die('Fatal Error: ' . pg_last_error());
+
+       if(self::contador($this->consulta)){
+        return $this;
+      }   
+       else{
+        return $this; 
+      } 
+    }
+
 
 // metodo para listar los  registros de la base de datos en un array asociativo
 
@@ -186,4 +217,31 @@ class GetbdP extends Postgres {
 }//final de clase postgres
 
 
+/*
 
+$sql = array(); 
+foreach( $data as $row ) {
+    $sql[] = '("'.mysql_real_escape_string($row['text']).'", '.$row['category_id'].')';
+}
+mysql_query('INSERT INTO table (text, category) VALUES '.implode(',', $sql));
+
+
+
+
+$data = array(
+   array(
+      'title' => 'My title' ,
+      'name' => 'My Name' ,
+      'date' => 'My date'
+   ),
+   array(
+      'title' => 'Another title' ,
+      'name' => 'Another Name' ,
+      'date' => 'Another date'
+   )
+);
+
+$this->db->insert_batch('mytable', $data);
+
+// Produces: INSERT INTO mytable (title, name, date) VALUES ('My title', 'My name', 'My date'), ('Another title', 'Another name', 'Another date')
+*/

@@ -8,7 +8,7 @@
 
 // archivos requeridos para el funcionamiento
 
-require_once 'config/config.php';
+require'config/con.php';
 
 
 
@@ -51,11 +51,13 @@ static public function Debug(){
 
 
   public function check($var = []){
-
+      
+     if (is_array($var)) {
+     	
        $this->consulta = mysql_query("SELECT * FROM $var[0] WHERE $var[1] = '$var[2]'")
        or die(mysql_error());
        
-        if(self::contador($this->consulta) == true){
+        if(self::contador($this->consulta)){
             $this->status = true;
             return $this;//si se registro corectamente
 
@@ -64,8 +66,23 @@ static public function Debug(){
            $this->status = false;
             return $this;//si se registro corectamente
         }
+     }else{
 
-  }
+        $this->consulta = mysql_query($var,self::conectar())
+            or die(mysql_error());
+       
+       if(self::contador($this->consulta)){
+       	    $this->status = true;
+            return $this;//si se registro corectamente
+        }   
+       else{
+       	    $this->status = false;
+            return $this;//si se registro corectamente
+       } 
+
+     }
+
+  }//final metodo
 
 //guarda el registro
   public  function save( $sql )
@@ -113,6 +130,19 @@ static public function Debug(){
        else{return $this; } 
     }
 
+ //consultas simples  de datos   
+  public function findAll($tabla)
+    {  
+       $this->consulta = mysql_query("SELECT * FROM $tabla")
+       or die(mysql_error());
+
+       if(self::contador($this->consulta)){
+        return $this;
+      }   
+       else{
+        return $this; 
+      } 
+    }
 
 // metodo para listar los  registros de la base de datos en un array asociativo
 
