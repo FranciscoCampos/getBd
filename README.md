@@ -9,15 +9,16 @@
  + Licencia: OpenSource 
  + Contactar: <camqui2011@gmail.com>
  + [https://gitlab.com/franpc/getBd.git](http://)
- + Requicito: ( php5 +)
+ + Requicito: ( php5 )
 
 ------------------------------------------------------ 
 
 Tiene soporte para: 
 
 + Mysql
++ Mysqli
 + Postgres
-+ Help
++ Files
 
 ******************************************************
 
@@ -27,16 +28,18 @@ Tiene soporte para:
 
     -class
         class_file.php
-        class_mysql.php 
-        class_postgre.php  
+        class_mysql.php
+        class_mysqli.php
+        class_postgre.php
     -config
         config.php
+        conectar.php
     - README.md
-    
 
 
 
-### Descripcion de la Libreria:
+
+### Descripción de la Libreria:
 
 ------------------------------------------------------
 
@@ -45,18 +48,18 @@ Tiene soporte para:
     - class_mysql.php:
 Contiene las clases y metodos requerido el uso de Mysql.
 
+ 	 - class_mysqli.php:
+Contiene las clases y metodos requerido el uso de Mysqli.
+
     - class_postgre.php:
 Contiene las clases y metodos requerido el uso de Postgres.
 
     - class_file.php:
-Contiene las clases nesesarias para trabajos.  
-
-
-+ Subida de Archivos al servidor.
+Contiene las clases nesesarias para la Subida de Archivos al servidor.
 
 
 
-**Config:** Contiene las class dode se crea la conexion a la base de datos, aqui configuraremos las variables de la conexion: root , localhost , password.
+**Config:** Contiene las variables de configuración de la conexion a la base de datos, aqui se configura  las variables de la conexion: root , localhost , password, database, tambien  los parametros de los archivos como: tamaño , formato permitidos etc.
 
     - config.php:
 

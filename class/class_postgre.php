@@ -6,7 +6,9 @@
 // clase  para gestionar las consultas 
 // a la base de datos de postgres
 
-require'config/con.php';
+//// DRIVER POSTGRES
+
+require'config/conectar.php';
 
 
 
@@ -26,19 +28,24 @@ class GetbdP extends Postgres {
       else{ return false; }
   }
 
+// METOHOD QUE ACTIVA LOS HERRORES DE EJECUCION
+
   static public function Debug(){
       error_reporting(-1);
       ini_set('display_errors', '1');
   }
 
+
+
+
 //************************** INSERT SQL *********************************  
 
 //validor de registro repetido
 
-
-  public function check($var = []){
+  public function check($var= array()){
        
-       if (is_array($var)) {
+       if (is_array($var)) 
+       {
        	
 	       $this->consulta = pg_query("SELECT * FROM $var[0] WHERE $var[1] = '$var[2]'")
 	       or die('Fatal Error: ' . pg_last_error());
@@ -50,42 +57,50 @@ class GetbdP extends Postgres {
 	        }else{
 
 	           $this->status = false;
-	            return $this;//si se registro corectamente
+	            return $this;//si se registro corectamente RETORNO EL OBJETO EN SI
 	        }
-       }else{
-
-       	     $this->consulta = pg_query($var)
+       }
+       else
+       {
+       	    $this->consulta = pg_query($var) //SI NO ES UN ARRAY EJECUTO LA CONSULTA NORMAL
 		       or die('Fatal Error: ' . pg_last_error());
 
-		       if(self::contador($this->consulta)){
+		       if(self::contador($this->consulta))
+           {
 			        $this->status = false;
 		            return $this;//si se registro corectamente
-		      }   
-		       else{
+		       }   
+		       else
+           {
 		         $this->status = false;
 	             return $this;//si se registro corectamente
-		      } 
+		       } 
        }
 
-  }
+  }//FINAL DE METOHOD CHECK
 
 
 
 // metodo para insertar registros de la base de datos
-	public  function save($sql )
+	public  function save($sql)
 	{
-	    // verificamos si status no esta vacia
-    if(is_null($this->status)){
+	  // verificamos si status no esta vacia
+    if(is_null($this->status))
+    {
       //creando el registro normal en la bd
           $this->consulta = pg_query($sql)
                     or die('Fatal Error: ' . pg_last_error());//errores de sintaxis
          return true;//si se registro corectamente        
-     }
-    else{
-        if($this->status ==  true){
+    }
+    else
+    {
+        if($this->status ==  true)
+        {
           return false;
+        }
 
-        }else{
+        else
+        {
            //var_dump($this->status);
            //creando el registro normal en la bd
            $this->consulta = pg_query($sql)
@@ -104,6 +119,7 @@ class GetbdP extends Postgres {
      return $contador;
   }
    
+
 //************************** SELECT SQL *********************************  
 // metodo para seleccionar registros de la base de datos COMPLEJAS
 
@@ -113,10 +129,10 @@ class GetbdP extends Postgres {
        or die('Fatal Error: ' . pg_last_error());
 
        if(self::contador($this->consulta)){
-        return $this;
+        return $this;//RETORNAMOS EL OBJETO PARA SER ENCADENADO
       }   
        else{
-        return $this; 
+        return $this; //RETORNAMOS EL OBJETO PARA SER ENCADENADO
       } 
     }
 
@@ -142,7 +158,7 @@ class GetbdP extends Postgres {
         
           while ($res=pg_fetch_assoc($this->consulta))
             {
-               $this->result[] = $res;
+               $this->result[] = $res; //REGRESA UN ARREGLO ASOCIATIVO
             }
 
         return $this->result;
@@ -151,7 +167,7 @@ class GetbdP extends Postgres {
 
 //selecionar un registro unico de la base de datos
 
- public function findOne($var = []){
+ public function findOne($var = array()){
 
    $this->consulta = pg_query("SELECT * FROM $var[0] WHERE $var[1] = $var[2]")
          or die('Fatal Error: ' . pg_last_error());
@@ -217,31 +233,3 @@ class GetbdP extends Postgres {
 }//final de clase postgres
 
 
-/*
-
-$sql = array(); 
-foreach( $data as $row ) {
-    $sql[] = '("'.mysql_real_escape_string($row['text']).'", '.$row['category_id'].')';
-}
-mysql_query('INSERT INTO table (text, category) VALUES '.implode(',', $sql));
-
-
-
-
-$data = array(
-   array(
-      'title' => 'My title' ,
-      'name' => 'My Name' ,
-      'date' => 'My date'
-   ),
-   array(
-      'title' => 'Another title' ,
-      'name' => 'Another Name' ,
-      'date' => 'Another date'
-   )
-);
-
-$this->db->insert_batch('mytable', $data);
-
-// Produces: INSERT INTO mytable (title, name, date) VALUES ('My title', 'My name', 'My date'), ('Another title', 'Another name', 'Another date')
-*/

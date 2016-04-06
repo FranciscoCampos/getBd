@@ -5,10 +5,10 @@
 // ==================================
 // clases  para gestionar las consultas a la base de datos mysql
 
-
+//// DRIVER MYSQL
 // archivos requeridos para el funcionamiento
 
-require'config/con.php';
+require'config/conectar.php';
 
 
 
@@ -84,6 +84,8 @@ static public function Debug(){
 
   }//final metodo
 
+
+
 //guarda el registro
   public  function save( $sql )
 	{
@@ -109,7 +111,8 @@ static public function Debug(){
 	}//final del metodo insert
 
 
-  // metodo contador de los resultados de la consulta cuando se requiere los registros
+
+// metodo contador de los resultados de la consulta cuando se requiere los registros
 
   protected function contador($consulta){
     
@@ -118,7 +121,8 @@ static public function Debug(){
   }
 
 
-//************************** SELECT SQL  find(sql)->show()*********************************  
+
+//************************** SELECT SQL  find(sql)->show() *********************************  
 // metodo para seleccionar registros de la base de datos
 
     public function find($sql)

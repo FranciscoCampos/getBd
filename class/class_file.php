@@ -4,12 +4,15 @@
 // **********Año 2015***********
 // ==================================
 // version BETA
-require'../config/con.php';
+
+
+require'config/conectar.php';
 
 
 /*
- //class para subir archivos al servidor de manera facil
-//imagescale()
+*
+*class para subir archivos al servidor de manera facil
+*
 */
 
 
@@ -17,13 +20,16 @@ class File extends ConfigFile
 {
 
    private $file;//archivo a subir
+   private $newFile ;
    private $dire;//directorio
    private $repuesta = array();//repuesta sobre la subida
    private $opc;//parametros opcionales en beta
    
    
    
-//metodo para subir el archivo al servidor
+/*
+	METOHODO PARA SUBIR UN FILE AL SERVIDOR
+*/
 
    public function upFile($file , $dire , $opc = array())
    {
@@ -35,8 +41,8 @@ class File extends ConfigFile
 		     echo "Error Fatal: ";
 
 		  }
-		  else
-		  {//continua el proceso
+		  else //continua el proceso
+		  {
 			  
 			  //verificando los valores permitido "jpg , png , git etc" 
 		 	   if ( self::permitido($this->file) && self::sizes($this->file)) 
@@ -47,31 +53,28 @@ class File extends ConfigFile
 				         if(!file_exists($this->dire))//comprobando el directorio
 						  {
 							
-							if(!mkdir($this->dire, 0777, true))//creando el directorio
-							{
-							    die('Fallo al crear las carpetas...');
+								if(!mkdir($this->dire, 0777, true))//creando el directorio
+								{
+							    	exit('Fallo al crear las carpetas...');
 							
-							}else {
+								}else {
 				         
-				             	return self::subido();//se realiza la subidadel archivo
+				             		return self::subido();//se realiza la subidadel archivo
 				          
-				             }
+				             	}
 							
 						  }
 						  else 
 						  { 
-			
 							return self::subido();//se realiza la subidadel archivo
-
 						  }
 
 			 	}
-
 			 	else
 			 	{
-
-			 	   	return $err = NULL;//error sino cumple con 
-			 	   	                                       //los valores permitdos
+			 		/*error sino cumple con 
+			 	   	 los valores permitdos retorna NULL */
+			 	   	return $err = NULL;
 			 	}//final de else de comprobacion de tamaño y peso
 
 			}//final de la llave del else del error
@@ -79,13 +82,13 @@ class File extends ConfigFile
   	 }//final del motodo upladfile
 
 
-//metodo para la validaciones permitidas para subir archivos al servidor.
+//METOHODO QUE VALIDA LOS FORMATOS PERMITIDOS HANTES DE SUBIR.
   
 	  public function permitido($file)
 	  {
 	  
 	     $res = false;//repuesta del metodo por defecto esta en false
-	     foreach ( self::setFormato() as $key => $value ) 
+	     foreach ( self::getFormato() as $key => $value ) 
 	     {
 	     	//validando solo formato del archivo
 			 	if ($file['type'] == $value ) 
@@ -98,14 +101,16 @@ class File extends ConfigFile
 	  }  
  
 
- //*************************BETA****************************************
-  //metodo para la validaciones permitidas para subir archivos al servidor.
+/*
+*
+* METOHODO QUE VALIDA LOS TAMAÑOS PERMITIDOS HANTES DE SUBIR.
+*/
   
   protected function sizes($file)
   {
       
      $res = false;//repuesta del metodo por defecto esta en false
-     foreach ( self::setSize() as $key => $value ) 
+     foreach ( self::getSize() as $key => $value ) 
      {
      	//validando solo tamano  del archivo
 		 	if ($file['size'] <= $value ) 
@@ -117,21 +122,35 @@ class File extends ConfigFile
 		return $res; //var_dump($res);
   }
 
-//metodo para subir un solo archivo al servidor
+//METOHODO PARA SUBIR UN FILE AL SERVIDOR EL FINAL
 
 protected function subido()
 {
 
 	// se mueve el archivo a la ruta creada
+
+	//REMPRAZANDO EL NOMBRE DE LA IMAGEN PARA QUE SE SOBRE ESCRIBA
+
+	/*
+		FOTO_MIA.JPG => +time().rand() =  290190FOTO MIA.JPG
+		FOTO MIA.JPG => +time().rand() => strtolower(str_replace(' ', '_', 290190FOTO_MIA.JPG)) 
+		=> FILE FINAL  (290190FOTO_MIA.JPG)
+	*/
+
+	// LE SUMAMOS EL RANDON PARA EVITAR LA SOBRE ESCRITURA DEL ARCHIVO
+	$noCopi = time().rand().$this->file['name']; 
+
+    // LE REMPLAZAMOS LOS ESPACIOS POR _ AL ARCHVIO
+	$this->newFile = strtolower(str_replace(' ', '_', $noCopi));
    
-	if(move_uploaded_file($this->file['tmp_name'], "".$this->dire."/" . $this->file['name'].""))
+	if(move_uploaded_file($this->file['tmp_name'], "".$this->dire."/" . $this->newFile .""))
 	{
 
 		//se retorna un array con el primer valor true
 		//si se gurdo correctamente , mas la ruta donde 
 		//se guardo el archivo para ser ingresado a la bd
-
-		return $this->repuesta = array(true , $this->dire."/" . $this->file['name']);			             	
+		//unlink($this->file['tmp_name'].$this->newFile);
+		return $this->repuesta = array(true , $this->dire."/" . $this->file['name']);
 	}
 
 	else
@@ -139,19 +158,14 @@ protected function subido()
 
 		return false;//si hay error retorna false
 	}
-}
+}//FINAL DEL METHODO SUBIDO
 
 
 
-// Copyright by Francisco Campos 
-// **********Año 2015***********
-// ==================================
-// version BETA
 
+/****************************** ARCHIVOS MULTIPLES ****************************************************/
 
-
-//****************************** ARCHIVOS MULTIPLES ****************************************************
-//metodo para multiples ficheros
+//METHODO PARA FILES MULTIPLES 
 
 public function upFiles($file , $dire , $conf = array())
 {
