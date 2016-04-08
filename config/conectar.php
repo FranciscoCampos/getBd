@@ -42,7 +42,7 @@
 
 //===============================configuracion de Mysqli ===============================
 
- class Mysqli
+ /*class Mysqli
  {
 
     private $usuario; //usuario de la base de datos
@@ -72,7 +72,7 @@
        return $con;
     }
 
- }
+ }*/
 
 
 

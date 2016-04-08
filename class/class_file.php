@@ -6,7 +6,7 @@
 // version BETA
 
 
-require'config/conectar.php';
+require'../config/conectar.php';
 
 
 /*
@@ -53,19 +53,19 @@ class File extends ConfigFile
 				         if(!file_exists($this->dire))//comprobando el directorio
 						  {
 							
-								if(!mkdir($this->dire, 0777, true))//creando el directorio
+								if(!mkdir($this->dire, 0775, true))//creando el directorio
 								{
 							    	exit('Fallo al crear las carpetas...');
 							
 								}else {
-				         
+				         			chmod($this->dire, 0777);
 				             		return self::subido();//se realiza la subidadel archivo
 				          
 				             	}
 							
 						  }
 						  else 
-						  { 
+						  { chmod($this->dire, 0777);
 							return self::subido();//se realiza la subidadel archivo
 						  }
 
@@ -179,16 +179,19 @@ public function upFiles($file , $dire , $conf = array())
         if(!file_exists($this->dire))
         {
         	//se crea el directorio con los permiso totales
-			if(!mkdir($this->dire, 0777, true))//creando el directorio
+			if(!mkdir($this->dire, 0775, true))//creando el directorio
 			 {
 				die('Fallo al crear las carpetas...');
 
 			 }else{
-
+			 	//le damos permisos por si acaso
+			 	chmod($this->dire, 0777);
 			 	return self::subiendoMultiple();//donde se subi el archivo
 			 }
 			 
         }else{
+        	//le damos permisos por si acaso
+        	chmod($this->dire, 0777);
             //si ya existe el directorio solo se guarda el archivo
         	return self::subiendoMultiple();//donde se subi el archivo
         }
@@ -203,14 +206,25 @@ public function upFiles($file , $dire , $conf = array())
 
 	  	for ($i= 0; $i < count($this->file['name']); $i++)
 	  	{ 
-	  		
-			if(move_uploaded_file($this->file['tmp_name'][$i], "".$this->dire."/" . $this->file['name'][$i].""))
+	  		//REMPRAZANDO EL NOMBRE DE LA IMAGEN PARA QUE SE SOBRE ESCRIBA
+
+			/*
+				FOTO_MIA.JPG => +time().rand() =  290190FOTO MIA.JPG
+				FOTO MIA.JPG => +time().rand() => strtolower(str_replace(' ', '_', 290190FOTO_MIA.JPG)) 
+				=> FILE FINAL  (290190FOTO_MIA.JPG)
+			*/
+
+			// LE SUMAMOS EL RANDON PARA EVITAR LA SOBRE ESCRITURA DEL ARCHIVO
+			$noCopi = time().rand(). $this->file['name'][$i]; 
+			// LE REMPLAZAMOS LOS ESPACIOS POR _ AL ARCHVIO
+			$newFile = strtolower(str_replace(' ', '-', $noCopi));
+
+			if(move_uploaded_file($this->file['tmp_name'][$i], "".$this->dire."/" . $newFile .""))
 			{
 				
 				//agregando la ruta al arreglo sel archivo movido correctamente	             		
-				$this->statusFile[] =  $this->dire."/" . $this->file['name'][$i];
+				$this->statusFile[] =  $this->dire."/" . $newFile;
 				
-        	
 			}
 			else
 			{
