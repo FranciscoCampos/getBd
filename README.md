@@ -1,3 +1,4 @@
+
 # Libreria getBd 
 ![](http://i.imgur.com/q2CBZ1t.png?1)
 
@@ -523,13 +524,4 @@ echo "</pre>";
 
 ?>
 ```
-
-
-------------------------------------------------------
-## Creditos:
- + Copyright by **FRANCISCO CAMPOS** 
- + Vercion: BETA
- + Licencia: OpenSource 
- + Contactar: <camqui2011@gmail.com>
-
 

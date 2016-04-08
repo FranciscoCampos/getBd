@@ -42,6 +42,7 @@ return array(
 
 // DRIVES POSTGRES
 
+
         'postgre' => array(
             
             'host' => 'localhost',
@@ -49,6 +50,7 @@ return array(
             'user' => 'postgres',
             'password' => '123456'
         ),
+
 
 
 // DRIVES MYSQLI   
@@ -84,14 +86,9 @@ return array(
             'm' =>  819200 , //800 Kb
             'l' => 1048576 , //1024 Kb
             'xl' => 6291456, //6144 Kb
+
         )
 
 );
-
-
-
-
-
-
 
 
