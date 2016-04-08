@@ -145,12 +145,15 @@ protected function subido()
    
 	if(move_uploaded_file($this->file['tmp_name'], "".$this->dire."/" . $this->newFile .""))
 	{
-
+		//AQUI LE DAMOS PERMISO AL ARCHIVO
+		
+		chmod($this->dire."/" . $this->newFile, 0777);
 		//se retorna un array con el primer valor true
 		//si se gurdo correctamente , mas la ruta donde 
 		//se guardo el archivo para ser ingresado a la bd
 		//unlink($this->file['tmp_name'].$this->newFile);
-		return $this->repuesta = array(true , $this->dire."/" . $this->file['name']);
+		//error al devolver el nombre
+		return $this->repuesta = array(true , $this->dire."/" . $this->newFile);
 	}
 
 	else
