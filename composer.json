@@ -1,5 +1,5 @@
 {
-    "name": "root/get-bd",
+    "name": "root/getBd",
     "description": "Mini libreria para manejo basico de la consultas sql y los ficheros",
     "type": "json",
     "authors": [
