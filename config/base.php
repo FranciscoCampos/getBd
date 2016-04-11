@@ -59,7 +59,7 @@ return array(
             
             'host' => 'localhost',
             'database' => 'beta',
-            'user' => 'sistema',
+            'user' => 'root',
             'password' =>'123456'
         ),
 
@@ -89,14 +89,7 @@ return array(
 
         ),
 
-       'permiso' => array( 
-           
-            't' => 4096000 , //500kb
-            'm' =>  819200 , //800 Kb
-            'l' => 1048576 , //1024 Kb
-            'xl' => 6291456, //6144 Kb
-
-        )
+       
 
 );
 

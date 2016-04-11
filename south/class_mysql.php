@@ -8,7 +8,7 @@
 //// DRIVER MYSQL
 // archivos requeridos para el funcionamiento
 
-require'config/conectar.php';
+require'./config/start.php';
 
 
 

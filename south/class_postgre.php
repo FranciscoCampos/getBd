@@ -8,7 +8,7 @@
 
 //// DRIVER POSTGRES
 
-require'config/conectar.php';
+require'./config/start.php';
 
 
 
@@ -163,6 +163,21 @@ class GetbdP extends Postgres {
 
         return $this->result;
     }
+
+
+
+    public function showObj()
+    {  
+        
+          while ($res=pg_fetch_object($this->consulta))
+            {
+               $this->result[] = $res;
+            }
+
+        return $this->result;
+       
+    }
+
 
 
 //selecionar un registro unico de la base de datos

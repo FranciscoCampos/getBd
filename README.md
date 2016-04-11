@@ -2,15 +2,15 @@
 # Libreria getBd 
 ![](http://i.imgur.com/q2CBZ1t.png?1)
 
-#### libreria basica para gestionar consultas a la base de dato.
+#### Mini libreria básica para CRUD y gestión de  consultas a la base de dato.
 
 ------------------------------------------------------
  + Copyright by **FRANCISCO CAMPOS** 
- + Vercion: BETA
+ + Verción: BETA
  + Licencia: OpenSource 
  + Contactar: <camqui2011@gmail.com>
  + [https://gitlab.com/franpc/getBd.git](http://)
- + Requicito: ( php5 )
+ + Requicito: ( php5+ , mysql 5.0+ , postgres 9.1.1+)
 
 ------------------------------------------------------ 
 
@@ -27,14 +27,14 @@ Tiene soporte para:
 
 #### getBd:
 
-    -class
+    -south
         class_file.php
         class_mysql.php
         class_mysqli.php
         class_postgre.php
     -config
-        config.php
-        conectar.php
+        base.php
+        start.php
     - README.md
 
 
@@ -47,54 +47,67 @@ Tiene soporte para:
 **Class:** contiene las class necesaria para el manejo rapido de las consultas a la base de datos.
 
     - class_mysql.php:
-Contiene las clases y metodos requerido el uso de Mysql.
 
- 	 - class_mysqli.php:
-Contiene las clases y metodos requerido el uso de Mysqli.
+    - name: GetbdM()
+Contiene las clases y métodos requerido el uso de Mysql.
+
+     -class_mysqli.php:
+
+    - name: GetbdMy()
+Contiene las clases y métodos requerido el uso de Mysqli.
 
     - class_postgre.php:
-Contiene las clases y metodos requerido el uso de Postgres.
+
+    - name: GetbdP()
+Contiene las clases y métodos requerido el uso de Postgres.
 
     - class_file.php:
+
+    - name: File()
 Contiene las clases nesesarias para la Subida de Archivos al servidor.
 
 
 
-**Config:** Contiene las variables de configuración de la conexion a la base de datos, aqui se configura  las variables de la conexion: root , localhost , password, database, tambien  los parametros de los archivos como: tamaño , formato permitidos etc.
+**Config:** Contiene las variables de configuración de la conexión a la base de datos, aqui se configura  las variables de la conexión: root , localhost , password, database, tambien  los parametros de los archivos como: tamaño , formato permitidos etc.
 
-    - config.php:
+    - base.php:
 
 ## Funcionamiento:
 
-Configuracion de las variables de conexión.
+Configuración de las variables de conexión.
 
-*config/config.php*
- 
- **Class Mysql:**
+*config/base.php*
 
- Inicializamos los valores en el  constructor de la clase.
+ Inicializamos los parametros del Drive a utilizar en el array de configuración.
 
-    public function __construct()
-    {  
-        $this->localhost = 'nombre del host';
-        $this->usuario = 'usuario del host';
-        $this->password = 'clave del host';
-        $this->bd = 'nombre de base de datos';
-    }
+    // DRIVER MYSQL
+        'mysql' => array(
+            'host' => 'host',
+            'database' => 'database',
+            'user' => 'username',
+            'password' => 'password'
+           
+        ),
 
-**Class Postgres:**
+    // DRIVER POSTGRES
+        'postgre' => array(
+            'host' => 'host',
+            'database' => 'database',
+            'user' => 'postusername',
+            'password' => 'password'
+        ),
 
- Inicializamos los valores en el  constructor de la clase.
+     // DRIVER MYSQLI   
+        'mysqli' => array(
+            'host' => 'host',
+            'database' => 'database',
+            'user' => 'username',
+            'password' =>'password'
+        ),
 
-    public function __construct()
-    {  
-        $this->localhost = 'nombre del host';
-        $this->usuario = 'usuario del host';
-        $this->password = 'clave del host';
-        $this->bd = 'nombre de base de datos';
-    }
 
-Ejemplo de uso en Mysql:
+
+Ejemplo de uso getBd implementación con el driver de Mysql:
 
 
 **Archivo demo.php**
@@ -102,17 +115,17 @@ Ejemplo de uso en Mysql:
 <?php
 
 //Requerimos la clase para Mysql
-require_once 'class/class_mysql.php';
+require_once 'south/class_mysql.php';
 
 //Instancisa del objeto para Mysql
- $con = new GetbdM();
+ $obj = new GetbdM();
 
 ?>
 
 ```
 
 
-Ejemplo de uso en Postgres:
+Ejemplo de uso getBd implementación con el driver de Postgres:
 
 
 **Archivo demo.php**
@@ -120,13 +133,31 @@ Ejemplo de uso en Postgres:
 <?php
 
 //Requerimos la clase para Postgres
-require_once 'class/class_postgre.php';
+require_once 'south/class_postgre.php';
 
 //Instancisa del objeto para Postgres
-$con = new GetbdP();
+$obj = new GetbdP();
 
 ?>
 ```
+
+Ejemplo de uso getBd implementación con el driver de Mysqli:
+
+
+**Archivo demo.php**
+```
+<?php
+
+//Requerimos la clase para Mysqli
+require_once 'south/class_mysqli.php';
+
+//Instancisa del objeto para Mysqli
+$obj = new GetbdMi();
+
+?>
+```
+
+
 
 ## getBd con Mysql
 
@@ -134,15 +165,15 @@ $con = new GetbdP();
 
 `save( sql )`
 
-Este metodo recibe un parametro, la consulta SQL.
+Este método recibe un parametro, la consulta SQL.
 
 - **sql:**  consulta sql a insertar, Nota: la variable puede ser llamada de otra forma!
 
-Retorna:
+Valores de Retorno:
 
-- **true:**  Si la consulta se realizo correctamente.
-- **false:** Si la consulta no se realizo correctamente.
-Con getBd es posible verificar el registro antes de ser insertado, todo en una sola linea de codigo.
+- **true:**  Si la consulta se realizó correctamente.
+- **false:** Si la consulta no se realizó correctamente.
+Con getBd es posible verificar el registro antes de ser insertado, todo en una sola linea de código.
 
 Usamos el método: 
 
@@ -150,14 +181,14 @@ Usamos el método:
 
 - **tabla** : Nombre de la tabla donde sera verificado el registro.
 - **campo**: Campos referencia para la condicion a cumplir.
-- **valor**: Valor de verificacion de la condicion.
+- **valor**: Valor de verificación de la condición.
 
-Retorna:
+Valores de Retorno:
 
 - **true**: Si existe el registro.
 - **false**: No se encotro registro.
 
-**Nota:** Uselo antes del metodo save()
+**Nota:** Uselo antes del método save()
 Ejemplo:
 
     `obj->check( [ 'tabla' , 'campos' , 'valor'] )->save(sql)`
@@ -167,7 +198,7 @@ Ejemplo:
 ```
 <?php 
 
-require_once 'class/class_mysql.php';
+require_once 'south/class_mysql.php';
 
 
 $con = new GetbdM();
@@ -206,9 +237,15 @@ $con->save($sql);
 
 ## Consultar registro de la base de datos
 
-Para ello tenemos 2 metodos:
+Para ello tenemos los métodos:
 
-`find( parametro )`
+`find( parametro )` consultas complejas
+
++ Recibe un parametro que es la consulta SQL
++ Retorna **True:** Si hay registro
++ Retorna **False:**  Si no hay registro
+
+`findAll( parametro )` consultas simples
 
 + Recibe un parametro que es la consulta SQL
 + Retorna **True:** Si hay registro
@@ -218,11 +255,17 @@ Para ello tenemos 2 metodos:
 
 + Retorna un Array Asociativo con los datos
 
+`showObj()`
+
++ Retorna un Objeto con los datos
+
 ## Consulta a la base de datos
+
+`find( parametro ) show() `
 
 ```
  <?php
-  require_once 'class/class_mysql.php';
+  require_once 'south/class_mysql.php';
 
   $obj = new GetbdM();
   
@@ -239,25 +282,40 @@ Para ello tenemos 2 metodos:
  ?>
 ```
 
+`findAll( parametro ) showObj() `
+
+```
+ <?php
+  require_once 'south/class_mysql.php';
+
+  $obj = new GetbdM();
+  
+  $datos = $obj->findAll("tabla")->showObj();
+
+ //mostrando los registros
+ 
+ foreach ($datos as $dato) {
+    echo $dato->campo . "<br>";
+ }
+    
+ ?>
+```
+
 ## Consultar un registro unico en la  base de datos
 
-Para ello tenemos el metodos:
+Para ello tenemos el métodos:
 
 `findOne( ['tabla' , 'campos', 'valor'] )`
 
 + Recibe un arreglo con 3 parametros 
 + Retorna **True:** Si hay registro
-+ Retorna **False:**  Si no hay registro
-
-
-
++ Retorna **False:** Si no hay registro
 + Retorna un registro encontrado
 
-## Consulta a la base de datos
 
 ```
  <?php
-  require_once 'class/class_mysql.php';
+  require_once 'south/class_mysql.php';
 
   $obj = new GetbdM();
   
@@ -275,7 +333,7 @@ Para ello tenemos el metodos:
 
 ## Actualizar registro de la base de datos
 
-Para ello tenemos el metodos:
+Para ello tenemos el métodos:
 
 `update( sql , 'string' )`
 
@@ -285,7 +343,7 @@ Para ello tenemos el metodos:
 
 ```
  <?php
-  require_once 'class/class_mysql.php';
+  require_once 'south/class_mysql.php';
 
  $obj = new GetbdM();
       
@@ -306,7 +364,7 @@ Para ello tenemos el metodos:
 
 ## Eliminar registro de la base de datos
 
-Para ello tenemos el metodos:
+Para ello tenemos el métodos:
 
 `remove(sql , string' )`
 
@@ -316,7 +374,7 @@ Para ello tenemos el metodos:
 
 ```
  <?php
-  require_once 'class/class_mysql.php';
+  require_once 'south/class_mysql.php';
 
   $obj = new GetbdM();
   
@@ -334,15 +392,17 @@ Para ello tenemos el metodos:
  ?>
 ```
 
-## Evitar  sql injection en los query necesarios...
+## Evitar  SQL injection en los query necesarios...
 
 Usamos el método `Valid()` recibe la variable a verificar
 
 **Retorna la consulta segura**
 
+`GetbdM::Valid( $_POST['campos'])`
+
 ```
  <?php
-  require_once 'class/class_mysql.php';
+  require_once 'south/class_mysql.php';
 
   $var = GetbdM::Valid( $_POST['campos']);
   
@@ -355,21 +415,10 @@ Usamos el método `Valid()` recibe la variable a verificar
  ?>
 ```
 
-## getBd  con  Postgres
+## getBd  con  Postgres y Mysqli
 
-El uso de getBd con Postgres es igual al funcionamiento con Mysql tenemos los mismo metodos. Solo cambia es el **include de la class**
+El uso de getBd con Postgres o Mysqli es igual al funcionamiento con Mysql tenemos los mismo metodos. Solo cambia es el **include de la class**
 
-```
-<?php
-
-//Requerimos la clase para Postgres
-require_once 'class/class_postgre.php';
-
-//Instancisa del objeto para Postgres
-$con = new GetbdP();
-
-?>
-```
 
 `save( parametro )` 
 
@@ -377,9 +426,13 @@ $con = new GetbdP();
 
 `find( parametro )`
 
+`findAll( parametro )`
+
 `findOne( array )`
 
 `show()`
+
+`showObj()`
 
 `upadate( parametro , 'string' )`
 
@@ -388,11 +441,12 @@ $con = new GetbdP();
 `Valid( parametro )`
 
 **Nota:** 
- >puede ver los ejemplos de los metodos arriba.
+ >Puede ver los ejemplos de los métodos arriba.
+
 
 ## getBd subir archivos al servidor
 
-Para ello tenemos la clase ` File()` que contiene los metodos:
+Para ello tenemos la clase ` File()` que contiene los métodos:
     
 `upFile()` 
 
@@ -434,7 +488,7 @@ Ejemplo de uso:
 ```
  <?php 
 
-require_once 'class/file.php';
+require_once 'south/file.php';
 
 
 $file = $_FILES['archivo'];//reciben el archivo
@@ -460,7 +514,7 @@ if($var[0] == true){
 
 ## getBd con multiples archivos:
 
-Para ello tenemos la clase ` File()` que contiene los metodos:
+Para ello tenemos la clase ` File()` que contiene los métodos:
     
 `upFiles()` 
 
@@ -472,7 +526,9 @@ Para ello tenemos la clase ` File()` que contiene los metodos:
 ```
 array respuesta = {
   [0] => 'true',
-  [1] => 'ruta del archivo guardado'
+  [0] => 'ruta del archivo guardado1'
+  [1] => 'true',
+  [1] => 'ruta del archivo guardado2'
 }
 
 ```
@@ -504,7 +560,7 @@ Ejemplo de uso:
 ```
  <?php 
 
-require_once 'class/file.php'; //se puede usar con postgres
+require_once 'south/file.php'; 
 
 
 $file = $_FILES['archivo'];//reciben el archivo
@@ -525,3 +581,12 @@ echo "</pre>";
 ?>
 ```
 
+------------------------------------------------------
+ + Copyright by **FRANCISCO CAMPOS** 
+ + Verción: BETA
+ + Licencia: OpenSource 
+ + Contactar: <camqui2011@gmail.com>
+ + [https://gitlab.com/franpc/getBd.git](http://)
+ + Requicito: ( php5+ , mysql 5.0+ , postgres 9.1.1+)
+
+------------------------------------------------------ 

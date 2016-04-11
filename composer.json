@@ -1,0 +1,15 @@
+{
+    "name": "root/get-bd",
+    "description": "Mini libreria para manejo basico de la consultas sql y los ficheros",
+    "type": "json",
+    "authors": [
+        {
+            "name": "francisco campos",
+            "email": "camqui2011@gmail.com"
+        }
+    ],
+    "minimum-stability": "beta",
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    }
+}

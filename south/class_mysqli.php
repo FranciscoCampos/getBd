@@ -1,5 +1,5 @@
 <?php 
-
+ 
 // Copyright by Francisco Campos 
 // **********Año 2015***********
 // ==================================
@@ -9,13 +9,13 @@
 
 // archivos requeridos para el funcionamiento
 
-require'config/conectar.php';
+require './config/start.php';
 
 
 
 //======= clase Conectar la clase  extiende de Mysql ==========
 
-class GetbdM extends Mysql
+class GetbdMi extends Mysqly
 { 
    
    //atributos de la clase 
@@ -51,12 +51,12 @@ static public function Debug(){
   //validor de registro repetido
 
 
-  public function check($var = []){
+  public function check($var = array()){
       
      if (is_array($var)) {
      	
-       $this->consulta = mysql_query("SELECT * FROM $var[0] WHERE $var[1] = '$var[2]'")
-       or die(mysql_error());
+       $this->consulta = mysqli_query(self::conectar(),"SELECT * FROM $var[0] WHERE $var[1] = '$var[2]'")
+       or die(mysqli_error());
        
         if(self::contador($this->consulta)){
             $this->status = true;
@@ -69,8 +69,8 @@ static public function Debug(){
         }
      }else{
 
-        $this->consulta = mysql_query($var,self::conectar())
-            or die(mysql_error());
+        $this->consulta = mysqli_query(self::conectar(),$var)
+            or die(mysqli_error());
        
        if(self::contador($this->consulta)){
        	    $this->status = true;
@@ -93,8 +93,8 @@ static public function Debug(){
     // verificamos si status no esta vacia
     if(is_null($this->status)){
       //creando el registro normal en la bd
-        $this->consulta = mysql_query($sql)
-                    or die(mysql_error());//errores de sintaxis
+        $this->consulta = mysqli_query(self::conectar(),$sql)
+                    or die(mysqli_error());//errores de sintaxis
          return true;//si se registro corectamente        
      }
     else{
@@ -104,8 +104,8 @@ static public function Debug(){
         }else{
            //var_dump($this->status);
            //creando el registro normal en la bd
-           $this->consulta = mysql_query($sql)
-                                          or die(mysql_error());//errores de sintaxis
+           $this->consulta = mysqli_query(self::conectar(),$sql)
+                                          or die(mysqli_error());//errores de sintaxis
            return true;//si se registro corectamente   
         }
      }//llave de else
@@ -117,7 +117,7 @@ static public function Debug(){
 
   protected function contador($consulta){
     
-     $contador = mysql_num_rows($consulta); 
+     $contador = mysqli_num_rows($consulta); 
      return $contador; // retorna 1 o cero 
   }
 
@@ -128,8 +128,8 @@ static public function Debug(){
 
     public function find($sql)
     {  
-       $this->consulta = mysql_query($sql,self::conectar())
-       or die(mysql_error());
+       $this->consulta = mysqli_query(self::conectar(),$sql)
+       or die(mysqli_error());
        
        if(self::contador($this->consulta)){return $this;}   
        else{return $this; } 
@@ -138,8 +138,8 @@ static public function Debug(){
  //consultas simples  de datos   
   public function findAll($tabla)
     {  
-       $this->consulta = mysql_query("SELECT * FROM $tabla")
-       or die(mysql_error());
+       $this->consulta = mysqli_query(self::conectar(),"SELECT * FROM $tabla");
+       //or die(mysqli_error());
 
        if(self::contador($this->consulta)){
         return $this;
@@ -154,23 +154,49 @@ static public function Debug(){
     public function show()
     {  
         
-          while ($res=mysql_fetch_assoc($this->consulta))
+          while ($res=mysqli_fetch_assoc($this->consulta))
             {
                $this->result[] = $res;
             }
 
         return $this->result;
+        mysqli_free_result($this->consulta);
     }
+
+
+// metodo para listar los  registros de la base de datos en un array con los objeto de los campos
+
+/*
+   
+foreach ($datos as $dato ) {
+  $dato->nombre;
+}
+
+*/
+    public function showObj()
+    {  
+        
+          while ($res=mysqli_fetch_object($this->consulta))
+            {
+               $this->result[] = $res;
+            }
+
+        return $this->result;
+        mysqli_free_result($this->consulta);
+    }
+
+
 
 //selecionar un registro unico de la base de datos
 
-   public function findOne($var = []){
+   public function findOne($var = array()){
 
-     $this->consulta = mysql_query("SELECT * FROM $var[0] WHERE $var[1] = $var[2]")
+     $this->consulta = mysqli_query(self::conectar(),"SELECT * FROM $var[0] WHERE $var[1] = $var[2]")
                                                              or die(mysql_error());
 
-        return $fila = mysql_fetch_array($this->consulta);
+        return $fila = mysqli_fetch_array($this->consulta);
           //var_dump($fila);
+        mysqli_free_result($this->consulta);
    }
 
 
@@ -182,7 +208,7 @@ static public function Debug(){
 	{ 
       if( $conf == 'update' ){ //seguro para evitar error en los metodos
 
-      		$this->consulta = mysql_query($sql,self::conectar());
+      		$this->consulta = mysqli_query(self::conectar(),$sql);
 
           return $this->consulta;
 
@@ -201,7 +227,7 @@ static public function Debug(){
 	{
 		if( $conf == 'delete' ){ //seguro para evitar error en los metodos
 
-          $this->consulta = mysql_query($sql,self::conectar());
+          $this->consulta = mysqli_query(self::conectar(),$sql);
 
           return $this->consulta;
 
@@ -218,10 +244,13 @@ static public function Debug(){
   {
     //seguro para evitar error en los metodos 
     //y la inyeccion de sql malo
-      return mysql_real_escape_string($var);
+      return mysqli_real_escape_string(self::conectar(),$var);
 
   }
+ 
 
+
+ 
 }//final de la clase conectar
 
 

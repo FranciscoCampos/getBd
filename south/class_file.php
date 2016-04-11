@@ -6,7 +6,7 @@
 // version BETA
 
 
-require'../config/conectar.php';
+require'../config/start.php';
 
 
 /*
