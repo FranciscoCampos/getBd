@@ -32,9 +32,11 @@ Tiene soporte para:
         class_mysql.php
         class_mysqli.php
         class_postgre.php
+		
     -config
         base.php
         start.php
+		
     - README.md
 
 
@@ -459,9 +461,9 @@ La clase ` File()` se puede configurar siertos parametros para ello nos ubicamos
 
 *config/base.php*
 
-  // CONFIGURACION DE LOS FILES O ARCHIVOS DE GETBD
+  	// CONFIGURACION DE LOS FILES O ARCHIVOS DE GETBD
 
- // EXTENCION DEL FILE PERMITIDO
+ 	// EXTENCION DEL FILE PERMITIDO
 
         'exten' => array(
 
@@ -472,7 +474,8 @@ La clase ` File()` se puede configurar siertos parametros para ello nos ubicamos
 
         ),
 
- // TAMAÑO  DEL FILE PERMITIDO
+ 		
+		// TAMAÑO  DEL FILE PERMITIDO
 
         'sizes' => array( 
            
@@ -488,7 +491,9 @@ La clase ` File()` se puede configurar siertos parametros para ello nos ubicamos
  >Puede agregar mas valores al array de configuracion del FILE en su campo correspondiente.
 
 
+
 `upFile()`
+
 
 * Recibe un primer parametro. file a subir.
 * Recibe un segundo parametro el nombre de la carpeta donde se guarda el archivo.
