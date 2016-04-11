@@ -5,7 +5,6 @@
 // ==================================
 
 
-
 //===============================configuracion de Mysql ===============================
 
  class Mysql
@@ -122,7 +121,7 @@ class ConfigFile
 
     public function __construct(){
 
-        $obj = require_once 'config.php';
+        $obj = require_once 'base.php';
         $this->datos = array(
 
             'jpg' => $obj['exten']['jpg'],

@@ -7,7 +7,7 @@
 
 
 require'../config/start.php';
-
+//require __DIR__ . '/config' . '/start.php';
 
 /*
 *

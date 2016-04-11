@@ -177,7 +177,14 @@ Con getBd es posible verificar el registro antes de ser insertado, todo en una s
 
 Usamos el método: 
 
+Consulta simples  Array de datos
+
 `check( [ 'tabla' , 'campos' , 'valor'] )`
+
+Consulta complejas  Query complesjo
+
+`check( '...SQL...')`
+
 
 - **tabla** : Nombre de la tabla donde sera verificado el registro.
 - **campo**: Campos referencia para la condicion a cumplir.
@@ -193,7 +200,7 @@ Ejemplo:
 
     `obj->check( [ 'tabla' , 'campos' , 'valor'] )->save(sql)`
 
-
+    `obj->check( 'SQL' )->save(sql)`
 
 ```
 <?php 
@@ -448,7 +455,40 @@ El uso de getBd con Postgres o Mysqli es igual al funcionamiento con Mysql tenem
 
 Para ello tenemos la clase ` File()` que contiene los métodos:
     
-`upFile()` 
+La clase ` File()` se puede configurar siertos parametros para ello nos ubicamos en la  siguiente ruta:
+
+*config/base.php*
+
+  // CONFIGURACION DE LOS FILES O ARCHIVOS DE GETBD
+
+ // EXTENCION DEL FILE PERMITIDO
+
+        'exten' => array(
+
+            'jpg' => 'image/jpeg',
+            'png' => 'image/png',
+            'word' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'pdf'  => 'application/pdf'
+
+        ),
+
+ // TAMAÑO  DEL FILE PERMITIDO
+
+        'sizes' => array( 
+           
+            's' => 4096000 , //500kb
+            'm' =>  819200 , //800 Kb
+            'l' => 1048576 , //1024 Kb
+            'xl' => 6291456, //6144 Kb
+
+        ),
+
+
+**Nota:** 
+ >Puede agregar mas valores al array de configuracion del FILE en su campo correspondiente.
+
+
+`upFile()`
 
 * Recibe un primer parametro. file a subir.
 * Recibe un segundo parametro el nombre de la carpeta donde se guarda el archivo.
