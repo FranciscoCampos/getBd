@@ -8,7 +8,7 @@
 
 //// DRIVER POSTGRES
 
-require'./config/start.php';
+require'../config/start.php';
 
 
 
@@ -80,35 +80,38 @@ class GetbdP extends Postgres {
   }//FINAL DE METOHOD CHECK
 
 
-
-// metodo para insertar registros de la base de datos
-	public  function save($sql)
-	{
-	  // verificamos si status no esta vacia
-    if(is_null($this->status))
+//METODO SAVE() PARA GUARDAR REGISTROS Y TAMBIEN COMPRUEBA REGISTRO
+public  function save( $sql , $var = array())
+{
+    // verificamos si status no esta vacia
+    if (is_null($var))
     {
-      //creando el registro normal en la bd
-          $this->consulta = pg_query($sql)
-                    or die('Fatal Error: ' . pg_last_error());//errores de sintaxis
-         return true;//si se registro corectamente        
-    }
+        $this->consulta = pg_query($sql )or die('Fatal Error: ' . pg_last_error());//errores de sintaxis
+         //self::verificador($this->consulta); 
+        if($this->consulta){return true;}else{return true;}
+     }
     else
-    {
-        if($this->status ==  true)
-        {
-          return false;
-        }
+    {  
+       $sQ = "SELECT * FROM $var[0]  WHERE  $var[1]  = '$var[2]' LIMIT 1";
+       $sq = explode(',',$sQ);
+       $sql = implode($sq);
+       $consulta = pg_query($sql)or die('Fatal Error: ' . pg_last_error());
 
-        else
-        {
-           //var_dump($this->status);
-           //creando el registro normal en la bd
-           $this->consulta = pg_query($sql)
-                    or die('Fatal Error: ' . pg_last_error());//errores de sintaxis
-           return true;//si se registro corectamente   
+       if(pg_num_rows($consulta ) > 0)
+        { 
+          return null; //si el nombre esta registrado
         }
-    }//llave de else
-	}//final de metodo save()
+       else{
+
+           $this->consulta = pg_query($sql)or die('Fatal Error: ' . pg_last_error());
+                                         // or die(mysql_error());//errores de sintaxis
+          if($this->consulta){return true;}else{return false;}//si se registro corectamente   
+          
+        }
+     }//llave de else
+}//final del metodo insert
+
+
 
 
 

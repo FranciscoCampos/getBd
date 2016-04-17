@@ -4,7 +4,7 @@
 // **********Año 2015***********
 // ==================================
 
-
+//vendor/bin/phpunit test/conMysqlTest
 
 
 //===============================configuracion de getBd ===============================
@@ -34,7 +34,7 @@ return array(
         'mysql' => array(
             
             'host' => 'localhost',
-            'database' => 'crud',
+            'database' => 'PRUEBA',
             'user' => 'root',
             'password' => '123456'
            

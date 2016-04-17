@@ -84,31 +84,50 @@ static public function Debug(){
 
   }//final metodo
 
+// INSERT INTO lista_emails(email,nombre)
+// SELECT 'juan@gmail.com','Juan'
+// FROM dual
+// WHERE NOT EXISTS (SELECT email FROM lista_emails WHERE email='juan@gmail.com' LIMIT 1)
+// INSERT IGNORE INTO lista_emails(email,nombre) VALUES ('juan@gmail.com','Juan Rodriguez')
+
+// INSERT IGNORE saltará el registro si existe.
+
+// REPLACE INTO lista_emails(email,nombre) VALUES ('juan@gmail.com','Juan Rodriguez')
+
+// REPLACE actualizará el registro si existe, y si no hará un insert.
 
 
-//guarda el registro
-  public  function save( $sql )
-	{
+
+public  function save( $sql , $var = array())
+{
     // verificamos si status no esta vacia
-    if(is_null($this->status)){
-      //creando el registro normal en la bd
-        $this->consulta = mysql_query($sql)
-                    or die(mysql_error());//errores de sintaxis
-         return true;//si se registro corectamente        
-     }
-    else{
-        if($this->status ==  true){
-          return false;
+    if (is_null($var))
+    {
 
-        }else{
-           //var_dump($this->status);
-           //creando el registro normal en la bd
-           $this->consulta = mysql_query($sql)
-                                          or die(mysql_error());//errores de sintaxis
-           return true;//si se registro corectamente   
+        $this->consulta = mysql_query($sql,self::conectar());//errores de sintaxis
+         //self::verificador($this->consulta); 
+        if($this->consulta){return true;}else{return true;}
+     }
+    else
+    {  
+       $sQ = "SELECT * FROM $var[0]  WHERE  $var[1]  = '$var[2]' LIMIT 1";
+       $sq = explode(',',$sQ);
+       $sql = implode($sq);
+       $consulta = mysql_query($sql ,self::conectar());
+
+       if(mysql_num_rows($consulta ) > 0)
+        { 
+          return null; //si el nombre esta registrado
+        }
+       else{
+
+           $this->consulta = mysql_query($sql,self::conectar());
+                                         // or die(mysql_error());//errores de sintaxis
+          if($this->consulta){return true;}else{return false;}//si se registro corectamente   
+          
         }
      }//llave de else
-	}//final del metodo insert
+}//final del metodo insert
 
 
 
@@ -181,14 +200,15 @@ static public function Debug(){
 	{ 
       if( $conf == 'update' ){ //seguro para evitar error en los metodos
 
-      		$this->consulta = mysql_query($sql,self::conectar());
+      		$this->consulta = mysql_query($sql , self::conectar())
+          or die(mysql_error());
+       
+         if($this->consulta){return true;}   
+         
+        }else{
 
-          return $this->consulta;
-
-      }else{
-
-          return false ;
-      }
+            return false ;
+        }
     
 	}
 
@@ -200,9 +220,9 @@ static public function Debug(){
 	{
 		if( $conf == 'delete' ){ //seguro para evitar error en los metodos
 
-          $this->consulta = mysql_query($sql,self::conectar());
-
-          return $this->consulta;
+        $this->consulta = mysql_query($sql , self::conectar())
+          or die(mysql_error());
+         if($this->consulta){return true;}
 
       }else{
 
