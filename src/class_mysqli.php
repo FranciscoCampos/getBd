@@ -9,7 +9,7 @@
 
 // archivos requeridos para el funcionamiento
 
-require './config/start.php';
+require '../config/start.php';
 
 
 

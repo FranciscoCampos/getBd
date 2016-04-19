@@ -27,7 +27,7 @@ Tiene soporte para:
 
 #### getBd:
 
-    -south
+    -src
         class_file.php
         class_mysql.php
         class_mysqli.php
@@ -117,7 +117,7 @@ Ejemplo de uso getBd implementación con el driver de Mysql:
 <?php
 
 //Requerimos la clase para Mysql
-require_once 'south/class_mysql.php';
+require_once 'src/class_mysql.php';
 
 //Instancisa del objeto para Mysql
  $obj = new GetbdM();
@@ -135,7 +135,7 @@ Ejemplo de uso getBd implementación con el driver de Postgres:
 <?php
 
 //Requerimos la clase para Postgres
-require_once 'south/class_postgre.php';
+require_once 'src/class_postgre.php';
 
 //Instancisa del objeto para Postgres
 $obj = new GetbdP();
@@ -151,7 +151,7 @@ Ejemplo de uso getBd implementación con el driver de Mysqli:
 <?php
 
 //Requerimos la clase para Mysqli
-require_once 'south/class_mysqli.php';
+require_once 'src/class_mysqli.php';
 
 //Instancisa del objeto para Mysqli
 $obj = new GetbdMi();
@@ -207,7 +207,7 @@ Ejemplo:
 ```
 <?php 
 
-require_once 'south/class_mysql.php';
+require_once 'src/class_mysql.php';
 
 
 $con = new GetbdM();
@@ -274,7 +274,7 @@ Para ello tenemos los métodos:
 
 ```
  <?php
-  require_once 'south/class_mysql.php';
+  require_once 'src/class_mysql.php';
 
   $obj = new GetbdM();
   
@@ -295,7 +295,7 @@ Para ello tenemos los métodos:
 
 ```
  <?php
-  require_once 'south/class_mysql.php';
+  require_once 'src/class_mysql.php';
 
   $obj = new GetbdM();
   
@@ -324,7 +324,7 @@ Para ello tenemos el métodos:
 
 ```
  <?php
-  require_once 'south/class_mysql.php';
+  require_once 'src/class_mysql.php';
 
   $obj = new GetbdM();
   
@@ -352,7 +352,7 @@ Para ello tenemos el métodos:
 
 ```
  <?php
-  require_once 'south/class_mysql.php';
+  require_once 'src/class_mysql.php';
 
  $obj = new GetbdM();
       
@@ -383,7 +383,7 @@ Para ello tenemos el métodos:
 
 ```
  <?php
-  require_once 'south/class_mysql.php';
+  require_once 'src/class_mysql.php';
 
   $obj = new GetbdM();
   
@@ -411,7 +411,7 @@ Usamos el método `Valid()` recibe la variable a verificar
 
 ```
  <?php
-  require_once 'south/class_mysql.php';
+  require_once 'src/class_mysql.php';
 
   $var = GetbdM::Valid( $_POST['campos']);
   
@@ -533,7 +533,7 @@ Ejemplo de uso:
 ```
  <?php 
 
-require_once 'south/file.php';
+require_once 'src/file.php';
 
 
 $file = $_FILES['archivo'];//reciben el archivo
@@ -605,7 +605,7 @@ Ejemplo de uso:
 ```
  <?php 
 
-require_once 'south/file.php'; 
+require_once 'src/file.php'; 
 
 
 $file = $_FILES['archivo'];//reciben el archivo
