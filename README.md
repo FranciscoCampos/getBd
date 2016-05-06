@@ -10,7 +10,7 @@
  + Licencia: GPL v3 
  + Contactar: <camqui2011@gmail.com>
  + [https://gitlab.com/franpc/getBd.git](http://)
- + Requicito: ( php5+ , mysql 5.0+ , postgres 9.1.1+)
+ + Requicito: ( php>=5.3.0 , mysql 5.0+ , postgres 9.1.1+)
 
 ------------------------------------------------------ 
 
@@ -27,16 +27,24 @@ Tiene soporte para:
 
 #### getBd:
 
-    -src
-        class_file.php
-        class_mysql.php
-        class_mysqli.php
-        class_postgre.php
+    -Src
+        File.php
+        GetbdM.php
+        GetbdMi.php
+        GetbdP.php
 		
-    -config
-        base.php
-        start.php
-		
+    -Config
+        Connect
+          Mysql.php
+          Mysqly.php
+          Postgre.php
+        Files
+          ConfigFile.php
+        Base.php
+
+    autocarga.php
+    
+		start.php
     - README.md
 
 

@@ -13,7 +13,6 @@ define('DS', DIRECTORY_SEPARATOR );
 
 //	USADO CON CARGA POR COMPOSER
 
-//require_once 'vendor/autoload.php';
 
 //	USADO CON CARGA MANUAL
 
