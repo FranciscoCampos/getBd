@@ -1,4 +1,4 @@
-<?php 
+<?php namespace Src;
 
 // Copyright by Francisco Campos 
 // **********Año 2015***********
@@ -7,8 +7,8 @@
 
 //// DRIVER MYSQL
 // archivos requeridos para el funcionamiento
-
-require'../config/start.php';
+use \Config\Connect\Mysql;
+//require '../config/start.php' ;
 
 
 
@@ -84,17 +84,7 @@ static public function Debug(){
 
   }//final metodo
 
-// INSERT INTO lista_emails(email,nombre)
-// SELECT 'juan@gmail.com','Juan'
-// FROM dual
-// WHERE NOT EXISTS (SELECT email FROM lista_emails WHERE email='juan@gmail.com' LIMIT 1)
-// INSERT IGNORE INTO lista_emails(email,nombre) VALUES ('juan@gmail.com','Juan Rodriguez')
 
-// INSERT IGNORE saltará el registro si existe.
-
-// REPLACE INTO lista_emails(email,nombre) VALUES ('juan@gmail.com','Juan Rodriguez')
-
-// REPLACE actualizará el registro si existe, y si no hará un insert.
 
 
 
@@ -153,7 +143,7 @@ public  function save( $sql , $var = array())
        else{return $this; } 
     }
 
- //consultas simples  de datos   
+ //consultas simples  de datos todo los registros  
   public function findAll($tabla)
     {  
        $this->consulta = mysql_query("SELECT * FROM $tabla")

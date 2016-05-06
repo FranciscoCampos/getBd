@@ -1,4 +1,4 @@
-<?php 
+<?php namespace Src;
 
 // Copyright by Francisco Campos 
 // **********Año 2015***********
@@ -8,18 +8,19 @@
 
 //// DRIVER POSTGRES
 
-require'../config/start.php';
+//require '../Config/Start.php';
 
 
+use \Config\Connect\Postgre;
 
-
-class GetbdP extends Postgres {
+class GetbdP  extends Postgre{
 
  //atributos de la clase
 
     public $result = array();
     public $consulta;
     private $status = NULL;
+
     
   //metodo verificador de la consulta realizada retorna true y false
   protected function verificador($consulta){

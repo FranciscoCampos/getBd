@@ -1,13 +1,17 @@
-<?php 
+<?php namespace Src;
 
 // Copyright by Francisco Campos 
 // **********Año 2015***********
 // ==================================
 // version BETA
+/*
 
+*/
+use \Config\Files\ConfigFile;
 
-require'../config/start.php';
+//require'../config/start.php';
 //require __DIR__ . '/config' . '/start.php';
+
 
 /*
 *

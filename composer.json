@@ -1,23 +1,31 @@
 {
-    "name": "root/getBd",
-    "description": "Mini libreria para manejo basico de la consultas sql y los ficheros",
-    "type": "json",
+    "name": "franpc/getBd",
+    "description": "Mini libreria básica para CRUD y gestión de  consultas a la base de dato",
+    "type": "library",
+    "license": "LGPL",
     "authors": [
         {
             "name": "francisco campos",
-            "email": "camqui2011@gmail.com"
+            "email": "camqui2011@gmail.com",
+             "role": "Developer"
         }
     ],
     "minimum-stability": "beta",
     "autoload":{
 
-
         "classmap": [
-            "demo/",
-            "config/",
-            "src/"
-        ]
+            "Config",
+            "Src"
+        ],
 
+        "psr-4":{
+            "Config\\":"Config/",
+            "Src\\":"Src/"
+        }
+
+    },
+    "require": {
+        "php": ">=5.3.0"
     }
     ,
     "require-dev": {

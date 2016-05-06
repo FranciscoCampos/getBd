@@ -2,12 +2,12 @@
 # Libreria getBd 
 ![](http://i.imgur.com/q2CBZ1t.png?1)
 
-#### Mini libreria básica para CRUD y gestión de  consultas a la base de dato.
+#### Mini libreria básica para CRUD y gestión de  consultas a la base de dato, y manejos de archivos.
 
 ------------------------------------------------------
  + Copyright by **FRANCISCO CAMPOS** 
  + Verción: BETA
- + Licencia: OpenSource 
+ + Licencia: GPL v3 
  + Contactar: <camqui2011@gmail.com>
  + [https://gitlab.com/franpc/getBd.git](http://)
  + Requicito: ( php5+ , mysql 5.0+ , postgres 9.1.1+)
@@ -78,7 +78,8 @@ Contiene las clases nesesarias para la Subida de Archivos al servidor.
 
 Configuración de las variables de conexión.
 
-*config/base.php*
+
+`config/base.php`
 
  Inicializamos los parametros del Drive a utilizar en el array de configuración.
 
@@ -165,9 +166,9 @@ $obj = new GetbdMi();
 
 **Insertar registros en la base de datos:**
 
-`save( sql )`
+`save( sql , NULL )`
 
-Este método recibe un parametro, la consulta SQL.
+Este método recibe dos parametro, la consulta SQL , y una configuracion.
 
 - **sql:**  consulta sql a insertar, Nota: la variable puede ser llamada de otra forma!
 
@@ -177,16 +178,11 @@ Valores de Retorno:
 - **false:** Si la consulta no se realizó correctamente.
 Con getBd es posible verificar el registro antes de ser insertado, todo en una sola linea de código.
 
-Usamos el método: 
+Usamos el método save() de la siguiente forma.
 
-Consulta simples  Array de datos
+`save($sql , [ 'tabla' , 'campos' , 'valor'] )`
 
-`check( [ 'tabla' , 'campos' , 'valor'] )`
-
-Consulta complejas  Query complesjo
-
-`check( '...SQL...')`
-
+  valores adicionales es un array de valores para la verificacion del registro
 
 - **tabla** : Nombre de la tabla donde sera verificado el registro.
 - **campo**: Campos referencia para la condicion a cumplir.
@@ -194,15 +190,15 @@ Consulta complejas  Query complesjo
 
 Valores de Retorno:
 
-- **true**: Si existe el registro.
-- **false**: No se encotro registro.
+- **NULL**: Si existe el registro y insert no se realizo.
+- **true**: No se encotro registro y se realizo el insert.
 
-**Nota:** Uselo antes del método save()
+**Nota:** Para query mas complejos usamos  check()
 Ejemplo:
 
-    `obj->check( [ 'tabla' , 'campos' , 'valor'] )->save(sql)`
+    `obj->check( [ 'tabla' , 'campos' , 'valor'] )`
 
-    `obj->check( 'SQL' )->save(sql)`
+    `obj->check( 'SQL' )`
 
 ```
 <?php 
@@ -216,9 +212,9 @@ $sql = "INSERT INTO tabla (campos) Values (valores)";
 
 //verificador del registro
 
-$con->check(['tabla' , 'campo' , 'valor'])->save($sql);
+$con->save($sql, ['tabla' , 'campo' , 'valor']);
 
- if(!$con)
+ if(!is_null($con))
  {
    echo "Registro Insertado";
  }
@@ -230,7 +226,7 @@ $con->check(['tabla' , 'campo' , 'valor'])->save($sql);
  
 //Sin verificar registro
 
-$con->save($sql);
+$con->save($sql,NULL);
 
  if(!$con)
  {
@@ -629,7 +625,7 @@ echo "</pre>";
 ------------------------------------------------------
  + Copyright by **FRANCISCO CAMPOS** 
  + Verción: BETA
- + Licencia: OpenSource 
+ + Licencia: GPL v3 
  + Contactar: <camqui2011@gmail.com>
  + [https://gitlab.com/franpc/getBd.git](http://)
  + Requicito: ( php5+ , mysql 5.0+ , postgres 9.1.1+)

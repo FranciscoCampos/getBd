@@ -1,18 +1,9 @@
-<phpunit bootstrap="vendor/autoload.php"
-	
-	colors="true"
-	convertErrorsToExceptions="true"
-	convertNoticesToExceptions="true"
-	convertWarningsToExceptions="true"
-	processIsolation="false"
-	stopOnFailure="false"
-	syntaxCheck="false"
->
 
-<testsuites>
-	<testsuites name="getBd test">
-		<directory>test</directory>
+
+<phpunit bootstrap="vendor/autoload.php" colors="true">
+    <testsuites>
+        <testsuite name="Unit Tests">
+            <directory>./test</directory>
+        </testsuite>
     </testsuites>
-</testsuites>
-
 </phpunit>

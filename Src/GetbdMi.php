@@ -1,4 +1,5 @@
-<?php 
+<?php namespace Src;
+ 
  
 // Copyright by Francisco Campos 
 // **********Año 2015***********
@@ -8,8 +9,8 @@
 // DRIVER MYSQLI
 
 // archivos requeridos para el funcionamiento
-
-require '../config/start.php';
+use \Config\Connect\Mysqly;
+//require '../config/start.php';
 
 
 
@@ -88,29 +89,36 @@ static public function Debug(){
 
 
 //guarda el registro
-  public  function save( $sql )
-	{
+  public  function save( $sql , $var = array())
+{
     // verificamos si status no esta vacia
-    if(is_null($this->status)){
-      //creando el registro normal en la bd
-        $this->consulta = mysqli_query(self::conectar(),$sql)
-                    or die(mysqli_error());//errores de sintaxis
-         return true;//si se registro corectamente        
-     }
-    else{
-        if($this->status ==  true){
-          return false;
+    if (is_null($var))
+    {
 
-        }else{
-           //var_dump($this->status);
-           //creando el registro normal en la bd
-           $this->consulta = mysqli_query(self::conectar(),$sql)
-                                          or die(mysqli_error());//errores de sintaxis
-           return true;//si se registro corectamente   
+        $this->consulta = mysqli_query(self::conectar(),$sql);//errores de sintaxis
+         //self::verificador($this->consulta); 
+        if($this->consulta){return true;}else{return true;}
+     }
+    else
+    {  
+       $sQ = "SELECT * FROM $var[0]  WHERE  $var[1]  = '$var[2]' LIMIT 1";
+       $sq = explode(',',$sQ);
+       $sql = implode($sq);
+       $consulta = mysqli_query(self::conectar(),$sql);
+
+       if(mysqli_num_rows($consulta ) > 0)
+        { 
+          return null; //si el nombre esta registrado
+        }
+       else{
+
+           $this->consulta = mysqli_query(self::conectar(),$sql);
+                                         // or die(mysql_error());//errores de sintaxis
+          if($this->consulta){return true;}else{return false;}//si se registro corectamente   
+          
         }
      }//llave de else
-	}//final del metodo insert
-
+}//final del metodo insert
 
 
 // metodo contador de los resultados de la consulta cuando se requiere los registros
