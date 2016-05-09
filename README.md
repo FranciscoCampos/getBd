@@ -7,10 +7,10 @@
 ------------------------------------------------------
  + Copyright by **FRANCISCO CAMPOS** 
  + Verción: BETA
- + Licencia: GPL v3 
+ + Licencia: LGPL 3.0  
  + Contactar: <camqui2011@gmail.com>
  + [https://gitlab.com/franpc/getBd.git](http://)
- + Requicito: ( php>=5.3.0 , mysql 5.0+ , postgres 9.1.1+)
+ + Requicito: ( php >=5.3.0 , mysql 5.0+ , postgres 9.1.1+)
 
 ------------------------------------------------------ 
 
@@ -43,9 +43,9 @@ Tiene soporte para:
         Base.php
 
     autocarga.php
+	start.php
     
-		start.php
-    - README.md
+    - Documentación.md
 
 
 
@@ -54,24 +54,24 @@ Tiene soporte para:
 
 ------------------------------------------------------
 
-**Class:** contiene las class necesaria para el manejo rapido de las consultas a la base de datos.
+**Src:** contiene las class necesaria para el manejo rapido de las consultas a la base de datos.
 
-    - class_mysql.php:
+    - GetbdM.php:
 
     - name: GetbdM()
 Contiene las clases y métodos requerido el uso de Mysql.
 
-     -class_mysqli.php:
+     -GetbdMi.php:
 
     - name: GetbdMy()
 Contiene las clases y métodos requerido el uso de Mysqli.
 
-    - class_postgre.php:
+    - GetbdP.php:
 
     - name: GetbdP()
 Contiene las clases y métodos requerido el uso de Postgres.
 
-    - class_file.php:
+    - File.php:
 
     - name: File()
 Contiene las clases nesesarias para la Subida de Archivos al servidor.
@@ -80,14 +80,14 @@ Contiene las clases nesesarias para la Subida de Archivos al servidor.
 
 **Config:** Contiene las variables de configuración de la conexión a la base de datos, aqui se configura  las variables de la conexión: root , localhost , password, database, tambien  los parametros de los archivos como: tamaño , formato permitidos etc.
 
-    - base.php:
+    - Base.php:
 
 ## Funcionamiento:
 
 Configuración de las variables de conexión.
 
 
-`config/base.php`
+`Config/Base.php`
 
  Inicializamos los parametros del Drive a utilizar en el array de configuración.
 
@@ -117,6 +117,28 @@ Configuración de las variables de conexión.
         ),
 
 
+Instalación:
+
+Mediante Composer:
+
+
+`composer require getBd`
+
+Uso:
+
+`require 'vendor/autoload.php'`
+
+
+Instalación:
+
+Mediante Descarga:
+
+
+`https://gitlab.com/franpc/getBd`
+
+Uso:
+
+`require 'path/getbd/start.php`
 
 Ejemplo de uso getBd implementación con el driver de Mysql:
 
@@ -125,11 +147,9 @@ Ejemplo de uso getBd implementación con el driver de Mysql:
 ```
 <?php
 
-//Requerimos la clase para Mysql
-require_once 'src/class_mysql.php';
+use Src\GetbdM;
 
-//Instancisa del objeto para Mysql
- $obj = new GetbdM();
+$obj = new GetbdM();
 
 ?>
 
@@ -143,10 +163,8 @@ Ejemplo de uso getBd implementación con el driver de Postgres:
 ```
 <?php
 
-//Requerimos la clase para Postgres
-require_once 'src/class_postgre.php';
+use Src\GetbdP;
 
-//Instancisa del objeto para Postgres
 $obj = new GetbdP();
 
 ?>
@@ -159,11 +177,9 @@ Ejemplo de uso getBd implementación con el driver de Mysqli:
 ```
 <?php
 
-//Requerimos la clase para Mysqli
-require_once 'src/class_mysqli.php';
+use Src\GetbdMi;
 
-//Instancisa del objeto para Mysqli
-$obj = new GetbdMi();
+$obj = new GetbdMy();
 
 ?>
 ```
@@ -211,10 +227,9 @@ Ejemplo:
 ```
 <?php 
 
-require_once 'src/class_mysql.php';
+use Src\GetbdM;
 
-
-$con = new GetbdM();
+$obj = new GetbdM();
 
 $sql = "INSERT INTO tabla (campos) Values (valores)";
 
@@ -278,7 +293,7 @@ Para ello tenemos los métodos:
 
 ```
  <?php
-  require_once 'src/class_mysql.php';
+ use Src\GetbdM;
 
   $obj = new GetbdM();
   
@@ -299,9 +314,9 @@ Para ello tenemos los métodos:
 
 ```
  <?php
-  require_once 'src/class_mysql.php';
+  use Src\GetbdM;
 
-  $obj = new GetbdM();
+ $obj = new GetbdM();
   
   $datos = $obj->findAll("tabla")->showObj();
 
@@ -328,9 +343,9 @@ Para ello tenemos el métodos:
 
 ```
  <?php
-  require_once 'src/class_mysql.php';
+  use Src\GetbdM;
 
-  $obj = new GetbdM();
+$obj = new GetbdM();
   
   $sql = "SELECT * FROM tabla ";
 
@@ -356,9 +371,9 @@ Para ello tenemos el métodos:
 
 ```
  <?php
-  require_once 'src/class_mysql.php';
+ use Src\GetbdM;
 
- $obj = new GetbdM();
+$obj = new GetbdM();
       
  $sql = "UPDATE  tabla SET campo = 'valor' where condicion";
 
@@ -387,9 +402,9 @@ Para ello tenemos el métodos:
 
 ```
  <?php
-  require_once 'src/class_mysql.php';
+ use Src\GetbdM;
 
-  $obj = new GetbdM();
+ $obj = new GetbdM();
   
   $sql = "DELETE FROM tabla WHERE condición";
 
@@ -415,13 +430,14 @@ Usamos el método `Valid()` recibe la variable a verificar
 
 ```
  <?php
-  require_once 'src/class_mysql.php';
+ 
+  use Src\GetbdM;
 
   $var = GetbdM::Valid( $_POST['campos']);
   
   $sql = "SELECT * FROM  tabla WHERE campo = ( $var )";
 
-  $con->find($sql);
+  $con->save($sql , NULL);
 
 // todas las demas opciones 
 
@@ -463,7 +479,7 @@ Para ello tenemos la clase ` File()` que contiene los métodos:
     
 La clase ` File()` se puede configurar siertos parametros para ello nos ubicamos en la  siguiente ruta:
 
-*config/base.php*
+*Config/Base.php*
 
   	// CONFIGURACION DE LOS FILES O ARCHIVOS DE GETBD
 
@@ -537,8 +553,7 @@ Ejemplo de uso:
 ```
  <?php 
 
-require_once 'src/file.php';
-
+use Src\File;
 
 $file = $_FILES['archivo'];//reciben el archivo
 
@@ -609,7 +624,7 @@ Ejemplo de uso:
 ```
  <?php 
 
-require_once 'src/file.php'; 
+use Src\File;
 
 
 $file = $_FILES['archivo'];//reciben el archivo
@@ -633,9 +648,9 @@ echo "</pre>";
 ------------------------------------------------------
  + Copyright by **FRANCISCO CAMPOS** 
  + Verción: BETA
- + Licencia: GPL v3 
+ + Licencia: LGPL 3.0 
  + Contactar: <camqui2011@gmail.com>
  + [https://gitlab.com/franpc/getBd.git](http://)
- + Requicito: ( php5+ , mysql 5.0+ , postgres 9.1.1+)
+ + Requicito: ( php>=5.3.0 , mysql 5.0+ , postgres 9.1.1+)
 
 ------------------------------------------------------ 

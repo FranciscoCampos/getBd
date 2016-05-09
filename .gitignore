@@ -2,5 +2,8 @@
 **/demo
 **/prueba2/
 
+composer.lock
+phpunit.xml
 
+/test/
 /vendor/
