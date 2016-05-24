@@ -1,17 +1,18 @@
 <?php namespace Src;
  
- 
-// Copyright by Francisco Campos 
-// **********Año 2015***********
-// ==================================
-// clases  para gestionar las consultas a la base de datos mysql
-
-// DRIVER MYSQLI
-
-// archivos requeridos para el funcionamiento
+/* Copyright by Francisco Campos 
+ **********Año 2016***********
+ ==================================
+*
+* CLASE PARA CONSULTAS
+* CON MYSQLI A LA BASE DE DATOS
+*
+*DRIVER MYSQLI
+*
+* 
+*
+*/
 use \Config\Connect\Mysqly;
-//require '../config/start.php';
-
 
 
 //======= clase Conectar la clase  extiende de Mysql ==========
@@ -20,22 +21,22 @@ class GetbdMi extends Mysqly
 { 
    
    //atributos de la clase 
-    public $result = array(); //almasena el resultado de la consulta
+    public $result ; //almasena el resultado de la consulta
     public $consulta; //almacena el query a ejecutar
-    private $status = NULL;
+    private $status;
 
-
+   
 
 //metodo verificador de la consulta realizada retorna true de ser positivo y false negativo
  
-  protected function verificador($var){
+  public function verificador($var){
 
-      if ($var > 0)
+      if ($var)
        {
-        return true; 
+        return 1; 
        }
       else{ 
-        return false; 
+        return 0; 
       }
   }
 
@@ -86,9 +87,15 @@ static public function Debug(){
 
   }//final metodo
 
+/*
+* METODO SAVE() PARA GUARDAR REGISTROS Y TAMBIEN COMPRUEBA REGISTRO
+*
+* SAVE(SQL , NULL) INSERT NORMAL
+* RETURN TRUE Y FALSE
+* SAVE(SQL , ARRAY()) INSERT CON VALIDACION DE DATOS
+* RETURN TRUE Y FALSE Y NULL PARA LA VALIDACION
+*/
 
-
-//guarda el registro
   public  function save( $sql , $var = array())
 {
     // verificamos si status no esta vacia
@@ -97,18 +104,19 @@ static public function Debug(){
 
         $this->consulta = mysqli_query(self::conectar(),$sql);//errores de sintaxis
          //self::verificador($this->consulta); 
-        if($this->consulta){return true;}else{return true;}
+
+        if($this->consulta){return true;}else{return false;}
      }
     else
     {  
        $sQ = "SELECT * FROM $var[0]  WHERE  $var[1]  = '$var[2]' LIMIT 1";
        $sq = explode(',',$sQ);
-       $sql = implode($sq);
-       $consulta = mysqli_query(self::conectar(),$sql);
-
-       if(mysqli_num_rows($consulta ) > 0)
+       $sql2 = implode($sq);
+       $consulta = mysqli_query(self::conectar(),$sql2);
+       if(self::contador($consulta ) > 0)
         { 
-          return null; //si el nombre esta registrado
+          return NULL; //si el nombre esta registrado
+          exit();
         }
        else{
 
@@ -143,7 +151,11 @@ static public function Debug(){
        else{return $this; } 
     }
 
- //consultas simples  de datos   
+/*
+* FINDALL('TABLA')
+* RETORNA TODO LOS REGISTRO DE LA BASE DE DATOS
+* SELECIONADA EN EL METEDO
+*/   
   public function findAll($tabla)
     {  
        $this->consulta = mysqli_query(self::conectar(),"SELECT * FROM $tabla");
@@ -157,8 +169,11 @@ static public function Debug(){
       } 
     }
 
-// metodo para listar los  registros de la base de datos en un array asociativo
-
+/*
+* METODO
+* SHOWOBJ() ==> RETORNA UN OBJETO TIPO ARRAY ASOCIATIVO,
+* DEL RESULTADO DEL QUERY , VAR['CAMPO']
+*/
     public function show()
     {  
         
@@ -171,16 +186,11 @@ static public function Debug(){
         mysqli_free_result($this->consulta);
     }
 
-
-// metodo para listar los  registros de la base de datos en un array con los objeto de los campos
-
 /*
-   
-foreach ($datos as $dato ) {
-  $dato->nombre;
-}
-
+* SHOWOBJ() ==> RETORNA UN OBJETO TIPO OBJETO,
+* DEL RESULTADO DEL QUERY
 */
+
     public function showObj()
     {  
         
@@ -193,14 +203,27 @@ foreach ($datos as $dato ) {
         mysqli_free_result($this->consulta);
     }
 
+/*
+* SHOWOBJSON() ==> RETORNA UN OBJETO JSON
+*/
+    public function showObJson()
+    {  
+        
+          while ($res=mysqli_fetch_object($this->consulta))
+            {
+               $this->result[] = $res;
+            }
 
+        return json_encode($this->result);
+       mysqli_free_result($this->consulta);
+    }
 
 //selecionar un registro unico de la base de datos
 
    public function findOne($var = array()){
 
      $this->consulta = mysqli_query(self::conectar(),"SELECT * FROM $var[0] WHERE $var[1] = $var[2]")
-                                                             or die(mysql_error());
+           or die(mysql_error());
 
         return $fila = mysqli_fetch_array($this->consulta);
           //var_dump($fila);
@@ -208,21 +231,35 @@ foreach ($datos as $dato ) {
    }
 
 
+/*
+* GETID(['TABLA','CAMPO','VALOR'])
+* RETORNA EL ID DE LA CONSULTA 
+*/
+
+
 
 //************************** UPDATE SQL update(sql , 'update')*********************************
 // metodo para actulizar registros de la base de datos
 
-	public  function update($sql, $conf)
+	public  function update($sql, $conf = '')
 	{ 
-      if( $conf == 'update' ){ //seguro para evitar error en los metodos
+      try {
+ 
+         //seguro para evitar error en los metodos
+          if( !is_null($conf) && $conf == 'update' ){ 
+              //sql con el query a realizar
+              $this->consulta = mysqli_query(self::conectar(),$sql);
+              if($this->consulta ) return true; 
+              else return false;
+              
+          }else{
 
-      		$this->consulta = mysqli_query(self::conectar(),$sql);
-
-          return $this->consulta;
-
-      }else{
-
-          return false ;
+               throw new \Exception(' Upps !!');
+          }
+        
+      }catch (\Exception $e) {
+          
+          echo 'Falta Algumentos ' . $e->getMessage();
       }
     
 	}
@@ -231,20 +268,32 @@ foreach ($datos as $dato ) {
 //************************** DELETE SQL remove(sql , 'delete')*********************************
 //metodo para borrar registros de la base de datos
 
-	public  function remove($sql , $conf)
-	{
-		if( $conf == 'delete' ){ //seguro para evitar error en los metodos
+	public  function remove($sql , $conf = '' )
+	{  
+     try {
 
-          $this->consulta = mysqli_query(self::conectar(),$sql);
+         //seguro para evitar error en los metodos
+          if( !is_null($conf) && $conf == 'delete' ){ 
 
-          return $this->consulta;
+              $this->consulta = mysqli_query(self::conectar(),$sql);
+              if($this->consulta ) return true; 
+              else return false;
+              
+          }else{
 
-      }else{
-
-          return false ;
+               throw new \Exception(' Upps !!');
+          }
+        
+      }catch (\Exception $e) {
+          
+          echo 'Falta Algumentos ' . $e->getMessage();
       }
+   
+		
 	}
     
+
+
 //************************** PROTEC SQL *********************************
 //metodo para EVITAR  la inyec de sql registros de la base de datos
 
@@ -256,8 +305,11 @@ foreach ($datos as $dato ) {
 
   }
  
-
-
+/*
+* REAL_SQL(SQL)==> RETORNA TRUE O FALSE
+* METODO QUE VERIFICA EL SQL INGRESADO
+* POR SEGURIDAD DEL LA LIBRERIA
+*/
  
 }//final de la clase conectar
 
