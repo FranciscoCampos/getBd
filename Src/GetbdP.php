@@ -1,16 +1,17 @@
 <?php namespace Src;
 
-// Copyright by Francisco Campos 
-// **********Año 2015***********
-// ==================================
-// clase  para gestionar las consultas 
-// a la base de datos de postgres
-
-//// DRIVER POSTGRES
-
-//require '../Config/Start.php';
-
-
+/* Copyright by Francisco Campos 
+ **********Año 2016***********
+ ==================================
+*
+* CLASE PARA CONSULTAS
+* CON POSTGRES A LA BASE DE DATOS
+*
+*DRIVER POSTGRES
+*
+* 
+*
+*/
 use \Config\Connect\Postgre;
 
 class GetbdP  extends Postgre{
@@ -25,8 +26,12 @@ class GetbdP  extends Postgre{
   //metodo verificador de la consulta realizada retorna true y false
   protected function verificador($consulta){
 
-      if ($consulta > 0) {return true; }
-      else{ return false; }
+      if ($consulta > 0){
+        return true; 
+      }
+      else{ 
+        return false; 
+      }
   }
 
 // METOHOD QUE ACTIVA LOS HERRORES DE EJECUCION
@@ -81,7 +86,15 @@ class GetbdP  extends Postgre{
   }//FINAL DE METOHOD CHECK
 
 
-//METODO SAVE() PARA GUARDAR REGISTROS Y TAMBIEN COMPRUEBA REGISTRO
+/*
+* METODO SAVE() PARA GUARDAR REGISTROS Y TAMBIEN COMPRUEBA REGISTRO
+*
+* SAVE(SQL , NULL) INSERT NORMAL
+* RETURN TRUE Y FALSE
+* SAVE(SQL , ARRAY()) INSERT CON VALIDACION DE DATOS
+* RETURN TRUE Y FALSE Y NULL PARA LA VALIDACION
+*/
+
 public  function save( $sql , $var = array())
 {
     // verificamos si status no esta vacia
@@ -89,14 +102,14 @@ public  function save( $sql , $var = array())
     {
         $this->consulta = pg_query($sql )or die('Fatal Error: ' . pg_last_error());//errores de sintaxis
          //self::verificador($this->consulta); 
-        if($this->consulta){return true;}else{return true;}
+        if($this->consulta){return true;}else{return false;}
      }
     else
     {  
        $sQ = "SELECT * FROM $var[0]  WHERE  $var[1]  = '$var[2]' LIMIT 1";
        $sq = explode(',',$sQ);
-       $sql = implode($sq);
-       $consulta = pg_query($sql)or die('Fatal Error: ' . pg_last_error());
+       $sql2 = implode($sq);
+       $consulta = pg_query($sql2)or die('Fatal Error: ' . pg_last_error());
 
        if(pg_num_rows($consulta ) > 0)
         { 
@@ -114,9 +127,6 @@ public  function save( $sql , $var = array())
 
 
 
-
-
-
 // contador de los resultados de la consulta 
   protected function contador($consulta){
      $contador = pg_num_rows($consulta); 
@@ -125,7 +135,7 @@ public  function save( $sql , $var = array())
    
 
 //************************** SELECT SQL *********************************  
-// metodo para seleccionar registros de la base de datos COMPLEJAS
+// Metodo para seleccionar registros de la base de datos COMPLEJAS
 
     public function find($sql)
     {  
@@ -140,7 +150,11 @@ public  function save( $sql , $var = array())
       } 
     }
 
-//consultas simples  de datos
+/*
+* FINDALL('TABLA')
+* RETORNA TODO LOS REGISTRO DE LA BASE DE DATOS
+* SELECIONADA EN EL METEDO
+*/
     public function findAll($tabla)
     {  
        $this->consulta = pg_query("SELECT * FROM $tabla")
@@ -154,9 +168,11 @@ public  function save( $sql , $var = array())
       } 
     }
 
-
-// metodo para listar los  registros de la base de datos en un array asociativo
-
+/*
+* METODO
+* SHOWOBJ() ==> RETORNA UN OBJETO TIPO ARRAY ASOCIATIVO,
+* DEL RESULTADO DEL QUERY , VAR['CAMPO']
+*/
     public function show()
     {  
         
@@ -169,7 +185,10 @@ public  function save( $sql , $var = array())
     }
 
 
-
+/*
+* SHOWOBJ() ==> RETORNA UN OBJETO TIPO OBJETO,
+* DEL RESULTADO DEL QUERY
+*/
     public function showObj()
     {  
         
@@ -182,13 +201,28 @@ public  function save( $sql , $var = array())
        
     }
 
+/*
+* SHOWOBJSON() ==> RETORNA UN OBJETO JSON
+*/
+    public function showObJson()
+    {  
+        
+          while ($res=pg_fetch_object($this->consulta))
+            {
+               $this->result[] = $res;
+            }
 
+       return json_encode($this->result);
+       
+    }
 
 //selecionar un registro unico de la base de datos
 
+
+
  public function findOne($var = array()){
 
-   $this->consulta = pg_query("SELECT * FROM $var[0] WHERE $var[1] = $var[2]")
+   $this->consulta = pg_query("SELECT * FROM $var[0] WHERE $var[1] = $var[2] LIMIT 1")
          or die('Fatal Error: ' . pg_last_error());
 
       return $fila = pg_fetch_array($this->consulta);
@@ -196,48 +230,67 @@ public  function save( $sql , $var = array())
  }
 
 
-//************************** UPDATE SQL *********************************
+/*
+* GETID(['TABLA','CAMPO','VALOR'])
+* RETORNA EL ID DE LA CONSULTA 
+*/
+
+//************************** UPDATE SQL update(sql , 'update')*********************************
 // metodo para actulizar registros de la base de datos
 
+  public  function update($sql, $conf = '')
+  { 
+      try {
+ 
+         //seguro para evitar error en los metodos
+          if( !is_null($conf) && $conf == 'update' ){ 
+              //sql con el query a realizar
+              $this->consulta = pg_query($sql);
+              if($this->consulta ) return true; 
+              else return false;
+              
+          }else{
 
-	public  function update($sql, $conf)
-	{
-		 
-    if( $conf == 'update' ){ //seguro para evitar error en los metodos
-
-          $this->consulta = pg_query($sql)
-    or die('Fatal Error: ' . pg_last_error());
-
-          return $this->consulta;
-
-      }else{
-
-          return false ;
+               throw new \Exception(' Upps !!');
+          }
+        
+      }catch (\Exception $e) {
+          
+          echo 'Falta Algumentos ' . $e->getMessage();
       }
-	}
+    
+  }
 
 
-
-//************************** DELETE SQL *********************************
+//************************** DELETE SQL remove(sql , 'delete')*********************************
 //metodo para borrar registros de la base de datos
 
+  public  function remove($sql , $conf = '' )
+  {  
+     try {
 
-	public  function remove($sql, $conf)
-	{
-      if( $conf == 'delete' ){ //seguro para evitar error en los metodos
+         //seguro para evitar error en los metodos
+          if( !is_null($conf) && $conf == 'delete' ){ 
 
-         $this->consulta = pg_query($sql)
-              or die('Fatal Error: ' . pg_last_error());
+              $this->consulta = pg_query($sql);
+              if($this->consulta ) return true; 
+              else return false;
+              
+          }else{
 
-          return $this->consulta;
-
-      }else{
-
-          return false ;
+               throw new \Exception(' Upps !!');
+          }
+        
+      }catch (\Exception $e) {
+          
+          echo 'Falta Algumentos ' . $e->getMessage();
       }
-	}
+   
+    
+  }
+    
 
-//seguro en el query
+//VALIDAR DE QUERY
   static public  function Valid( $var )
   {
     //seguro para evitar error en los metodos 
@@ -245,8 +298,12 @@ public  function save( $sql , $var = array())
       return pg_escape_string($var);
 
   }
-    
 
+/*
+* REAL_SQL(SQL)==> RETORNA TRUE O FALSE
+* METODO QUE VERIFICA EL SQL INGRESADO
+* POR SEGURIDAD DEL LA LIBRERIA
+*/
 
 
 }//final de clase postgres

@@ -1,15 +1,20 @@
 <?php namespace Src;
 
-// Copyright by Francisco Campos 
-// **********Año 2015***********
-// ==================================
-// clases  para gestionar las consultas a la base de datos mysql
+/* 
+* Copyright by Francisco Campos 
+* **********Año 2016***********
+* ==================================
+*
+* CLASE PARA CONSULTAS
+* CON MYSQL A LA BASE DE DATOS
+*
+*DRIVER MYSQL
+*
+* 
+*
+*/
 
-//// DRIVER MYSQL
-// archivos requeridos para el funcionamiento
 use \Config\Connect\Mysql;
-//require '../config/start.php' ;
-
 
 
 //======= clase Conectar la clase  extiende de Mysql ==========
@@ -85,7 +90,14 @@ static public function Debug(){
   }//final metodo
 
 
-
+/*
+* METODO SAVE() PARA GUARDAR REGISTROS Y TAMBIEN COMPRUEBA REGISTRO
+*
+* SAVE(SQL , NULL) INSERT NORMAL
+* RETURN TRUE Y FALSE
+* SAVE(SQL , ARRAY()) INSERT CON VALIDACION DE DATOS
+* RETURN TRUE Y FALSE Y NULL PARA LA VALIDACION
+*/
 
 
 public  function save( $sql , $var = array())
@@ -96,14 +108,14 @@ public  function save( $sql , $var = array())
 
         $this->consulta = mysql_query($sql,self::conectar());//errores de sintaxis
          //self::verificador($this->consulta); 
-        if($this->consulta){return true;}else{return true;}
+        if($this->consulta){return true;}else{return false;}
      }
     else
     {  
        $sQ = "SELECT * FROM $var[0]  WHERE  $var[1]  = '$var[2]' LIMIT 1";
        $sq = explode(',',$sQ);
-       $sql = implode($sq);
-       $consulta = mysql_query($sql ,self::conectar());
+       $sql2 = implode($sq);
+       $consulta = mysql_query($sql2 ,self::conectar());
 
        if(mysql_num_rows($consulta ) > 0)
         { 
@@ -143,7 +155,13 @@ public  function save( $sql , $var = array())
        else{return $this; } 
     }
 
- //consultas simples  de datos todo los registros  
+
+/*
+* FINDALL('TABLA')
+* RETORNA TODO LOS REGISTRO DE LA BASE DE DATOS
+* SELECIONADA EN EL METEDO
+*/
+
   public function findAll($tabla)
     {  
        $this->consulta = mysql_query("SELECT * FROM $tabla")
@@ -157,8 +175,12 @@ public  function save( $sql , $var = array())
       } 
     }
 
-// metodo para listar los  registros de la base de datos en un array asociativo
 
+/*
+* METODO
+* SHOWOBJ() ==> RETORNA UN OBJETO TIPO ARRAY ASOCIATIVO,
+* DEL RESULTADO DEL QUERY , VAR['CAMPO']
+*/
     public function show()
     {  
         
@@ -169,6 +191,25 @@ public  function save( $sql , $var = array())
 
         return $this->result;
     }
+
+
+
+/*
+* SHOWOBJSON() ==> RETORNA UN OBJETO JSON
+*/
+    public function showObJson()
+    {  
+        
+          while ($res=mysql_fetch_assoc($this->consulta))
+            {
+               $this->result[] = $res;
+            }
+
+        return json_encode($this->result);
+       
+    }
+
+
 
 //selecionar un registro unico de la base de datos
 
@@ -181,44 +222,67 @@ public  function save( $sql , $var = array())
           //var_dump($fila);
    }
 
+/*
+* GETID(['TABLA','CAMPO','VALOR'])
+* RETORNA EL ID DE LA CONSULTA 
+*/
+
 
 
 //************************** UPDATE SQL update(sql , 'update')*********************************
 // metodo para actulizar registros de la base de datos
 
-	public  function update($sql, $conf)
-	{ 
-      if( $conf == 'update' ){ //seguro para evitar error en los metodos
+  public  function update($sql , $conf = '')
+  { 
+      try {
+ 
+         //seguro para evitar error en los metodos
+          if( !is_null($conf) && $conf == 'update' ){ 
+              //sql con el query a realizar
+              $this->consulta = mysql_query(self::conectar(),$sql);
+              if($this->consulta ) return true; 
+              else return false;
+              
+          }else{
 
-      		$this->consulta = mysql_query($sql , self::conectar())
-          or die(mysql_error());
-       
-         if($this->consulta){return true;}   
-         
-        }else{
-
-            return false ;
-        }
+               throw new \Exception(' Upps !!');
+          }
+        
+      }catch (\Exception $e) {
+          
+          echo 'Falta Algumentos ' . $e->getMessage();
+      }
     
-	}
+  }
 
 
 //************************** DELETE SQL remove(sql , 'delete')*********************************
 //metodo para borrar registros de la base de datos
 
-	public  function remove($sql , $conf)
-	{
-		if( $conf == 'delete' ){ //seguro para evitar error en los metodos
+  public  function remove($sql , $conf = '' )
+  {  
+     try {
 
-        $this->consulta = mysql_query($sql , self::conectar())
-          or die(mysql_error());
-         if($this->consulta){return true;}
+         //seguro para evitar error en los metodos
+          if( !is_null($conf) && $conf == 'delete' ){ 
 
-      }else{
+              $this->consulta = mysql_query(self::conectar(),$sql);
+              if($this->consulta ) return true; 
+              else return false;
+              
+          }else{
 
-          return false ;
+               throw new \Exception(' Upps !!');
+          }
+        
+      }catch (\Exception $e) {
+          
+          echo 'Falta Algumentos ' . $e->getMessage();
       }
-	}
+   
+    
+  }
+    
     
 //************************** PROTEC SQL *********************************
 //metodo para EVITAR  la inyec de sql registros de la base de datos
@@ -230,6 +294,13 @@ public  function save( $sql , $var = array())
       return mysql_real_escape_string($var);
 
   }
+
+/*
+* REAL_SQL(SQL)==> RETORNA TRUE O FALSE
+* METODO QUE VERIFICA EL SQL INGRESADO
+* POR SEGURIDAD DEL LA LIBRERIA
+*/
+
 
 }//final de la clase conectar
 

@@ -1,10 +1,11 @@
 <?php 
  
-/* Copyright by Francisco Campos 
-// **********Año 2015***********
-// ==================================
-// 
-//AUTOCARGA DE LAS CLASES DE LA LIBRERIA GETBD
+/* 
+* Copyright by Francisco Campos 
+* **********Año 2015***********
+* ==================================
+*
+* AUTOCARGA DE LAS CLASES DE LA LIBRERIA GETBD
 */
 
 function __autoload($class){

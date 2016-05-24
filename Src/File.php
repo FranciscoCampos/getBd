@@ -1,17 +1,17 @@
 <?php namespace Src;
 
-// Copyright by Francisco Campos 
-// **********Año 2015***********
-// ==================================
-// version BETA
-/*
-
+/* 
+* Copyright by Francisco Campos 
+* **********Año 2016***********
+* ==================================
+*
+* CLASE PARA SUBIDA DE FILE
+* CON GETBD ES MUY FACIL
+* DESCARGA Y COMPRESION DEL FILE
+* EN .ZIP SI LO DESEAN...
+*
 */
 use \Config\Files\ConfigFile;
-
-//require'../config/start.php';
-//require __DIR__ . '/config' . '/start.php';
-
 
 /*
 *
@@ -56,16 +56,21 @@ class File extends ConfigFile
 			         
 				         if(!file_exists($this->dire))//comprobando el directorio
 						  {
-							
-								if(!mkdir($this->dire, 0775, true))//creando el directorio
-								{
-							    	exit('Fallo al crear las carpetas...');
-							
-								}else {
-				         			chmod($this->dire, 0777);
-				             		return self::subido();//se realiza la subidadel archivo
-				          
-				             	}
+								try {
+									
+										if(!mkdir($this->dire, 0775, true))//creando el directorio
+										{
+									    	throw new \Exception(' Upps !!');
+									
+										}else {
+						         			chmod($this->dire, 0777);
+						             		return self::subido();//se realiza la subidadel archivo
+						          
+						             	}
+
+								} catch (\Exception $e) {
+									echo "DIRECTORY NOT CREATED ┌∩┐(◕_◕)┌∩┐" . $e->getMessage();
+								}
 							
 						  }
 						  else 
@@ -77,8 +82,8 @@ class File extends ConfigFile
 			 	else
 			 	{
 			 		/*error sino cumple con 
-			 	   	 los valores permitdos retorna NULL */
-			 	   	return $err = NULL;
+			 	   	 los valores permitdos retorna 1 */
+			 	   	return $err = 1;
 			 	}//final de else de comprobacion de tamaño y peso
 
 			}//final de la llave del else del error
@@ -185,16 +190,22 @@ public function upFiles($file , $dire , $conf = array())
         // se comprueba si el directorio existe
         if(!file_exists($this->dire))
         {
-        	//se crea el directorio con los permiso totales
-			if(!mkdir($this->dire, 0775, true))//creando el directorio
-			 {
-				die('Fallo al crear las carpetas...');
+        	try {
+        		
+		        	//se crea el directorio con los permiso totales
+					if(!mkdir($this->dire, 0775, true))//creando el directorio
+					 {
+						throw new \Exception(' Upps !!');
 
-			 }else{
-			 	//le damos permisos por si acaso
-			 	chmod($this->dire, 0777);
-			 	return self::subiendoMultiple();//donde se subi el archivo
-			 }
+					 }else{
+					 	//le damos permisos por si acaso
+					 	chmod($this->dire, 0777);
+					 	return self::subiendoMultiple();//donde se subi el archivo
+					 }
+
+        	} catch (\Exception $e) {
+        		echo "DIRECTORY NOT CREATED ┌∩┐(◕_◕)┌∩┐" . $e->getMessage();
+        	}
 			 
         }else{
         	//le damos permisos por si acaso
@@ -247,4 +258,201 @@ public function upFiles($file , $dire , $conf = array())
 
 
 
-}//final de clase file
+//DESCARGA Y COMPRECION DE LOS FILES CON GETBD=>FILE()
+
+
+
+ /*	
+ * METODO PARA DESCARGAR EL FILE
+ * PROTOTIPO DEL dowFile()
+ * GETBD->dowfile(ruta, option)
+ * SRC ES LA RUTA DEL ARCHIVO, A BAJAR
+ * ZIP OPCIONAL POR DEFECTO ESTA EN FALSE,
+ * SI SE CAMBIA A TRUE ACTIVA LA COMPRESION,
+ * EN FORMATO ZIP...
+ */
+
+public function dowFile($srcFile, $zip = false){
+
+	try {
+		 
+			if ($zip == TRUE && is_bool($zip)) {
+				
+				if(!empty($srcFile)){
+
+                    $srcTem = self::zipFile( $srcFile );
+                    /*
+					* LLAMADO DE LA FUNCION DE HEADERFILE()
+					* PARA SER DESCARGADO
+				    */
+					self::headerFile( $srcTem );
+					/*
+					* LIBERAMOS MEMORIA BORRANDO
+					* EL .ZIP FINAL DESPUES DE BAJARLO
+				    */
+					unlink($srcTem);
+					return TRUE;
+
+				}else{
+					throw new \Exception(' Upps !!');
+				}
+
+			}else{
+
+				if(!empty($srcFile)){
+
+					self::headerFile($srcFile);
+					
+
+				}else{
+
+					throw new \Exception(' Upps !!');
+				}
+			}
+
+	} catch (\Exception $e) {
+		echo "Empty Route ٩(×̯×)۶ " . $e->getMessage();
+	}
+
+    
+}//FINAL DEL METODO DONFILE()
+
+
+/*
+ * METODO PARA DERCARGAR ARCHIVO
+ * HEADERFILE(RUTA_ARCHIVO)
+ * SOLO LA RUTA Y LISTO...
+*/
+
+public function headerFile($src){
+
+	/*
+     * RUTA BASE /CARPETA/SUBCARPETA/ARCHIVO.PNG
+     */
+    $rutaBase = explode("/", $src);
+    /*
+	* ARRAY([0]=>'CARPETA',[1]=>'SUBCARPETA',[2]=>'ARCHIVO.PNG')
+    */
+	$numElem = count($rutaBase);
+	/*
+	* TAMANIO ARRAY() => 3 ELEMENTO')
+    */
+	$f = $rutaBase[$numElem - 1];
+	/*
+	* ARRAY(TAMANIO) - 1 = ARCHIVO.PNG 
+    */
+	array_pop($rutaBase); 
+	/*
+	* ARRAY([0]=>'CARPETA',[1]=>'SUBCARPETA')
+    */
+	$ruta = implode("/", $rutaBase);
+	/*
+	* RUTA BASE /CARPETA/SUBCARPETA/
+    */
+	$file = basename($f);
+	/*
+	* RUTA BASE REAL DEL ARCHIVO
+    */
+	$srcBase = $ruta ."/" . $file;
+	/*
+	* RUTA BASE /CARPETA/SUBCARPETA/ARCHIVO.PNG
+    */
+    try {
+    	
+		if (is_file($srcBase))
+		{
+		   header('Content-Type: application/force-download');
+		   header('Content-Disposition: attachment; filename='. $file);
+		   header('Content-Transfer-Encoding: binary');
+		   header('Content-Length: '. filesize($srcBase));
+		   readfile($srcBase);
+		   /*
+		    * RETURN TRUE O 1 PARA SU CONTROL
+		    * EN EL CONTROLADOR O USO.
+		   */
+		   return true;
+		   
+
+		}else{
+			throw new \Exception(' Upps !!');
+		}
+
+    } catch (\Exception $e) {
+    	echo "Dead File ٩(×̯×)۶ " . $e->getMessage();
+    }
+	
+}
+
+/*
+ * METODO PARA COMPRIMIR ARCHIVO
+ * EN .ZIP ZIPFILE(RUTA_ARCHIVO, FALSE)
+ * FALSE PARA UN ARCHIVO A LA VES
+ * TRUE PARA MULTIPLES ARCHIVOS
+*/
+
+public function zipFile($addFile , $mult = false){
+	
+	$down = new \ZipArchive();
+    /*
+     * RUTA BASE /CARPETA/SUBCARPETA/ARCHIVO.PNG
+     */
+    $rutaBase = explode("/", $addFile);
+    /*
+	* ARRAY([0]=>'CARPETA',[1]=>'SUBCARPETA',[2]=>'ARCHIVO.PNG')
+    */
+	$elem = count($rutaBase);
+	/*
+	* TAMANIO ARRAY() => 3 ELEMENTO')
+    */
+	$file_ext = $rutaBase[$elem - 1];
+	/*
+	* ARRAY(TAMANIO) - 1 = ARCHIVO.PNG 
+    */
+	$file = preg_split('/([.])\w+/', $file_ext);
+	/*
+	* ARCHIVO.PNG => ('/([.])\w+/')
+	* ARRAY([0]=>'ARCHIVO',[1]=>'PNG')
+    */
+    $fileName = $file[0];
+    /*
+	* FILE => ARCHIVO
+    */
+	array_pop($rutaBase); 
+	/*
+	* ARRAY([0]=>'CARPETA',[1]=>'SUBCARPETA')
+    */
+	$ruta = implode("/", $rutaBase);
+	/*
+	* RUTA BASE /CARPETA/SUBCARPETA/
+    */
+	$srcBase = $ruta ."/". $fileName .".zip";
+	/*
+	* RUTA BASE /CARPETA/SUBCARPETA/ARCHIVO.ZIP
+    */
+
+	try {
+		if (!$down->open($srcBase, \ZipArchive::CREATE)) {
+
+		   throw new \Exception(' Upps !!');
+
+		}else{
+
+			/*
+			* AQUI LO DE MULTIPLE FILE EN UN .ZIP
+			*/
+			$down->addFile( $addFile , $file_ext);
+			$down->close();
+			/*
+			* RETURN LA RUTA FINAL DEL .ZIP
+			*/
+			return $srcBase;
+		}
+		
+	} catch (\Exception $e) {
+    	echo "Dead File  " . $e->getMessage();
+    }
+}
+
+
+
+}//FINAL DE LA CLASE FILE

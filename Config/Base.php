@@ -1,18 +1,17 @@
 <?php namespace Config;
 
 /* Copyright by Francisco Campos 
-// **********Año 2015***********
+ **********Año 2015***********
  ==================================
-
-vendor/bin/phpunit test/conMysqlTest
-configuracion de getBd 
-*/
-/*
-
- BASE DE DATOS
- CONFIGURACION DE LOS ARCHIVOS FILES
-
-
+*
+* CONFIGURACION DE LA CONEXION DE GETBD
+* CONFIGURACION DE LOS FORMATOS PERMITIDOS
+* PARA LOS FILES
+*
+*DRIVER POSTGRES
+*DRIVER MYSQL
+*DRIVER ,YSQLI
+*FILES
 */
 
 class Base{
