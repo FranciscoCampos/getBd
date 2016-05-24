@@ -1,4 +1,3 @@
-
 # Libreria getBd 
 ![](http://i.imgur.com/q2CBZ1t.png?1)
 
@@ -153,7 +152,7 @@ $obj = new GetbdM();
 
 ?>
 
-```
+``` php
 
 
 Ejemplo de uso getBd implementación con el driver de Postgres:
