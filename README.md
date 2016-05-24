@@ -152,7 +152,7 @@ $obj = new GetbdM();
 
 ?>
 
-``` php
+```
 
 
 Ejemplo de uso getBd implementación con el driver de Postgres:
