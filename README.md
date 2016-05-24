@@ -143,7 +143,7 @@ Ejemplo de uso getBd implementación con el driver de Mysql:
 
 
 **Archivo demo.php**
-```
+```php
 <?php
 
 use Src\GetbdM;
@@ -643,20 +643,7 @@ echo "</pre>";
 
 ?>
 ```
-```javascript
-var s = "JavaScript syntax highlighting";
-alert(s);
-```
- 
-```python
-s = "Python syntax highlighting"
-print s
-```
- 
-```
-No language indicated, so no syntax highlighting. 
-But let's throw in a <b>tag</b>.
-```
+
 ------------------------------------------------------
  + Copyright by **FRANCISCO CAMPOS** 
  + Verción: BETA
