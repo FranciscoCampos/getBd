@@ -2,7 +2,7 @@
  
 /* 
 * Copyright by Francisco Campos 
-* **********Año 2015***********
+* **********Año 2016***********
 * ==================================
 *
 * AUTOCARGA DE LAS CLASES DE LA LIBRERIA GETBD
