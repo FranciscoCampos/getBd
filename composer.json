@@ -2,7 +2,7 @@
     "name": "franpc/getBd",
     "description": "Mini libreria básica para CRUD y gestión de  consultas a la base de dato",
     "type": "library",
-    "license": "LGPL v3",
+    "license": "GPLv3",
     "authors": [
         {
             "name": "francisco campos",

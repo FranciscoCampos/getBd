@@ -2,7 +2,7 @@
 **/demo
 **/prueba2/
 
-composer.lock
+**/composer.lock
 phpunit.xml
 
 
