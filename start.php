@@ -25,5 +25,5 @@ define('DS', DIRECTORY_SEPARATOR );
 Autoload::load();
 
 
-//require_once (GETBD . DS . 'Config/autocarga.php');
+//require_once (GETBD . DS . 'Config/Autoload.php');
 //Config\Autoload::load();

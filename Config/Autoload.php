@@ -1,24 +1,34 @@
-<?php 
- 
+<?php namespace Config;
+
 /* 
 * Copyright by Francisco Campos 
-* **********Año 2016***********
+* **********Año 2015***********
 * ==================================
 *
 * AUTOCARGA DE LAS CLASES DE LA LIBRERIA GETBD
 */
 
-function __autoload($class){
 
-	$class = GETBD . DS .  str_replace( '\\', DS , $class ) . '.php';
-	
-	if (file_exists($class)) {
+class Autoload{
 
-		require_once( $class );//retornando la clase indicada
+	public static function load(){
+
+		function __autoload($class){
+
+			$class = GETBD . DS .  str_replace( '\\', DS , $class ) . '.php';
+			
+			if (file_exists($class)) {
+				//retornando la clase indicada
+				require_once( $class );
+			}
+		}
+		
 	}
+	
 }
 
 
 
+?>
 
  
