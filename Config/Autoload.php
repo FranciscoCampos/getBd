@@ -13,22 +13,19 @@ class Autoload{
 
 	public static function load(){
 
-		function __autoload($class){
-
+		spl_autoload_register(function ($class){
 			$class = GETBD . DS .  str_replace( '\\', DS , $class ) . '.php';
-			
-			if (file_exists($class)) {
-				//retornando la clase indicada
-				require_once( $class );
-			}
-		}
+				
+				if (file_exists($class)) {
+					require_once( $class );
+				}
+	    });
 		
 	}
+	
 	
 }
 
 
-
-?>
 
  
