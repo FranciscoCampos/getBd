@@ -1,4 +1,3 @@
-
 # Librería getBd 
 **Mini librería Básica para CRUD y Gestión de  Consultas a la Base de Dato, y Manejos de File.**
 
@@ -22,7 +21,7 @@ Tiene soporte para:
 [TOC]
 
 
-##Estructura de la Librería
+# Estructura de la Librería
 
 ```php
     -Src
@@ -49,7 +48,7 @@ Tiene soporte para:
 
 
 
-##Descripción de la Librería
+# Descripción de la Librería
 
 ------------------------------------------------------
 
@@ -81,7 +80,7 @@ Contiene las clases nesesarias para la Subida de Archivos al servidor.
 
     - Base.php
 
-##Instalación
+# Instalación
 
 Instalación vía  Composer:
 
@@ -109,7 +108,7 @@ require 'path/getbd/start.php
 
 
 
-##Funcionamiento
+# Funcionamiento
 
 Configuración de las variables de conexión.
 
@@ -131,7 +130,7 @@ Configuración de las variables de conexión.
         ),
 ```
 
-**Driver para Postgres**
+** Driver para Postgres **
 
 ```php
     // DRIVER POSTGRES
@@ -157,7 +156,7 @@ Configuración de las variables de conexión.
 ```
 
 
-##GetBd Mysql
+# GetBd Mysql
 
 Para usar getBd con  Mysql
 
@@ -170,7 +169,7 @@ $obj = new GetbdM();
 
 ```
 
-##GetBd Mysql Insert
+# GetBd Mysql Insert
 
 ```php
 save( sql , opcional)
@@ -186,7 +185,7 @@ Valores de Retorno:
 
 Con getBd es posible verificar el registro antes de ser insertado, todo en una sola linea de código.
 
-##GetBd Mysql Insert Verificado
+# GetBd Mysql Insert Verificado
 
 Esto es posible solo agregando parámetros adicionales al  método save() de la siguiente forma.
 
@@ -256,7 +255,7 @@ $con->save($sql);
 ```
 
 
-##GetBd Mysql SELECT
+# GetBd Mysql SELECT
 
 Para ello tenemos los métodos:
 
@@ -350,7 +349,7 @@ findAll( parámetro ) showObj()
 ```
 
 
-##GetBd SELECT Único
+# GetBd SELECT Único
 
 Para ello tenemos el métodos:
 
@@ -376,7 +375,7 @@ $datos = $obj->findOne(['table' , 'id', 'valor']);
  ?>
 ```
 
-##GetBd Mysql UPDATE
+# GetBd Mysql UPDATE
 
 Para ello tenemos el métodos:
 
@@ -410,7 +409,7 @@ $obj = new GetbdM;
 ```
 
 
-##GetBd Mysql DELETE
+# GetBd Mysql DELETE
 
 Para ello tenemos el métodos:
 
@@ -443,7 +442,7 @@ remove(sql , 'string' )
  ?>
 ```
 
-##GetBd  SQL injection
+# GetBd  SQL injection
 
 Usamos el método `Valid()` recibe la variable a verificar
 
@@ -470,7 +469,7 @@ GetbdM::Valid( $_POST['campos'])
  ?>
 ```
 
-##GetBd Postgres y Mysqli
+# GetBd Postgres y Mysqli
 
 El uso de getBd con Postgres o Mysqli es igual al funcionamiento con Mysql tenemos los mismo métodos. Solo cambiar  **Instancia de la class.**
 
@@ -483,7 +482,7 @@ $obj = new GetbdMi();
 ?>
 
 ```
-**Para usar getBd con  Postgres:**
+** Para usar getBd con  Postgres: **
 
 ```php
 <?php
@@ -522,7 +521,7 @@ $obj = new GetbdP();
  >Puede ver los ejemplos de los métodos arriba.
 
 
-##GetBd Files
+# GetBd Files
 
 Subir Archivos o files al servidor con getBd es muy fácil.
 Para ello tenemos la clase ` File()` que contiene los métodos:
