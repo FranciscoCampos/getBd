@@ -1,38 +1,36 @@
 
-# Libreria getBd 
-![](http://i.imgur.com/q2CBZ1t.png?1)
-
-#### Mini libreria básica para CRUD y gestión de  consultas a la base de dato, y manejos de archivos.
+# Librería getBd 
+**Mini librería Básica para CRUD y Gestión de  Consultas a la Base de Dato, y Manejos de File.**
 
 ------------------------------------------------------
  + Copyright by **FRANCISCO CAMPOS** 
- + Verción: BETA
- + Licencia: LGPL 3.0  
+ + Versión: BETA
+ + Licencia: MIT  
  + Contactar: <camqui2011@gmail.com>
  + [https://gitlab.com/franpc/getBd.git](http://)
  + Requicito: ( php >=5.3.0 , mysql 5.0+ , postgres 9.1.1+)
 
------------------------------------------------------- 
 
-Tiene soporte para: 
+Tiene soporte para:
 
 + Mysql
 + Mysqli
 + Postgres
 + Files
 
-******************************************************
 
-### Extructura de la Libreria:
+[TOC]
 
-#### getBd:
 
+##Estructura de la Librería
+
+```php
     -Src
         File.php
         GetbdM.php
         GetbdMi.php
         GetbdP.php
-		
+
     -Config
         Connect
           Mysql.php
@@ -41,20 +39,21 @@ Tiene soporte para:
         Files
           ConfigFile.php
         Base.php
+		autocarga.php
 
-    autocarga.php
 	start.php
-    
+
     - Documentación.md
 
+```
 
 
 
-### Descripción de la Libreria:
+##Descripción de la Librería
 
 ------------------------------------------------------
 
-**Src:** contiene las class necesaria para el manejo rapido de las consultas a la base de datos.
+**Src:** Contiene las clases necesaria para el manejo rápido de las consultas a la base de datos.
 
     - GetbdM.php:
 
@@ -78,28 +77,63 @@ Contiene las clases nesesarias para la Subida de Archivos al servidor.
 
 
 
-**Config:** Contiene las variables de configuración de la conexión a la base de datos, aqui se configura  las variables de la conexión: root , localhost , password, database, tambien  los parametros de los archivos como: tamaño , formato permitidos etc.
+**Config:** Contiene las variables de configuración de la conexión a la base de datos, aquí se configura  las variables de la conexión: root , localhost , password, database, también  los parámetros de los archivos como: tamaño , formato permitidos etc.
 
-    - Base.php:
+    - Base.php
 
-## Funcionamiento:
+##Instalación
+
+Instalación vía  Composer:
+
+```php
+ composer require getBd
+```
+Uso:
+
+```php
+require 'vendor/autoload.php'
+```
+
+
+Instalación Mediante Descarga:
+
+[https://gitlab.com/franpc/getBd.git](http://)
+
+
+
+Uso:
+
+```php
+require 'path/getbd/start.php
+```
+
+
+
+##Funcionamiento
 
 Configuración de las variables de conexión.
 
 
 `Config/Base.php`
 
- Inicializamos los parametros del Drive a utilizar en el array de configuración.
+ Inicializamos los parámetros del Drive a utilizar en el array de configuración.
 
+**Driver para Mysql**
+
+```php
     // DRIVER MYSQL
         'mysql' => array(
             'host' => 'host',
             'database' => 'database',
             'user' => 'username',
             'password' => 'password'
-           
-        ),
 
+        ),
+```
+
+**Driver para Postgres**
+
+```php
     // DRIVER POSTGRES
         'postgre' => array(
             'host' => 'host',
@@ -107,8 +141,12 @@ Configuración de las variables de conexión.
             'user' => 'postusername',
             'password' => 'password'
         ),
+```
 
-     // DRIVER MYSQLI   
+**Driver para Mysqli**
+
+```php
+     // DRIVER MYSQLI
         'mysqli' => array(
             'host' => 'host',
             'database' => 'database',
@@ -116,97 +154,46 @@ Configuración de las variables de conexión.
             'password' =>'password'
         ),
 
-
-Instalación:
-
-Mediante Composer:
-
-
-`composer require getBd`
-
-Uso:
-
-`require 'vendor/autoload.php'`
-
-
-Instalación:
-
-Mediante Descarga:
-
-
-`https://gitlab.com/franpc/getBd`
-
-Uso:
-
-`require 'path/getbd/start.php`
-
-Ejemplo de uso getBd implementación con el driver de Mysql:
-
-
-**Archivo demo.php**
 ```
-<?php
 
+
+##GetBd Mysql
+
+Para usar getBd con  Mysql
+
+
+```php
+<?php
 use Src\GetbdM;
-
 $obj = new GetbdM();
-
 ?>
 
 ```
 
+##GetBd Mysql Insert
 
-Ejemplo de uso getBd implementación con el driver de Postgres:
-
-
-**Archivo demo.php**
+```php
+save( sql , opcional)
 ```
-<?php
-
-use Src\GetbdP;
-
-$obj = new GetbdP();
-
-?>
-```
-
-Ejemplo de uso getBd implementación con el driver de Mysqli:
-
-
-**Archivo demo.php**
-```
-<?php
-
-use Src\GetbdMi;
-
-$obj = new GetbdMy();
-
-?>
-```
-
-
-
-## getBd con Mysql
-
-**Insertar registros en la base de datos:**
-
-`save( sql , NULL )`
-
-Este método recibe dos parametro, la consulta SQL , y una configuracion.
+Este método recibe dos parámetro, la consulta SQL , y una configuración opcional.
 
 - **sql:**  consulta sql a insertar, Nota: la variable puede ser llamada de otra forma!
 
 Valores de Retorno:
 
-- **true:**  Si la consulta se realizó correctamente.
-- **false:** Si la consulta no se realizó correctamente.
+- **true:** Registro insertado correctamente.
+- **false:** Registro no insertado .
+
 Con getBd es posible verificar el registro antes de ser insertado, todo en una sola linea de código.
 
-Usamos el método save() de la siguiente forma.
+##GetBd Mysql Insert Verificado
 
-`save($sql , [ 'tabla' , 'campos' , 'valor'] )`
+Esto es posible solo agregando parámetros adicionales al  método save() de la siguiente forma.
 
-  valores adicionales es un array de valores para la verificacion del registro
+```php
+save( $sql , array('tabla' , 'campos' , 'valor') )
+```
+  valor adicional es un array con  iten  para la verificacion del registro.
 
 - **tabla** : Nombre de la tabla donde sera verificado el registro.
 - **campo**: Campos referencia para la condicion a cumplir.
@@ -214,22 +201,26 @@ Usamos el método save() de la siguiente forma.
 
 Valores de Retorno:
 
-- **NULL**: Si existe el registro y insert no se realizo.
-- **true**: No se encotro registro y se realizo el insert.
+- **NULL**: Sí existe un registro que coincida con el array de verificación, el sql  no sera insertado.
+- **true**: No se encotro registro similar a la verificación, se realiza el insert de manera correcta.
 
-**Nota:** Para query mas complejos usamos  check()
+**Nota:** Para query más complejos usamos  check()
 Ejemplo:
-
-    `obj->check( [ 'tabla' , 'campos' , 'valor'] )`
-
-    `obj->check( 'SQL' )`
-
+```php
+ check( [ 'tabla' , 'campos' , 'valor'] )
 ```
+```php
+ check( 'SQL' )
+```
+
+Ejemplo: Realizando INSERT con su validación
+
+```php
 <?php 
 
 use Src\GetbdM;
 
-$obj = new GetbdM();
+$obj = new GetbdM;
 
 $sql = "INSERT INTO tabla (campos) Values (valores)";
 
@@ -246,10 +237,12 @@ $con->save($sql, ['tabla' , 'campo' , 'valor']);
    echo "Registro No Insertado";
  }
  
+ ```
  
+ ```php
 //Sin verificar registro
 
-$con->save($sql,NULL);
+$con->save($sql);
 
  if(!$con)
  {
@@ -263,21 +256,23 @@ $con->save($sql,NULL);
 ```
 
 
-## Consultar registro de la base de datos
+##GetBd Mysql SELECT
 
 Para ello tenemos los métodos:
 
 `find( parametro )` consultas complejas
 
-+ Recibe un parametro que es la consulta SQL
++ Recibe un parámetro que es la consulta SQL
 + Retorna **True:** Si hay registro
 + Retorna **False:**  Si no hay registro
 
-`findAll( parametro )` consultas simples
+`findAll( tabla )` consultas simples
 
-+ Recibe un parametro que es la consulta SQL
++ Recibe un parámetro, el nombre de la tabla de la base de datos
 + Retorna **True:** Si hay registro
 + Retorna **False:**  Si no hay registro
+
+Mostrando los datos:
 
 `show()`
 
@@ -287,15 +282,21 @@ Para ello tenemos los métodos:
 
 + Retorna un Objeto con los datos
 
-## Consulta a la base de datos
+`showObjson()`
 
-`find( parametro ) show() `
++ Retorna un Objeto JSON con los datos Ideal para REST API
 
+**SELECT a la base de datos**
+
+```php
+find( sql_query ) show() 
 ```
+
+```php
  <?php
  use Src\GetbdM;
 
-  $obj = new GetbdM();
+  $obj = new GetbdM;
   
   $sql = "SELECT * FROM tabla ";
 
@@ -310,9 +311,11 @@ Para ello tenemos los métodos:
  ?>
 ```
 
-`findAll( parametro ) showObj() `
-
+```php
+findAll( parámetro ) showObj() 
 ```
+
+```php
  <?php
   use Src\GetbdM;
 
@@ -329,57 +332,74 @@ Para ello tenemos los métodos:
  ?>
 ```
 
-## Consultar un registro unico en la  base de datos
+```php
+ <?php
+  use Src\GetbdM;
+
+ $obj = new GetbdM();
+  
+  $datos = $obj->findAll("tabla")->showObjson();
+
+ //mostrando los registros en formato JSON
+ 
+ foreach ($datos as $dato) {
+    echo $dato.campo  "<br>";
+ }
+    
+ ?>
+```
+
+
+##GetBd SELECT Único
 
 Para ello tenemos el métodos:
 
 `findOne( ['tabla' , 'campos', 'valor'] )`
 
-+ Recibe un arreglo con 3 parametros 
-+ Retorna **True:** Si hay registro
-+ Retorna **False:** Si no hay registro
++ Recibe un arreglo con 3 parámetros 
++ Retorna **True:** Sí hay registro
++ Retorna **False:** Sí no hay registro
 + Retorna un registro encontrado
 
 
-```
+```php
  <?php
   use Src\GetbdM;
 
-$obj = new GetbdM();
-  
-  $sql = "SELECT * FROM tabla ";
+$obj = new GetbdM;
 
-  $datos = $obj->findOne(['table' , 'id', 'valor']);
+$datos = $obj->findOne(['table' , 'id', 'valor']);
 
  //mostrando el registro
 
-    print_r($dato );
- 
-    
+  print_r($dato );
  ?>
 ```
 
-## Actualizar registro de la base de datos
+##GetBd Mysql UPDATE
 
 Para ello tenemos el métodos:
 
-`update( sql , 'string' )`
-
-+ Recibe dos parametro que son: la consulta SQL , y la cadena 'update', para evitar error en la consulta. 
-+ Retorna **True:** Si se actualizo el registro
-+ Retorna **False:** Si no se actualizo el registro
-
+```php
+update( sql , 'string' )
 ```
+
++ Recibe dos parámetro que son: la consulta SQL , y la cadena 'update', para evitar error en la consulta. 
++ Retorna **True:** Sí se actualizó el registro
++ Retorna **False:** No se actualizó el registro
++ String: Debe ser igual a update
+
+```php
  <?php
  use Src\GetbdM;
 
-$obj = new GetbdM();
-      
- $sql = "UPDATE  tabla SET campo = 'valor' where condicion";
+$obj = new GetbdM;
+
+ $sql = "UPDATE  tabla SET campo = 'valor' where condición";
 
   if ( !$con->update($sql , 'update')) 
   {
-     echo "No! se actualizo el registro";
+     echo "No! se actualizÓ el registro";
   }
   else
   {   
@@ -390,21 +410,24 @@ $obj = new GetbdM();
 ```
 
 
-## Eliminar registro de la base de datos
+##GetBd Mysql DELETE
 
 Para ello tenemos el métodos:
 
-`remove(sql , string' )`
-
-+ Recibe dos parametro que son : la consulta SQL , y la cadena 'delete', para evitar error en la consulta. 
-+ Retorna **True:** Si se elimino el registro
-+ Retorna **False:** Si no se elimino el registro
-
+```php
+remove(sql , 'string' )
 ```
+
++ Recibe dos parámetro que son : la consulta SQL , y la cadena 'delete', para evitar error en la consulta. 
++ Retorna **True:** Sí se elimino el registro.
++ Retorna **False:** No se elimino el registro.
++ String: Debe ser igual a delete.
+
+```php
  <?php
  use Src\GetbdM;
 
- $obj = new GetbdM();
+ $obj = new GetbdM;
   
   $sql = "DELETE FROM tabla WHERE condición";
 
@@ -420,15 +443,18 @@ Para ello tenemos el métodos:
  ?>
 ```
 
-## Evitar  SQL injection en los query necesarios...
+##GetBd  SQL injection
 
 Usamos el método `Valid()` recibe la variable a verificar
 
 **Retorna la consulta segura**
 
-`GetbdM::Valid( $_POST['campos'])`
-
+```php
+GetbdM::Valid( $_POST['campos'])
 ```
+
+```php
+
  <?php
  
   use Src\GetbdM;
@@ -437,25 +463,46 @@ Usamos el método `Valid()` recibe la variable a verificar
   
   $sql = "SELECT * FROM  tabla WHERE campo = ( $var )";
 
-  $con->save($sql , NULL);
+  $con->save( $sql );
 
 // todas las demas opciones 
 
  ?>
 ```
 
-## getBd  con  Postgres y Mysqli
+##GetBd Postgres y Mysqli
 
-El uso de getBd con Postgres o Mysqli es igual al funcionamiento con Mysql tenemos los mismo metodos. Solo cambia es el **include de la class**
+El uso de getBd con Postgres o Mysqli es igual al funcionamiento con Mysql tenemos los mismo métodos. Solo cambiar  **Instancia de la class.**
+
+**Para usar getBd con  Mysqli:**
+
+```php
+<?php
+use Src\GetbdMi;
+$obj = new GetbdMi();
+?>
+
+```
+**Para usar getBd con  Postgres:**
+
+```php
+<?php
+use Src\GetbdP;
+$obj = new GetbdP();
+?>
+
+```
 
 
-`save( parametro )` 
+**Tenemos los mismo métodos:**
+
+`save( parámetro )`
 
 `check( array )`
 
-`find( parametro )`
+`find( parámetro )`
 
-`findAll( parametro )`
+`findAll( parámetro )`
 
 `findOne( array )`
 
@@ -463,27 +510,31 @@ El uso de getBd con Postgres o Mysqli es igual al funcionamiento con Mysql tenem
 
 `showObj()`
 
-`upadate( parametro , 'string' )`
+`showObjson()`
 
-`remove( parametro , 'string' )` 
+`upadate( parámetro , 'string' )`
 
-`Valid( parametro )`
+`remove( parámetro , 'string' )` 
 
-**Nota:** 
+`Valid( parámetro )`
+
+**Nota:**
  >Puede ver los ejemplos de los métodos arriba.
 
 
-## getBd subir archivos al servidor
+##GetBd Files
 
+Subir Archivos o files al servidor con getBd es muy fácil.
 Para ello tenemos la clase ` File()` que contiene los métodos:
-    
-La clase ` File()` se puede configurar siertos parametros para ello nos ubicamos en la  siguiente ruta:
+
+La clase ` File()` se puede configurar siertos parámetros para ello nos ubicamos en la  siguiente ruta:
 
 *Config/Base.php*
 
-  	// CONFIGURACION DE LOS FILES O ARCHIVOS DE GETBD
+// CONFIGURACIÓN DE LOS FILES O ARCHIVOS DE GETBD
+```php
 
- 	// EXTENCION DEL FILE PERMITIDO
+// EXTENCION DEL FILE PERMITIDO
 
         'exten' => array(
 
@@ -494,11 +545,13 @@ La clase ` File()` se puede configurar siertos parametros para ello nos ubicamos
 
         ),
 
- 		
+```
+
+```php
 		// TAMAÑO  DEL FILE PERMITIDO
 
         'sizes' => array( 
-           
+
             's' => 4096000 , //500kb
             'm' =>  819200 , //800 Kb
             'l' => 1048576 , //1024 Kb
@@ -506,31 +559,32 @@ La clase ` File()` se puede configurar siertos parametros para ello nos ubicamos
 
         ),
 
+```
+**Nota:**
+ >Puede agregar más valores al array de configuración del FILE en su campo correspondiente.
 
-**Nota:** 
- >Puede agregar mas valores al array de configuracion del FILE en su campo correspondiente.
+**Subir FILE Usando el Método upFile:**
 
+```php
+upFile( file , directorio)
+```
 
-
-`upFile()`
-
-
-* Recibe un primer parametro. file a subir.
-* Recibe un segundo parametro el nombre de la carpeta donde se guarda el archivo.
+* Recibe un primer parámetro. file a subir.
+* Recibe un segundo parámetro el nombre de la carpeta donde se guarda el archivo.
 * Retorna **Array:** con 2 valores el primero true , el sugundo la ruta final del archivo guardado.
-* Retorna **False:** Si no se guardo el archivo.
+* Retorna **False:** Sí no se guardo el archivo.
 
 >Array retornado:
 
-```
+```php
  array respuesta = [ 'valid' => true , 'ruta'=> 'ruta del archivo' ];
 ```
 
-Ejemplo de uso:
+**Ejemplo de uso:**
 
 *index.html*
 
-```
+```php
 <!DOCTYPE html>
 
 <html>
@@ -550,25 +604,26 @@ Ejemplo de uso:
 
 *demo.php*
 
-```
- <?php 
+```php
+
+ <?php
 
 use Src\File;
 
 $file = $_FILES['archivo'];//reciben el archivo
 
-$archivo = new File(); //instancia de la clase
+$archivo = new File; //instancia de la clase
 
-//usamos el metodo upFile(nombre del archivo , nombre de la carpeta)
+//usamos el método upFile(nombre del archivo , nombre de la carpeta)
 
 $var = $archivo->upFile( $file , "nombre de la carpeta" );
 
 if($var[0] == true){
     echo "Archivo subido";
-    
+
     //ejemplo mostrando el archivo subido
     echo" <img src='$var[1]' /> ";
-    
+
 }else{
     echo "Error al subir archivo";
 }
@@ -576,18 +631,19 @@ if($var[0] == true){
 ?>
 ```
 
-## getBd con multiples archivos:
+**getBd con múltiples archivos:**
 
 Para ello tenemos la clase ` File()` que contiene los métodos:
-    
-`upFiles()` 
 
-* Recibe un primer parametro. file a subir.
-* Recibe un segundo parametro el nombre de la carpeta donde se guarda el archivo.
+```php
+upFiles(files, directorio)
+```
+* Recibe un primer parámetro. file a subir.
+* Recibe un segundo parámetro el nombre de la carpeta donde se guarda el archivo.
 * Retorna **Array:** con 2 valores el primero true , el sugundo la ruta final del archivo guardado.
 * Retorna **Array:** con error  Si no se guardo el archivo.
 
-```
+```php
 array respuesta = {
   [0] => 'true',
   [0] => 'ruta del archivo guardado1'
@@ -599,9 +655,9 @@ array respuesta = {
 
 Ejemplo de uso:
 
-*index.html*
+**index.html**
 
-```
+```php
 <!DOCTYPE html>
 
 <html>
@@ -620,8 +676,9 @@ Ejemplo de uso:
 ```
 
 
-*file.php*
-```
+**demo.php**
+
+```php
  <?php 
 
 use Src\File;
@@ -629,9 +686,9 @@ use Src\File;
 
 $file = $_FILES['archivo'];//reciben el archivo
 
-$archivo = new File(); //instancia de la clase
+$archivo = new File; //instancia de la clase
 
-//usamos el metodo upFiles(nombre del archivo , nombre de la carpeta)
+//usamos el método upFiles(nombre del archivo , nombre de la carpeta)
 //para la subida de varios archivos al servidor.
 
 $var = $archivo->upFiles($file , "carpeta a guardar" );
@@ -644,13 +701,42 @@ echo "</pre>";
 
 ?>
 ```
+** GetBd Bajar archivo:**
 
-------------------------------------------------------
- + Copyright by **FRANCISCO CAMPOS** 
- + Verción: BETA
- + Licencia: LGPL 3.0 
- + Contactar: <camqui2011@gmail.com>
- + [https://gitlab.com/franpc/getBd.git](http://)
- + Requicito: ( php>=5.3.0 , mysql 5.0+ , postgres 9.1.1+)
+```php
+dowFile( ruta_file )
+```
 
------------------------------------------------------- 
+Ejemplo: Bajando un file
+
+```php
+ <?php 
+
+use Src\File;
+
+$archivo = new File; //instancia de la clase
+
+$archivo->dowFile( " ruta fina del file " );
+
+echo "Archivo Bajado...";
+
+?>
+```
+
+**Comprimir un archivo a formato Zip:**
+
+```php
+zipFile( "ruta final del file" )
+```
+Este método Retorna la ruta Final del Archivo .zip.
+
+** Comprimir un archivo a formato Zip y Bajarlo Al mismo tiempo:**
+
+```php
+dowFile( "ruta final del file"  , true )
+```
+
+
+
+
+

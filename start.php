@@ -1,7 +1,7 @@
 <?php 
 /*
 * Copyright by Francisco Campos 
-* **********Año 2015***********
+* **********Año 2016***********
 * ==================================
 * ARCHIVO A INCLUIR PARA EL INICIO 
 * DE GETBD
