@@ -1,5 +1,5 @@
 {
-    "name": "franpc/Get-bd",
+    "name": "franpc/get-bd",
     "description": "Mini libreria básica para CRUD y gestión de  consultas a la base de dato",
     "type": "library",
     "license": "MIT",
