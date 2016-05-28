@@ -35,10 +35,10 @@ class Base{
 
                 'mysql' => array(
                     
-                    'host' => 'localhost',
-                    'database' => 'PRUEBA',
-                    'user' => 'root',
-                    'password' => '123456'
+                    'host' => 'name_host',
+                    'database' => 'name_data_base',
+                    'user' => 'name_root',
+                    'password' => 'password'
                    
                 ),
 
@@ -47,10 +47,10 @@ class Base{
 
                 'postgre' => array(
                     
-                    'host' => 'localhost',
-                    'database' => 'beta',
-                    'user' => 'sistema',
-                    'password' => '123456'
+                    'host' => 'name_host',
+                    'database' => 'name_data_base',
+                    'user' => 'name_root',
+                    'password' => 'password'
                 ),
 
 
@@ -59,10 +59,10 @@ class Base{
 
                'mysqli' => array(
                     
-                    'host' => 'localhost',
-                    'database' => 'PRUEBA',
-                    'user' => 'root',
-                    'password' =>'123456'
+                    'host' => 'name_host',
+                    'database' => 'name_data_base',
+                    'user' => 'name_root',
+                    'password' =>'password'
                 ),
 
 
