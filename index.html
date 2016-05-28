@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Getbd by FranciscoCampos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Getbd</h1>
+      <h2 class="project-tagline">Mini librería Básica para CRUD y Gestión de  Consultas a la Base de Dato, y Manejos de File</h2>
+      <a href="https://github.com/FranciscoCampos/getBd" class="btn">View on GitHub</a>
+      <a href="https://github.com/FranciscoCampos/getBd/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/FranciscoCampos/getBd/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="librería-getbd" class="anchor" href="#librer%C3%ADa-getbd" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Librería getBd</h1>
+
+<p><strong>Mini librería Básica para CRUD y Gestión de  Consultas a la Base de Dato, y Manejos de File.</strong></p>
+
+<hr>
+
+<ul>
+<li>Copyright by <strong>FRANCISCO CAMPOS</strong> </li>
+<li>Versión: BETA</li>
+<li>Licencia: MIT<br>
+</li>
+<li>Contactar: <a href="mailto:camqui2011@gmail.com">camqui2011@gmail.com</a>
+</li>
+<li><a href="https://gitlab.com/franpc/getBd.git">https://gitlab.com/franpc/getBd.git</a></li>
+<li>Requicito: ( php &gt;=5.3.0 , mysql 5.0+ , postgres 9.1.1+)</li>
+</ul>
+
+<p>Tiene soporte para:</p>
+
+<ul>
+<li>Mysql</li>
+<li>Mysqli</li>
+<li>Postgres</li>
+<li>Files</li>
+</ul>
+
+<p>[TOC]</p>
+
+<h1>
+<a id="estructura-de-la-librería" class="anchor" href="#estructura-de-la-librer%C3%ADa" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Estructura de la Librería</h1>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1">    <span class="pl-k">-</span><span class="pl-c1">Src</span></span>
+<span class="pl-s1">        <span class="pl-c1">File</span><span class="pl-k">.</span><span class="pl-c1">php</span></span>
+<span class="pl-s1">        <span class="pl-c1">GetbdM</span><span class="pl-k">.</span><span class="pl-c1">php</span></span>
+<span class="pl-s1">        <span class="pl-c1">GetbdMi</span><span class="pl-k">.</span><span class="pl-c1">php</span></span>
+<span class="pl-s1">        <span class="pl-c1">GetbdP</span><span class="pl-k">.</span><span class="pl-c1">php</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-k">-</span><span class="pl-c1">Config</span></span>
+<span class="pl-s1">        <span class="pl-c1">Connect</span></span>
+<span class="pl-s1">          <span class="pl-c1">Mysql</span><span class="pl-k">.</span><span class="pl-c1">php</span></span>
+<span class="pl-s1">          <span class="pl-c1">Mysqly</span><span class="pl-k">.</span><span class="pl-c1">php</span></span>
+<span class="pl-s1">          <span class="pl-c1">Postgre</span><span class="pl-k">.</span><span class="pl-c1">php</span></span>
+<span class="pl-s1">        <span class="pl-c1">Files</span></span>
+<span class="pl-s1">          <span class="pl-c1">ConfigFile</span><span class="pl-k">.</span><span class="pl-c1">php</span></span>
+<span class="pl-s1">        <span class="pl-c1">Base</span><span class="pl-k">.</span><span class="pl-c1">php</span></span>
+<span class="pl-s1">        <span class="pl-c1">autocarga</span><span class="pl-k">.</span><span class="pl-c1">php</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-c1">start</span><span class="pl-k">.</span><span class="pl-c1">php</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-k">-</span> <span class="pl-c1">Documentación</span><span class="pl-k">.</span><span class="pl-c1">md</span></span>
+<span class="pl-s1"></span></pre></div>
+
+<h1>
+<a id="descripción-de-la-librería" class="anchor" href="#descripci%C3%B3n-de-la-librer%C3%ADa" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Descripción de la Librería</h1>
+
+<hr>
+
+<p><strong>Src:</strong> Contiene las clases necesaria para el manejo rápido de las consultas a la base de datos.</p>
+
+<pre><code>- GetbdM.php:
+
+- name: GetbdM()
+</code></pre>
+
+<p>Contiene las clases y métodos requerido el uso de Mysql.</p>
+
+<pre><code> -GetbdMi.php:
+
+- name: GetbdMy()
+</code></pre>
+
+<p>Contiene las clases y métodos requerido el uso de Mysqli.</p>
+
+<pre><code>- GetbdP.php:
+
+- name: GetbdP()
+</code></pre>
+
+<p>Contiene las clases y métodos requerido el uso de Postgres.</p>
+
+<pre><code>- File.php:
+
+- name: File()
+</code></pre>
+
+<p>Contiene las clases nesesarias para la Subida de Archivos al servidor.</p>
+
+<p><strong>Config:</strong> Contiene las variables de configuración de la conexión a la base de datos, aquí se configura  las variables de la conexión: root , localhost , password, database, también  los parámetros de los archivos como: tamaño , formato permitidos etc.</p>
+
+<pre><code>- Base.php
+</code></pre>
+
+<h1>
+<a id="instalación" class="anchor" href="#instalaci%C3%B3n" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instalación</h1>
+
+<p>Instalación vía  Composer:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"> <span class="pl-c1">composer</span> <span class="pl-k">require</span> <span class="pl-c1">getBd</span></span></pre></div>
+
+<p>Uso:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">require</span> <span class="pl-s"><span class="pl-pds">'</span>vendor/autoload.php<span class="pl-pds">'</span></span></span></pre></div>
+
+<p>Instalación Mediante Descarga:</p>
+
+<p><a href="https://gitlab.com/franpc/getBd.git">https://gitlab.com/franpc/getBd.git</a></p>
+
+<p>Uso:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">require</span> <span class="pl-s"><span class="pl-pds">'</span>path/getbd/start.php</span></span></pre></div>
+
+<h1>
+<a id="funcionamiento" class="anchor" href="#funcionamiento" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Funcionamiento</h1>
+
+<p>Configuración de las variables de conexión.</p>
+
+<p><code>Config/Base.php</code></p>
+
+<p>Inicializamos los parámetros del Drive a utilizar en el array de configuración.</p>
+
+<p><strong>Driver para Mysql</strong></p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1">    <span class="pl-c">// DRIVER MYSQL</span></span>
+<span class="pl-s1">        <span class="pl-s"><span class="pl-pds">'</span>mysql<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">array</span>(</span>
+<span class="pl-s1">            <span class="pl-s"><span class="pl-pds">'</span>host<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>host<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s1">            <span class="pl-s"><span class="pl-pds">'</span>database<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>database<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s1">            <span class="pl-s"><span class="pl-pds">'</span>user<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>username<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s1">            <span class="pl-s"><span class="pl-pds">'</span>password<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>password<span class="pl-pds">'</span></span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1">        ),</span></pre></div>
+
+<p>** Driver para Postgres **</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1">    <span class="pl-c">// DRIVER POSTGRES</span></span>
+<span class="pl-s1">        <span class="pl-s"><span class="pl-pds">'</span>postgre<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">array</span>(</span>
+<span class="pl-s1">            <span class="pl-s"><span class="pl-pds">'</span>host<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>host<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s1">            <span class="pl-s"><span class="pl-pds">'</span>database<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>database<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s1">            <span class="pl-s"><span class="pl-pds">'</span>user<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>postusername<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s1">            <span class="pl-s"><span class="pl-pds">'</span>password<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>password<span class="pl-pds">'</span></span></span>
+<span class="pl-s1">        ),</span></pre></div>
+
+<p><strong>Driver para Mysqli</strong></p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1">     <span class="pl-c">// DRIVER MYSQLI</span></span>
+<span class="pl-s1">        <span class="pl-s"><span class="pl-pds">'</span>mysqli<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">array</span>(</span>
+<span class="pl-s1">            <span class="pl-s"><span class="pl-pds">'</span>host<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>host<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s1">            <span class="pl-s"><span class="pl-pds">'</span>database<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>database<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s1">            <span class="pl-s"><span class="pl-pds">'</span>user<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>username<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s1">            <span class="pl-s"><span class="pl-pds">'</span>password<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span><span class="pl-s"><span class="pl-pds">'</span>password<span class="pl-pds">'</span></span></span>
+<span class="pl-s1">        ),</span>
+<span class="pl-s1"></span></pre></div>
+
+<h1>
+<a id="getbd-mysql" class="anchor" href="#getbd-mysql" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>GetBd Mysql</h1>
+
+<p>Para usar getBd con  Mysql</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-pse">&lt;?php</span><span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Src\GetbdM</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$obj</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">GetbdM</span>();</span>
+<span class="pl-s1"></span><span class="pl-pse"><span class="pl-s1">?</span>&gt;</span>
+</pre></div>
+
+<h1>
+<a id="getbd-mysql-insert" class="anchor" href="#getbd-mysql-insert" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>GetBd Mysql Insert</h1>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1">save( <span class="pl-c1">sql</span> , <span class="pl-c1">opcional</span>)</span></pre></div>
+
+<p>Este método recibe dos parámetro, la consulta SQL , y una configuración opcional.</p>
+
+<ul>
+<li>
+<strong>sql:</strong>  consulta sql a insertar, Nota: la variable puede ser llamada de otra forma!</li>
+</ul>
+
+<p>Valores de Retorno:</p>
+
+<ul>
+<li>
+<strong>true:</strong> Registro insertado correctamente.</li>
+<li>
+<strong>false:</strong> Registro no insertado .</li>
+</ul>
+
+<p>Con getBd es posible verificar el registro antes de ser insertado, todo en una sola linea de código.</p>
+
+<h1>
+<a id="getbd-mysql-insert-verificado" class="anchor" href="#getbd-mysql-insert-verificado" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>GetBd Mysql Insert Verificado</h1>
+
+<p>Esto es posible solo agregando parámetros adicionales al  método save() de la siguiente forma.</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1">save( <span class="pl-smi">$sql</span> , <span class="pl-c1">array</span>(<span class="pl-s"><span class="pl-pds">'</span>tabla<span class="pl-pds">'</span></span> , <span class="pl-s"><span class="pl-pds">'</span>campos<span class="pl-pds">'</span></span> , <span class="pl-s"><span class="pl-pds">'</span>valor<span class="pl-pds">'</span></span>) )</span></pre></div>
+
+<p>valor adicional es un array con  iten  para la verificacion del registro.</p>
+
+<ul>
+<li>
+<strong>tabla</strong> : Nombre de la tabla donde sera verificado el registro.</li>
+<li>
+<strong>campo</strong>: Campos referencia para la condicion a cumplir.</li>
+<li>
+<strong>valor</strong>: Valor de verificación de la condición.</li>
+</ul>
+
+<p>Valores de Retorno:</p>
+
+<ul>
+<li>
+<strong>NULL</strong>: Sí existe un registro que coincida con el array de verificación, el sql  no sera insertado.</li>
+<li>
+<strong>true</strong>: No se encotro registro similar a la verificación, se realiza el insert de manera correcta.</li>
+</ul>
+
+<p><strong>Nota:</strong> Para query más complejos usamos  check()
+Ejemplo:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"> check( [ <span class="pl-s"><span class="pl-pds">'</span>tabla<span class="pl-pds">'</span></span> , <span class="pl-s"><span class="pl-pds">'</span>campos<span class="pl-pds">'</span></span> , <span class="pl-s"><span class="pl-pds">'</span>valor<span class="pl-pds">'</span></span>] )</span></pre></div>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"> check( <span class="pl-s"><span class="pl-pds">'</span>SQL<span class="pl-pds">'</span></span> )</span></pre></div>
+
+<p>Ejemplo: Realizando INSERT con su validación</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">&lt;</span>?<span class="pl-c1">php</span> </span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Src\GetbdM</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$obj</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">GetbdM</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$sql</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-s1"><span class="pl-k">INSERT INTO</span> tabla (campos) <span class="pl-k">Values</span> (valores)</span><span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">//verificador del registro</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$con</span><span class="pl-k">-&gt;</span>save(<span class="pl-smi">$sql</span>, [<span class="pl-s"><span class="pl-pds">'</span>tabla<span class="pl-pds">'</span></span> , <span class="pl-s"><span class="pl-pds">'</span>campo<span class="pl-pds">'</span></span> , <span class="pl-s"><span class="pl-pds">'</span>valor<span class="pl-pds">'</span></span>]);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"> <span class="pl-k">if</span>(<span class="pl-k">!</span><span class="pl-c1">is_null</span>(<span class="pl-smi">$con</span>))</span>
+<span class="pl-s1"> {</span>
+<span class="pl-s1">   <span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>Registro Insertado<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"> }</span>
+<span class="pl-s1"> <span class="pl-k">else</span></span>
+<span class="pl-s1"> {</span>
+<span class="pl-s1">   <span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>Registro No Insertado<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"> }</span>
+<span class="pl-s1"></span></pre></div>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-c">//Sin verificar registro</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$con</span><span class="pl-k">-&gt;</span>save(<span class="pl-smi">$sql</span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"> <span class="pl-k">if</span>(<span class="pl-k">!</span><span class="pl-smi">$con</span>)</span>
+<span class="pl-s1"> {</span>
+<span class="pl-s1">   <span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>Registro Insertado<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"> }</span>
+<span class="pl-s1"> <span class="pl-k">else</span></span>
+<span class="pl-s1"> {</span>
+<span class="pl-s1">   <span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>Registro No Insertado<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"> }</span>
+<span class="pl-s1"></span><span class="pl-pse"><span class="pl-s1">?</span>&gt;</span></pre></div>
+
+<h1>
+<a id="getbd-mysql-select" class="anchor" href="#getbd-mysql-select" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>GetBd Mysql SELECT</h1>
+
+<p>Para ello tenemos los métodos:</p>
+
+<p><code>find( parametro )</code> consultas complejas</p>
+
+<ul>
+<li>Recibe un parámetro que es la consulta SQL</li>
+<li>Retorna <strong>True:</strong> Si hay registro</li>
+<li>Retorna <strong>False:</strong>  Si no hay registro</li>
+</ul>
+
+<p><code>findAll( tabla )</code> consultas simples</p>
+
+<ul>
+<li>Recibe un parámetro, el nombre de la tabla de la base de datos</li>
+<li>Retorna <strong>True:</strong> Si hay registro</li>
+<li>Retorna <strong>False:</strong>  Si no hay registro</li>
+</ul>
+
+<p>Mostrando los datos:</p>
+
+<p><code>show()</code></p>
+
+<ul>
+<li>Retorna un Array Asociativo con los datos</li>
+</ul>
+
+<p><code>showObj()</code></p>
+
+<ul>
+<li>Retorna un Objeto con los datos</li>
+</ul>
+
+<p><code>showObjson()</code></p>
+
+<ul>
+<li>Retorna un Objeto JSON con los datos Ideal para REST API</li>
+</ul>
+
+<p><strong>SELECT a la base de datos</strong></p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1">find( <span class="pl-c1">sql_query</span> ) show() </span></pre></div>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"> <span class="pl-k">&lt;</span>?<span class="pl-c1">php</span></span>
+<span class="pl-s1"> <span class="pl-k">use</span> <span class="pl-c1">Src\GetbdM</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">  <span class="pl-smi">$obj</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">GetbdM</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">  <span class="pl-smi">$sql</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-s1"><span class="pl-k">SELECT</span> <span class="pl-k">*</span> <span class="pl-k">FROM</span> tabla </span><span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">  <span class="pl-smi">$datos</span> <span class="pl-k">=</span> <span class="pl-smi">$obj</span><span class="pl-k">-&gt;</span>find(<span class="pl-smi">$sql</span>)<span class="pl-k">-&gt;</span>show();</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"> <span class="pl-c">//mostrando los registros</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"> <span class="pl-k">foreach</span> (<span class="pl-smi">$datos</span> <span class="pl-k">as</span> <span class="pl-smi">$dato</span>) {</span>
+<span class="pl-s1">    <span class="pl-c1">echo</span> <span class="pl-smi">$dato</span>[<span class="pl-s"><span class="pl-pds">'</span>campo<span class="pl-pds">'</span></span>] <span class="pl-k">.</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;br&gt;<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"> }</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"> </span><span class="pl-pse"><span class="pl-s1">?</span>&gt;</span></pre></div>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1">findAll( <span class="pl-c1">parámetro</span> ) showObj() </span></pre></div>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"> <span class="pl-k">&lt;</span>?<span class="pl-c1">php</span></span>
+<span class="pl-s1">  <span class="pl-k">use</span> <span class="pl-c1">Src\GetbdM</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"> <span class="pl-smi">$obj</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">GetbdM</span>();</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">  <span class="pl-smi">$datos</span> <span class="pl-k">=</span> <span class="pl-smi">$obj</span><span class="pl-k">-&gt;</span>findAll(<span class="pl-s"><span class="pl-pds">"</span>tabla<span class="pl-pds">"</span></span>)<span class="pl-k">-&gt;</span>showObj();</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"> <span class="pl-c">//mostrando los registros</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"> <span class="pl-k">foreach</span> (<span class="pl-smi">$datos</span> <span class="pl-k">as</span> <span class="pl-smi">$dato</span>) {</span>
+<span class="pl-s1">    <span class="pl-c1">echo</span> <span class="pl-smi">$dato</span><span class="pl-k">-&gt;</span><span class="pl-smi">campo</span> <span class="pl-k">.</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;br&gt;<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"> }</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"> </span><span class="pl-pse"><span class="pl-s1">?</span>&gt;</span></pre></div>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"> <span class="pl-k">&lt;</span>?<span class="pl-c1">php</span></span>
+<span class="pl-s1">  <span class="pl-k">use</span> <span class="pl-c1">Src\GetbdM</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"> <span class="pl-smi">$obj</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">GetbdM</span>();</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">  <span class="pl-smi">$datos</span> <span class="pl-k">=</span> <span class="pl-smi">$obj</span><span class="pl-k">-&gt;</span>findAll(<span class="pl-s"><span class="pl-pds">"</span>tabla<span class="pl-pds">"</span></span>)<span class="pl-k">-&gt;</span>showObjson();</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"> <span class="pl-c">//mostrando los registros en formato JSON</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"> <span class="pl-k">foreach</span> (<span class="pl-smi">$datos</span> <span class="pl-k">as</span> <span class="pl-smi">$dato</span>) {</span>
+<span class="pl-s1">    <span class="pl-c1">echo</span> <span class="pl-smi">$dato</span><span class="pl-k">.</span><span class="pl-c1">campo</span>  <span class="pl-s"><span class="pl-pds">"</span>&lt;br&gt;<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"> }</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"> </span><span class="pl-pse"><span class="pl-s1">?</span>&gt;</span></pre></div>
+
+<h1>
+<a id="getbd-select-Único" class="anchor" href="#getbd-select-%C3%9Anico" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>GetBd SELECT Único</h1>
+
+<p>Para ello tenemos el métodos:</p>
+
+<p><code>findOne( ['tabla' , 'campos', 'valor'] )</code></p>
+
+<ul>
+<li>Recibe un arreglo con 3 parámetros </li>
+<li>Retorna <strong>True:</strong> Sí hay registro</li>
+<li>Retorna <strong>False:</strong> Sí no hay registro</li>
+<li>Retorna un registro encontrado</li>
+</ul>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"> <span class="pl-k">&lt;</span>?<span class="pl-c1">php</span></span>
+<span class="pl-s1">  <span class="pl-k">use</span> <span class="pl-c1">Src\GetbdM</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$obj</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">GetbdM</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$datos</span> <span class="pl-k">=</span> <span class="pl-smi">$obj</span><span class="pl-k">-&gt;</span>findOne([<span class="pl-s"><span class="pl-pds">'</span>table<span class="pl-pds">'</span></span> , <span class="pl-s"><span class="pl-pds">'</span>id<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>valor<span class="pl-pds">'</span></span>]);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"> <span class="pl-c">//mostrando el registro</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1">  <span class="pl-c1">print_r</span>(<span class="pl-smi">$dato</span> );</span>
+<span class="pl-s1"> </span><span class="pl-pse"><span class="pl-s1">?</span>&gt;</span></pre></div>
+
+<h1>
+<a id="getbd-mysql-update" class="anchor" href="#getbd-mysql-update" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>GetBd Mysql UPDATE</h1>
+
+<p>Para ello tenemos el métodos:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1">update( <span class="pl-c1">sql</span> , <span class="pl-s"><span class="pl-pds">'</span>string<span class="pl-pds">'</span></span> )</span></pre></div>
+
+<ul>
+<li>Recibe dos parámetro que son: la consulta SQL , y la cadena 'update', para evitar error en la consulta. </li>
+<li>Retorna <strong>True:</strong> Sí se actualizó el registro</li>
+<li>Retorna <strong>False:</strong> No se actualizó el registro</li>
+<li>String: Debe ser igual a update</li>
+</ul>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"> <span class="pl-k">&lt;</span>?<span class="pl-c1">php</span></span>
+<span class="pl-s1"> <span class="pl-k">use</span> <span class="pl-c1">Src\GetbdM</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$obj</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">GetbdM</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"> <span class="pl-smi">$sql</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-s1"><span class="pl-k">UPDATE</span>  tabla <span class="pl-k">SET</span> campo <span class="pl-k">=</span> <span class="pl-s">'valor'</span> <span class="pl-k">where</span> condición</span><span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">  <span class="pl-k">if</span> ( <span class="pl-k">!</span><span class="pl-smi">$con</span><span class="pl-k">-&gt;</span>update(<span class="pl-smi">$sql</span> , <span class="pl-s"><span class="pl-pds">'</span>update<span class="pl-pds">'</span></span>)) </span>
+<span class="pl-s1">  {</span>
+<span class="pl-s1">     <span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>No! se actualizÓ el registro<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1">  }</span>
+<span class="pl-s1">  <span class="pl-k">else</span></span>
+<span class="pl-s1">  {   </span>
+<span class="pl-s1">     <span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>Registro actualizado<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1">  }</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"> </span><span class="pl-pse"><span class="pl-s1">?</span>&gt;</span></pre></div>
+
+<h1>
+<a id="getbd-mysql-delete" class="anchor" href="#getbd-mysql-delete" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>GetBd Mysql DELETE</h1>
+
+<p>Para ello tenemos el métodos:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1">remove(<span class="pl-c1">sql</span> , <span class="pl-s"><span class="pl-pds">'</span>string<span class="pl-pds">'</span></span> )</span></pre></div>
+
+<ul>
+<li>Recibe dos parámetro que son : la consulta SQL , y la cadena 'delete', para evitar error en la consulta. </li>
+<li>Retorna <strong>True:</strong> Sí se elimino el registro.</li>
+<li>Retorna <strong>False:</strong> No se elimino el registro.</li>
+<li>String: Debe ser igual a delete.</li>
+</ul>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"> <span class="pl-k">&lt;</span>?<span class="pl-c1">php</span></span>
+<span class="pl-s1"> <span class="pl-k">use</span> <span class="pl-c1">Src\GetbdM</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"> <span class="pl-smi">$obj</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">GetbdM</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">  <span class="pl-smi">$sql</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-s1"><span class="pl-k">DELETE</span> <span class="pl-k">FROM</span> tabla <span class="pl-k">WHERE</span> condición</span><span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">  <span class="pl-k">if</span>(<span class="pl-smi">$obj</span><span class="pl-k">-&gt;</span>remove(<span class="pl-smi">$sql</span> , <span class="pl-s"><span class="pl-pds">'</span>delete<span class="pl-pds">'</span></span>))</span>
+<span class="pl-s1">  {</span>
+<span class="pl-s1">    <span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>Registro eliminado<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1">  }</span>
+<span class="pl-s1">  <span class="pl-k">else</span></span>
+<span class="pl-s1">  {</span>
+<span class="pl-s1">    <span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>No! se elimino el registros<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1">  }</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"> </span><span class="pl-pse"><span class="pl-s1">?</span>&gt;</span></pre></div>
+
+<h1>
+<a id="getbd--sql-injection" class="anchor" href="#getbd--sql-injection" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>GetBd  SQL injection</h1>
+
+<p>Usamos el método <code>Valid()</code> recibe la variable a verificar</p>
+
+<p><strong>Retorna la consulta segura</strong></p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-c1">GetbdM</span><span class="pl-k">::</span>Valid( <span class="pl-smi">$_POST</span>[<span class="pl-s"><span class="pl-pds">'</span>campos<span class="pl-pds">'</span></span>])</span></pre></div>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"></span>
+<span class="pl-s1"> <span class="pl-k">&lt;</span>?<span class="pl-c1">php</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1">  <span class="pl-k">use</span> <span class="pl-c1">Src\GetbdM</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">  <span class="pl-smi">$var</span> <span class="pl-k">=</span> <span class="pl-c1">GetbdM</span><span class="pl-k">::</span>Valid( <span class="pl-smi">$_POST</span>[<span class="pl-s"><span class="pl-pds">'</span>campos<span class="pl-pds">'</span></span>]);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">  <span class="pl-smi">$sql</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-s1"><span class="pl-k">SELECT</span> <span class="pl-k">*</span> <span class="pl-k">FROM</span>  tabla <span class="pl-k">WHERE</span> campo <span class="pl-k">=</span> ( <span class="pl-smi">$var</span> )</span><span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">  <span class="pl-smi">$con</span><span class="pl-k">-&gt;</span>save( <span class="pl-smi">$sql</span> );</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// todas las demas opciones </span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"> </span><span class="pl-pse"><span class="pl-s1">?</span>&gt;</span></pre></div>
+
+<h1>
+<a id="getbd-postgres-y-mysqli" class="anchor" href="#getbd-postgres-y-mysqli" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>GetBd Postgres y Mysqli</h1>
+
+<p>El uso de getBd con Postgres o Mysqli es igual al funcionamiento con Mysql tenemos los mismo métodos. Solo cambiar  <strong>Instancia de la class.</strong></p>
+
+<p><strong>Para usar getBd con  Mysqli:</strong></p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-pse">&lt;?php</span><span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Src\GetbdMi</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$obj</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">GetbdMi</span>();</span>
+<span class="pl-s1"></span><span class="pl-pse"><span class="pl-s1">?</span>&gt;</span>
+</pre></div>
+
+<p>** Para usar getBd con  Postgres: **</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-pse">&lt;?php</span><span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Src\GetbdP</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$obj</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">GetbdP</span>();</span>
+<span class="pl-s1"></span><span class="pl-pse"><span class="pl-s1">?</span>&gt;</span>
+</pre></div>
+
+<p><strong>Tenemos los mismo métodos:</strong></p>
+
+<p><code>save( parámetro )</code></p>
+
+<p><code>check( array )</code></p>
+
+<p><code>find( parámetro )</code></p>
+
+<p><code>findAll( parámetro )</code></p>
+
+<p><code>findOne( array )</code></p>
+
+<p><code>show()</code></p>
+
+<p><code>showObj()</code></p>
+
+<p><code>showObjson()</code></p>
+
+<p><code>upadate( parámetro , 'string' )</code></p>
+
+<p><code>remove( parámetro , 'string' )</code> </p>
+
+<p><code>Valid( parámetro )</code></p>
+
+<p><strong>Nota:</strong></p>
+
+<blockquote>
+<p>Puede ver los ejemplos de los métodos arriba.</p>
+</blockquote>
+
+<h1>
+<a id="getbd-files" class="anchor" href="#getbd-files" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>GetBd Files</h1>
+
+<p>Subir Archivos o files al servidor con getBd es muy fácil.
+Para ello tenemos la clase <code>File()</code> que contiene los métodos:</p>
+
+<p>La clase <code>File()</code> se puede configurar siertos parámetros para ello nos ubicamos en la  siguiente ruta:</p>
+
+<p><em>Config/Base.php</em></p>
+
+<p>// CONFIGURACIÓN DE LOS FILES O ARCHIVOS DE GETBD</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// EXTENCION DEL FILE PERMITIDO</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1">        <span class="pl-s"><span class="pl-pds">'</span>exten<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">array</span>(</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">            <span class="pl-s"><span class="pl-pds">'</span>jpg<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>image/jpeg<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s1">            <span class="pl-s"><span class="pl-pds">'</span>png<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>image/png<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s1">            <span class="pl-s"><span class="pl-pds">'</span>word<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>application/vnd.openxmlformats-officedocument.wordprocessingml.document<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s1">            <span class="pl-s"><span class="pl-pds">'</span>pdf<span class="pl-pds">'</span></span>  <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>application/pdf<span class="pl-pds">'</span></span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1">        ),</span>
+<span class="pl-s1"></span></pre></div>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1">        <span class="pl-c">// TAMAÑO  DEL FILE PERMITIDO</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1">        <span class="pl-s"><span class="pl-pds">'</span>sizes<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">array</span>( </span>
+<span class="pl-s1"></span>
+<span class="pl-s1">            <span class="pl-s"><span class="pl-pds">'</span>s<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">4096000</span> , <span class="pl-c">//500kb</span></span>
+<span class="pl-s1">            <span class="pl-s"><span class="pl-pds">'</span>m<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span>  <span class="pl-c1">819200</span> , <span class="pl-c">//800 Kb</span></span>
+<span class="pl-s1">            <span class="pl-s"><span class="pl-pds">'</span>l<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">1048576</span> , <span class="pl-c">//1024 Kb</span></span>
+<span class="pl-s1">            <span class="pl-s"><span class="pl-pds">'</span>xl<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">6291456</span>, <span class="pl-c">//6144 Kb</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1">        ),</span>
+<span class="pl-s1"></span></pre></div>
+
+<p><strong>Nota:</strong></p>
+
+<blockquote>
+<p>Puede agregar más valores al array de configuración del FILE en su campo correspondiente.</p>
+</blockquote>
+
+<p><strong>Subir FILE Usando el Método upFile:</strong></p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1">upFile( <span class="pl-c1">file</span> , <span class="pl-c1">directorio</span>)</span></pre></div>
+
+<ul>
+<li>Recibe un primer parámetro. file a subir.</li>
+<li>Recibe un segundo parámetro el nombre de la carpeta donde se guarda el archivo.</li>
+<li>Retorna <strong>Array:</strong> con 2 valores el primero true , el sugundo la ruta final del archivo guardado.</li>
+<li>Retorna <strong>False:</strong> Sí no se guardo el archivo.</li>
+</ul>
+
+<blockquote>
+<p>Array retornado:</p>
+</blockquote>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"> <span class="pl-k">array</span> <span class="pl-c1">respuesta</span> <span class="pl-k">=</span> [ <span class="pl-s"><span class="pl-pds">'</span>valid<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">true</span> , <span class="pl-s"><span class="pl-pds">'</span>ruta<span class="pl-pds">'</span></span><span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>ruta del archivo<span class="pl-pds">'</span></span> ];</span></pre></div>
+
+<p><strong>Ejemplo de uso:</strong></p>
+
+<p><em>index.html</em></p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">&lt;</span><span class="pl-k">!</span><span class="pl-c1">DOCTYPE</span> <span class="pl-c1">html</span><span class="pl-k">&gt;</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">&lt;</span><span class="pl-c1">html</span><span class="pl-k">&gt;</span></span>
+<span class="pl-s1">    <span class="pl-k">&lt;</span><span class="pl-c1">head</span><span class="pl-k">&gt;</span></span>
+<span class="pl-s1">    <span class="pl-k">&lt;</span><span class="pl-k">/</span><span class="pl-c1">head</span><span class="pl-k">&gt;</span></span>
+<span class="pl-s1">    <span class="pl-k">&lt;</span><span class="pl-c1">body</span><span class="pl-k">&gt;</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1">        <span class="pl-k">&lt;</span><span class="pl-c1">form</span> <span class="pl-c1">action</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>file.php<span class="pl-pds">"</span></span> <span class="pl-c1">method</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>post<span class="pl-pds">"</span></span> <span class="pl-c1">enctype</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>multipart/form-data<span class="pl-pds">"</span></span><span class="pl-k">&gt;</span></span>
+<span class="pl-s1">         <span class="pl-k">&lt;</span><span class="pl-c1">input</span> <span class="pl-c1">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>file<span class="pl-pds">"</span></span> <span class="pl-c1">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>archivo<span class="pl-pds">"</span></span> <span class="pl-k">&gt;&lt;</span><span class="pl-k">/</span><span class="pl-c1">input</span><span class="pl-k">&gt;&lt;</span><span class="pl-c1">br</span><span class="pl-k">&gt;</span></span>
+<span class="pl-s1">         <span class="pl-k">&lt;</span><span class="pl-c1">input</span> <span class="pl-c1">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>submit<span class="pl-pds">"</span></span> <span class="pl-c1">value</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Subir archivo<span class="pl-pds">"</span></span><span class="pl-k">&gt;&lt;</span><span class="pl-k">/</span><span class="pl-c1">input</span><span class="pl-k">&gt;</span></span>
+<span class="pl-s1">        <span class="pl-k">&lt;</span><span class="pl-k">/</span><span class="pl-c1">form</span><span class="pl-k">&gt;</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-k">&lt;</span><span class="pl-k">/</span><span class="pl-c1">body</span><span class="pl-k">&gt;</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">&lt;</span><span class="pl-k">/</span><span class="pl-c1">html</span><span class="pl-k">&gt;</span></span></pre></div>
+
+<p><em>demo.php</em></p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"></span>
+<span class="pl-s1"> <span class="pl-k">&lt;</span>?<span class="pl-c1">php</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Src\File</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$file</span> <span class="pl-k">=</span> <span class="pl-smi">$_FILES</span>[<span class="pl-s"><span class="pl-pds">'</span>archivo<span class="pl-pds">'</span></span>];<span class="pl-c">//reciben el archivo</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$archivo</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">File</span>; <span class="pl-c">//instancia de la clase</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">//usamos el método upFile(nombre del archivo , nombre de la carpeta)</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$var</span> <span class="pl-k">=</span> <span class="pl-smi">$archivo</span><span class="pl-k">-&gt;</span>upFile( <span class="pl-smi">$file</span> , <span class="pl-s"><span class="pl-pds">"</span>nombre de la carpeta<span class="pl-pds">"</span></span> );</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">if</span>(<span class="pl-smi">$var</span>[<span class="pl-c1">0</span>] <span class="pl-k">==</span> <span class="pl-c1">true</span>){</span>
+<span class="pl-s1">    <span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>Archivo subido<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-c">//ejemplo mostrando el archivo subido</span></span>
+<span class="pl-s1">    <span class="pl-c1">echo</span><span class="pl-s"><span class="pl-pds">"</span> &lt;img src='<span class="pl-smi">$var</span>[<span class="pl-c1">1</span>]' /&gt; <span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">}<span class="pl-k">else</span>{</span>
+<span class="pl-s1">    <span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>Error al subir archivo<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1">}</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"></span><span class="pl-pse"><span class="pl-s1">?</span>&gt;</span></pre></div>
+
+<p><strong>getBd con múltiples archivos:</strong></p>
+
+<p>Para ello tenemos la clase <code>File()</code> que contiene los métodos:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1">upFiles(<span class="pl-c1">files</span>, <span class="pl-c1">directorio</span>)</span></pre></div>
+
+<ul>
+<li>Recibe un primer parámetro. file a subir.</li>
+<li>Recibe un segundo parámetro el nombre de la carpeta donde se guarda el archivo.</li>
+<li>Retorna <strong>Array:</strong> con 2 valores el primero true , el sugundo la ruta final del archivo guardado.</li>
+<li>Retorna <strong>Array:</strong> con error  Si no se guardo el archivo.</li>
+</ul>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">array</span> <span class="pl-c1">respuesta</span> <span class="pl-k">=</span> {</span>
+<span class="pl-s1">  [<span class="pl-c1">0</span>] <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>true<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s1">  [<span class="pl-c1">0</span>] <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>ruta del archivo guardado1<span class="pl-pds">'</span></span></span>
+<span class="pl-s1">  [<span class="pl-c1">1</span>] <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>true<span class="pl-pds">'</span></span>,</span>
+<span class="pl-s1">  [<span class="pl-c1">1</span>] <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>ruta del archivo guardado2<span class="pl-pds">'</span></span></span>
+<span class="pl-s1">}</span>
+<span class="pl-s1"></span></pre></div>
+
+<p>Ejemplo de uso:</p>
+
+<p><strong>index.html</strong></p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">&lt;</span><span class="pl-k">!</span><span class="pl-c1">DOCTYPE</span> <span class="pl-c1">html</span><span class="pl-k">&gt;</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">&lt;</span><span class="pl-c1">html</span><span class="pl-k">&gt;</span></span>
+<span class="pl-s1">    <span class="pl-k">&lt;</span><span class="pl-c1">head</span><span class="pl-k">&gt;</span></span>
+<span class="pl-s1">    <span class="pl-k">&lt;</span><span class="pl-k">/</span><span class="pl-c1">head</span><span class="pl-k">&gt;</span></span>
+<span class="pl-s1">    <span class="pl-k">&lt;</span><span class="pl-c1">body</span><span class="pl-k">&gt;</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1">        <span class="pl-k">&lt;</span><span class="pl-c1">form</span> <span class="pl-c1">action</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>file.php<span class="pl-pds">"</span></span> <span class="pl-c1">method</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>post<span class="pl-pds">"</span></span> <span class="pl-c1">enctype</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>multipart/form-data<span class="pl-pds">"</span></span><span class="pl-k">&gt;</span></span>
+<span class="pl-s1">         <span class="pl-k">&lt;</span><span class="pl-c1">input</span> <span class="pl-c1">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>file<span class="pl-pds">"</span></span> <span class="pl-c1">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>archivo[]<span class="pl-pds">"</span></span> <span class="pl-c1">multiple</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>multiple<span class="pl-pds">"</span></span> <span class="pl-k">&gt;&lt;</span><span class="pl-k">/</span><span class="pl-c1">input</span><span class="pl-k">&gt;&lt;</span><span class="pl-c1">br</span><span class="pl-k">&gt;</span></span>
+<span class="pl-s1">         <span class="pl-k">&lt;</span><span class="pl-c1">input</span> <span class="pl-c1">type</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>submit<span class="pl-pds">"</span></span> <span class="pl-c1">value</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Subir archivo<span class="pl-pds">"</span></span><span class="pl-k">&gt;&lt;</span><span class="pl-k">/</span><span class="pl-c1">input</span><span class="pl-k">&gt;</span></span>
+<span class="pl-s1">        <span class="pl-k">&lt;</span><span class="pl-k">/</span><span class="pl-c1">form</span><span class="pl-k">&gt;</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-k">&lt;</span><span class="pl-k">/</span><span class="pl-c1">body</span><span class="pl-k">&gt;</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">&lt;</span><span class="pl-k">/</span><span class="pl-c1">html</span><span class="pl-k">&gt;</span></span></pre></div>
+
+<p><strong>demo.php</strong></p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"> <span class="pl-k">&lt;</span>?<span class="pl-c1">php</span> </span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Src\File</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$file</span> <span class="pl-k">=</span> <span class="pl-smi">$_FILES</span>[<span class="pl-s"><span class="pl-pds">'</span>archivo<span class="pl-pds">'</span></span>];<span class="pl-c">//reciben el archivo</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$archivo</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">File</span>; <span class="pl-c">//instancia de la clase</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">//usamos el método upFiles(nombre del archivo , nombre de la carpeta)</span></span>
+<span class="pl-s1"><span class="pl-c">//para la subida de varios archivos al servidor.</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$var</span> <span class="pl-k">=</span> <span class="pl-smi">$archivo</span><span class="pl-k">-&gt;</span>upFiles(<span class="pl-smi">$file</span> , <span class="pl-s"><span class="pl-pds">"</span>carpeta a guardar<span class="pl-pds">"</span></span> );</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;pre&gt;<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"> <span class="pl-c1">print_r</span>(<span class="pl-smi">$var</span>);<span class="pl-c">//mostrando el resultado de la subida.</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;/pre&gt;<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"></span><span class="pl-pse"><span class="pl-s1">?</span>&gt;</span></pre></div>
+
+<p>** GetBd Bajar archivo:**</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1">dowFile( <span class="pl-c1">ruta_file</span> )</span></pre></div>
+
+<p>Ejemplo: Bajando un file</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"> <span class="pl-k">&lt;</span>?<span class="pl-c1">php</span> </span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Src\File</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$archivo</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">File</span>; <span class="pl-c">//instancia de la clase</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$archivo</span><span class="pl-k">-&gt;</span>dowFile( <span class="pl-s"><span class="pl-pds">"</span> ruta fina del file <span class="pl-pds">"</span></span> );</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>Archivo Bajado...<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"></span><span class="pl-pse"><span class="pl-s1">?</span>&gt;</span></pre></div>
+
+<p><strong>Comprimir un archivo a formato Zip:</strong></p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1">zipFile( <span class="pl-s"><span class="pl-pds">"</span>ruta final del file<span class="pl-pds">"</span></span> )</span></pre></div>
+
+<p>Este método Retorna la ruta Final del Archivo .zip.</p>
+
+<p>** Comprimir un archivo a formato Zip y Bajarlo Al mismo tiempo:**</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1">dowFile( <span class="pl-s"><span class="pl-pds">"</span>ruta final del file<span class="pl-pds">"</span></span>  , <span class="pl-c1">true</span> )</span></pre></div>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/FranciscoCampos/getBd">Getbd</a> is maintained by <a href="https://github.com/FranciscoCampos">FranciscoCampos</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
