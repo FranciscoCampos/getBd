@@ -6,7 +6,7 @@
  + Versión: BETA
  + Licencia: MIT  
  + Contactar: <camqui2011@gmail.com>
- + https://gitlab.com/franpc/getBd.git
+ + https://github.com/FranciscoCampos/getBd.git
  + Requicito: ( php >=5.3.0 , mysql 5.0+ , postgres 9.1.1+)
  + Web del Proyecto https://franciscocampos.github.io/getBd
 
