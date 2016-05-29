@@ -19,9 +19,6 @@ Tiene soporte para:
 + Files
 
 
-[TOC]
-
-
 # Estructura de la Librería
 
 ```php
@@ -52,34 +49,10 @@ Tiene soporte para:
 # Descripción de la Librería
 
 ------------------------------------------------------
-
 **Src:** Contiene las clases necesaria para el manejo rápido de las consultas a la base de datos.
-
-    - GetbdM.php:
-
-    - name: GetbdM()
-Contiene las clases y métodos requerido el uso de Mysql.
-
-     -GetbdMi.php:
-
-    - name: GetbdMy()
-Contiene las clases y métodos requerido el uso de Mysqli.
-
-    - GetbdP.php:
-
-    - name: GetbdP()
-Contiene las clases y métodos requerido el uso de Postgres.
-
-    - File.php:
-
-    - name: File()
-Contiene las clases nesesarias para la Subida de Archivos al servidor.
-
-
 
 **Config:** Contiene las variables de configuración de la conexión a la base de datos, aquí se configura  las variables de la conexión: root , localhost , password, database, también  los parámetros de los archivos como: tamaño , formato permitidos etc.
 
-    - Base.php
 
 # Instalación
 
@@ -130,7 +103,6 @@ Configuración de las variables de conexión.
 
         ),
 ```
-
 ** Driver para Postgres **
 
 ```php
@@ -143,7 +115,7 @@ Configuración de las variables de conexión.
         ),
 ```
 
-**Driver para Mysqli**
+** Driver para Mysqli **
 
 ```php
      // DRIVER MYSQLI
@@ -563,7 +535,7 @@ La clase ` File()` se puede configurar siertos parámetros para ello nos ubicamo
 **Nota:**
  >Puede agregar más valores al array de configuración del FILE en su campo correspondiente.
 
-**Subir FILE Usando el Método upFile:**
+**Subir FILE Usando el Método upFile**
 
 ```php
 upFile( file , directorio)
@@ -631,7 +603,7 @@ if($var[0] == true){
 ?>
 ```
 
-**getBd con múltiples archivos:**
+**getBd con múltiples archivos**
 
 Para ello tenemos la clase ` File()` que contiene los métodos:
 
@@ -701,7 +673,7 @@ echo "</pre>";
 
 ?>
 ```
-** GetBd Bajar archivo:**
+**GetBd Bajar archivo**
 
 ```php
 dowFile( ruta_file )
@@ -723,14 +695,14 @@ echo "Archivo Bajado...";
 ?>
 ```
 
-**Comprimir un archivo a formato Zip:**
+** Comprimir un archivo a formato Zip **
 
 ```php
 zipFile( "ruta final del file" )
 ```
 Este método Retorna la ruta Final del Archivo .zip.
 
-** Comprimir un archivo a formato Zip y Bajarlo Al mismo tiempo:**
+** Comprimir un archivo a formato Zip y Bajarlo Al mismo tiempo **
 
 ```php
 dowFile( "ruta final del file"  , true )
