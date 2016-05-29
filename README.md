@@ -59,7 +59,7 @@ Tiene soporte para:
 Instalación vía  Composer:
 
 ```php
- composer require getBd
+ composer require franpc/get-bd dev-beta
 ```
 Uso:
 
