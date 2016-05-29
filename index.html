@@ -1,25 +1,34 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html>
   <head>
-    <meta charset="UTF-8">
-    <title>Getbd by FranciscoCampos</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-  </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">Getbd</h1>
-      <h2 class="project-tagline">Mini librería Básica para CRUD y Gestión de  Consultas a la Base de Dato, y Manejos de File</h2>
-      <a href="https://github.com/FranciscoCampos/getBd" class="btn">View on GitHub</a>
-      <a href="https://github.com/FranciscoCampos/getBd/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/FranciscoCampos/getBd/tarball/master" class="btn">Download .tar.gz</a>
-    </section>
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
-    <section class="main-content">
-      <h1>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Getbd by FranciscoCampos</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Getbd</h1>
+        <h2>Mini librería Básica para CRUD y Gestión de  Consultas a la Base de Dato, y Manejos de File</h2>
+        <a href="https://github.com/FranciscoCampos/getBd" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
 <a id="librería-getbd" class="anchor" href="#librer%C3%ADa-getbd" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Librería getBd</h1>
 
 <p><strong>Mini librería Básica para CRUD y Gestión de  Consultas a la Base de Dato, y Manejos de File.</strong></p>
@@ -35,6 +44,8 @@
 </li>
 <li><a href="https://gitlab.com/franpc/getBd.git">https://gitlab.com/franpc/getBd.git</a></li>
 <li>Requicito: ( php &gt;=5.3.0 , mysql 5.0+ , postgres 9.1.1+)</li>
+<li>Web del Proyecto <a href="https://franciscocampos.github.io/getBd">https://franciscocampos.github.io/getBd</a>
+</li>
 </ul>
 
 <p>Tiene soporte para:</p>
@@ -45,8 +56,6 @@
 <li>Postgres</li>
 <li>Files</li>
 </ul>
-
-<p>[TOC]</p>
 
 <h1>
 <a id="estructura-de-la-librería" class="anchor" href="#estructura-de-la-librer%C3%ADa" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Estructura de la Librería</h1>
@@ -79,45 +88,14 @@
 
 <p><strong>Src:</strong> Contiene las clases necesaria para el manejo rápido de las consultas a la base de datos.</p>
 
-<pre><code>- GetbdM.php:
-
-- name: GetbdM()
-</code></pre>
-
-<p>Contiene las clases y métodos requerido el uso de Mysql.</p>
-
-<pre><code> -GetbdMi.php:
-
-- name: GetbdMy()
-</code></pre>
-
-<p>Contiene las clases y métodos requerido el uso de Mysqli.</p>
-
-<pre><code>- GetbdP.php:
-
-- name: GetbdP()
-</code></pre>
-
-<p>Contiene las clases y métodos requerido el uso de Postgres.</p>
-
-<pre><code>- File.php:
-
-- name: File()
-</code></pre>
-
-<p>Contiene las clases nesesarias para la Subida de Archivos al servidor.</p>
-
 <p><strong>Config:</strong> Contiene las variables de configuración de la conexión a la base de datos, aquí se configura  las variables de la conexión: root , localhost , password, database, también  los parámetros de los archivos como: tamaño , formato permitidos etc.</p>
-
-<pre><code>- Base.php
-</code></pre>
 
 <h1>
 <a id="instalación" class="anchor" href="#instalaci%C3%B3n" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instalación</h1>
 
 <p>Instalación vía  Composer:</p>
 
-<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"> <span class="pl-c1">composer</span> <span class="pl-k">require</span> <span class="pl-c1">getBd</span></span></pre></div>
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"> <span class="pl-c1">composer</span> <span class="pl-k">require</span> <span class="pl-c1">franpc</span><span class="pl-k">/</span><span class="pl-c1">get</span><span class="pl-k">-</span><span class="pl-c1">bd</span> <span class="pl-c1">dev</span><span class="pl-k">-</span><span class="pl-c1">beta</span></span></pre></div>
 
 <p>Uso:</p>
 
@@ -161,7 +139,7 @@
 <span class="pl-s1">            <span class="pl-s"><span class="pl-pds">'</span>password<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-s"><span class="pl-pds">'</span>password<span class="pl-pds">'</span></span></span>
 <span class="pl-s1">        ),</span></pre></div>
 
-<p><strong>Driver para Mysqli</strong></p>
+<p>** Driver para Mysqli **</p>
 
 <div class="highlight highlight-text-html-php"><pre><span class="pl-s1">     <span class="pl-c">// DRIVER MYSQLI</span></span>
 <span class="pl-s1">        <span class="pl-s"><span class="pl-pds">'</span>mysqli<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">array</span>(</span>
@@ -580,7 +558,7 @@ Para ello tenemos la clase <code>File()</code> que contiene los métodos:</p>
 <p>Puede agregar más valores al array de configuración del FILE en su campo correspondiente.</p>
 </blockquote>
 
-<p><strong>Subir FILE Usando el Método upFile:</strong></p>
+<p><strong>Subir FILE Usando el Método upFile</strong></p>
 
 <div class="highlight highlight-text-html-php"><pre><span class="pl-s1">upFile( <span class="pl-c1">file</span> , <span class="pl-c1">directorio</span>)</span></pre></div>
 
@@ -644,7 +622,7 @@ Para ello tenemos la clase <code>File()</code> que contiene los métodos:</p>
 <span class="pl-s1"></span>
 <span class="pl-s1"></span><span class="pl-pse"><span class="pl-s1">?</span>&gt;</span></pre></div>
 
-<p><strong>getBd con múltiples archivos:</strong></p>
+<p><strong>getBd con múltiples archivos</strong></p>
 
 <p>Para ello tenemos la clase <code>File()</code> que contiene los métodos:</p>
 
@@ -709,7 +687,7 @@ Para ello tenemos la clase <code>File()</code> que contiene los métodos:</p>
 <span class="pl-s1"></span>
 <span class="pl-s1"></span><span class="pl-pse"><span class="pl-s1">?</span>&gt;</span></pre></div>
 
-<p>** GetBd Bajar archivo:**</p>
+<p><strong>GetBd Bajar archivo</strong></p>
 
 <div class="highlight highlight-text-html-php"><pre><span class="pl-s1">dowFile( <span class="pl-c1">ruta_file</span> )</span></pre></div>
 
@@ -727,23 +705,33 @@ Para ello tenemos la clase <code>File()</code> que contiene los métodos:</p>
 <span class="pl-s1"></span>
 <span class="pl-s1"></span><span class="pl-pse"><span class="pl-s1">?</span>&gt;</span></pre></div>
 
-<p><strong>Comprimir un archivo a formato Zip:</strong></p>
+<p>** Comprimir un archivo a formato Zip **</p>
 
 <div class="highlight highlight-text-html-php"><pre><span class="pl-s1">zipFile( <span class="pl-s"><span class="pl-pds">"</span>ruta final del file<span class="pl-pds">"</span></span> )</span></pre></div>
 
 <p>Este método Retorna la ruta Final del Archivo .zip.</p>
 
-<p>** Comprimir un archivo a formato Zip y Bajarlo Al mismo tiempo:**</p>
+<p>** Comprimir un archivo a formato Zip y Bajarlo Al mismo tiempo **</p>
 
 <div class="highlight highlight-text-html-php"><pre><span class="pl-s1">dowFile( <span class="pl-s"><span class="pl-pds">"</span>ruta final del file<span class="pl-pds">"</span></span>  , <span class="pl-c1">true</span> )</span></pre></div>
+        </section>
 
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/FranciscoCampos/getBd">Getbd</a> is maintained by <a href="https://github.com/FranciscoCampos">FranciscoCampos</a>.</span>
+        <aside id="sidebar">
+          <a href="https://github.com/FranciscoCampos/getBd/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/FranciscoCampos/getBd/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
 
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
+          <p class="repo-owner"><a href="https://github.com/FranciscoCampos/getBd"></a> is maintained by <a href="https://github.com/FranciscoCampos">FranciscoCampos</a>.</p>
 
-    </section>
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
 
   
   </body>
